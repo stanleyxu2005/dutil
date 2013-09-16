@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<profile>
+    <language ui="english"/>
+    <appearance dialogFontFace="" defaultFont="true" x="300" y="-50" int64="4294967295">
+        <banner gradientStartColor="" gradientStopColor="" textColor=""/>
+    </appearance>
+    <browser>
+        <tabs>
+        </tabs>
+        <confirmation closeAllTabs="true" openMultipleLinks="true" restoreLastSession="true"/>
+        <shortcuts>
+            <domainCompletion ctrl="" shift="" ctrlShift="" ctrlAlt=""/>
+            <gesture arrowDown="CMD" arrowUp="CMD" arrowLeft="CMD" arrowRight="CMD"/>
+            <tab leftDoubleClick="" middleClick="" rightClick=""/>
+            <assignment>
+                <command id="CloseCurrentTab" shortcut=""/>
+                <command id="ReopenClosedTab" shortcut=""/>
+                <command id="SwitchToNextTab" shortcut=""/>
+                <command id="SwitchToPreviousTab" shortcut=""/>
+            </assignment>
+        </shortcuts>
+        <download copyLinkToClipboard="true"/>
+        <shell checkDefaultBrowser="true" sourceViewerPath=""/> 
+        <!--<network useProxy="" proxyServer="" bypassAddress/>-->
+    </browser>
+    <recovery
+        storage="local" lastActivity="2011-10-20T12:30:50">
+    </recovery>
+</profile>

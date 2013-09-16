@@ -1,0 +1,137 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{D4E3A0E1-5D68-41FA-B618-334EA539F4AA}</ProjectGuid>
+			<ProjectVersion>12.0</ProjectVersion>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<MainSource>dutil_rtl_tests.dpr</MainSource>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UsePackage>rtl;vcl;vclx;vclimg;vclactnband;dbrtl;vcldb;bdertl;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;TeeUI;Tee;TeeDB;adortl;IndyCore;IndySystem;IndyProtocols;vclribbon;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DbxClientDriver;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;dui_d2010;dui_r2010;gcore_d2010;dutil_r2010</DCC_UsePackage>
+			<DCC_ExeOutput>..\..\test\build</DCC_ExeOutput>
+			<DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_Define>CONSOLE_TESTRUNNER;$(DCC_Define)</DCC_Define>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_DcuOutput>..\..\lib\test</DCC_DcuOutput>
+			<DCC_DependencyCheckOutputName>..\..\test\build\dutil_rtl_tests.exe</DCC_DependencyCheckOutputName>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_Platform>x86</DCC_Platform>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_DebugDCUs>true</DCC_DebugDCUs>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="dutil_rtl_tests.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="..\..\src\dutil.io.device.File_.pas"/>
+			<DCCReference Include="..\..\src\dutil.io.device.TempFile.pas"/>
+			<DCCReference Include="..\..\src\dutil.sys.win32.Platform.pas"/>
+			<DCCReference Include="..\..\src\dutil.sys.win32.Process.pas"/>
+			<DCCReference Include="..\..\src\dutil.sys.win32.registry.Validation.pas"/>
+			<DCCReference Include="..\..\src\dutil.sys.win32.SpecialPath.pas"/>
+			<DCCReference Include="..\..\src\dutil.text.arg.Arguments.pas"/>
+			<DCCReference Include="..\..\src\dutil.text.arg.Builder.pas"/>
+			<DCCReference Include="..\..\src\dutil.text.Convert.pas"/>
+			<DCCReference Include="..\..\src\dutil.text.xml.Validation.pas"/>
+			<DCCReference Include="..\..\src\dutil.text.Util.pas"/>
+			<DCCReference Include="..\..\src\dutil.util.concurrent.BlockingQueue.pas"/>
+			<DCCReference Include="..\..\src\dutil.util.concurrent.TimerQueue.pas"/>
+			<DCCReference Include="..\..\test\dutil.io.device.FileTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.io.device.TempFileTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.sys.win32.PlatformTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.sys.win32.ProcessTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.sys.win32.registry.ValidationTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.sys.win32.SpecialPathTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.text.arg.ArgumentsTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.text.arg.BuilderTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.text.ConvertTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.text.xml.ValidationTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.text.UtilTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.util.concurrent.BlockingQueueTest.pas"/>
+			<DCCReference Include="..\..\test\dutil.util.concurrent.TimerQueueTest.pas"/>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Parameters>
+						<Parameters Name="UseLauncher">False</Parameters>
+						<Parameters Name="LoadAllSymbols">True</Parameters>
+						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+					</Parameters>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1033</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dclDataSnapServer140.bpl">Embarcadero DBExpress DataSnap Server Components</Excluded_Packages>
+					</Excluded_Packages>
+					<Source>
+						<Source Name="MainSource">dutil_rtl_tests.dpr</Source>
+					</Source>
+				</Delphi.Personality>
+				<UnitTesting>
+					<TestFramework>DUnit / Delphi Win32</TestFramework>
+					<TestRunner>Console</TestRunner>
+				</UnitTesting>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>
