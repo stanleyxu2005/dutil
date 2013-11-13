@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Validation.pas 500 2012-05-14 17:35:56Z QXu $
+ * $Id: dutil.text.json.Validation.pas 712 2013-11-11 17:52:22Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -71,6 +71,7 @@ implementation
 
 uses
   SysUtils,
+  supertypes { An universal object serialization framework with Json support },
   dutil.core.Exception;
 
 class function TValidation.RequireStrMember(const Composite: ISuperObject; const Name: string): string;

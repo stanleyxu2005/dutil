@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.container.DynArray.pas 32 2012-06-10 14:27:59Z sx.away@gmail.com $
+ * $Id: dutil.util.container.DynArray.pas 542 2012-06-10 14:26:43Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.

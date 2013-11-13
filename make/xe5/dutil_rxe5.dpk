@@ -1,20 +1,21 @@
-package dutil_rtl;
+package dutil_rxe5;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
+{$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION ON}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$REFERENCEINFO OFF}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES OFF}
 {$TYPEDADDRESS OFF}
@@ -22,6 +23,8 @@ package dutil_rtl;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
 {$RUNONLY}
 {$IMPLICITBUILD ON}
 
@@ -29,11 +32,11 @@ requires
   rtl;
 
 contains
-  dutil.util.container.DynArray in '..\..\src\dutil.util.container.DynArray.pas',
   dutil.core.Exception in '..\..\src\dutil.core.Exception.pas',
   dutil.core.NonRefCountedInterfacedObject in '..\..\src\dutil.core.NonRefCountedInterfacedObject.pas',
   dutil.io.device.File_ in '..\..\src\dutil.io.device.File_.pas',
   dutil.io.device.TempFile in '..\..\src\dutil.io.device.TempFile.pas',
+  dutil.io.FileVersion in '..\..\src\dutil.io.FileVersion.pas',
   dutil.sys.win32.Platform in '..\..\src\dutil.sys.win32.Platform.pas',
   dutil.sys.win32.Process in '..\..\src\dutil.sys.win32.Process.pas',
   dutil.sys.win32.registry.Validation in '..\..\src\dutil.sys.win32.registry.Validation.pas',
@@ -54,7 +57,9 @@ contains
   dutil.util.concurrent.Result in '..\..\src\dutil.util.concurrent.Result.pas',
   dutil.util.concurrent.Timer in '..\..\src\dutil.util.concurrent.Timer.pas',
   dutil.util.concurrent.TimerImpl in '..\..\src\dutil.util.concurrent.TimerImpl.pas',
-  dutil.util.concurrent.TimerQueue in '..\..\src\dutil.util.concurrent.TimerQueue.pas';
+  dutil.util.concurrent.TimerQueue in '..\..\src\dutil.util.concurrent.TimerQueue.pas',
+  dutil.util.container.DynArray in '..\..\src\dutil.util.container.DynArray.pas',
+  dutil.util.digest.Crc32 in '..\..\src\dutil.util.digest.Crc32.pas';
 
 end.
 

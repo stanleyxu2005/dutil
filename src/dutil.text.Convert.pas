@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.Convert.pas 22 2012-05-14 17:45:19Z sx.away@gmail.com $
+ * $Id: dutil.text.Convert.pas 500 2012-05-14 17:35:56Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
