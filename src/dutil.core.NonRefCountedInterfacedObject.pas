@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.core.NonRefCountedInterfacedObject.pas 418 2012-04-13 04:00:35Z QXu $
+ * $Id: dutil.core.NonRefCountedInterfacedObject.pas 715 2013-11-15 03:24:03Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.

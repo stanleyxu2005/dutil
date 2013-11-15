@@ -1,0 +1,65 @@
+package dutil_rtl;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl;
+
+contains
+  dutil.core.Exception in '..\src\dutil.core.Exception.pas',
+  dutil.core.NonRefCountedInterfacedObject in '..\src\dutil.core.NonRefCountedInterfacedObject.pas',
+  dutil.io.device.File_ in '..\src\dutil.io.device.File_.pas',
+  dutil.io.device.TempFile in '..\src\dutil.io.device.TempFile.pas',
+  dutil.io.FileVersion in '..\src\dutil.io.FileVersion.pas',
+  dutil.sys.win32.Platform in '..\src\dutil.sys.win32.Platform.pas',
+  dutil.sys.win32.Process in '..\src\dutil.sys.win32.Process.pas',
+  dutil.sys.win32.registry.Validation in '..\src\dutil.sys.win32.registry.Validation.pas',
+  dutil.sys.win32.registry.Writer in '..\src\dutil.sys.win32.registry.Writer.pas',
+  dutil.sys.win32.SpecialPath in '..\src\dutil.sys.win32.SpecialPath.pas',
+  dutil.sys.win32.SubclassingWindow in '..\src\dutil.sys.win32.SubclassingWindow.pas',
+  dutil.text.arg.Arg in '..\src\dutil.text.arg.Arg.pas',
+  dutil.text.arg.Arguments in '..\src\dutil.text.arg.Arguments.pas',
+  dutil.text.arg.Builder in '..\src\dutil.text.arg.Builder.pas',
+  dutil.text.Convert in '..\src\dutil.text.Convert.pas',
+  dutil.text.json.Json in '..\src\dutil.text.json.Json.pas',
+  dutil.text.json.Validation in '..\src\dutil.text.json.Validation.pas',
+  dutil.text.Util in '..\src\dutil.text.Util.pas',
+  dutil.text.xml.Validation in '..\src\dutil.text.xml.Validation.pas',
+  dutil.time.Time in '..\src\dutil.time.Time.pas',
+  dutil.util.concurrent.BlockingQueue in '..\src\dutil.util.concurrent.BlockingQueue.pas',
+  dutil.util.concurrent.FailSafeThread in '..\src\dutil.util.concurrent.FailSafeThread.pas',
+  dutil.util.concurrent.Result in '..\src\dutil.util.concurrent.Result.pas',
+  dutil.util.concurrent.Timer in '..\src\dutil.util.concurrent.Timer.pas',
+  dutil.util.concurrent.TimerImpl in '..\src\dutil.util.concurrent.TimerImpl.pas',
+  dutil.util.concurrent.TimerQueue in '..\src\dutil.util.concurrent.TimerQueue.pas',
+  dutil.util.container.DynArray in '..\src\dutil.util.container.DynArray.pas',
+  dutil.util.digest.Crc32 in '..\src\dutil.util.digest.Crc32.pas';
+
+end.
+

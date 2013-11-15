@@ -1,25 +1,25 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{7FF500AF-8104-4394-AF9B-98A35A2A16F1}</ProjectGuid>
+        <ProjectGuid>{1118D87C-9E72-4D93-9098-E70AD237493A}</ProjectGuid>
+        <MainSource>dutil_rtl.dpk</MainSource>
         <ProjectVersion>15.1</ProjectVersion>
-        <FrameworkType>VCL</FrameworkType>
+        <FrameworkType>None</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
-        <AppType>Console</AppType>
-        <MainSource>dutil_rxe5_tests.dpr</MainSource>
+        <AppType>Package</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
     </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
-        <Base_Win32>true</Base_Win32>
+    <PropertyGroup Condition="('$(Platform)'=='Android' and '$(Base)'=='true') or '$(Base_Android)'!=''">
+        <Base_Android>true</Base_Android>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
-        <Base_Win64>true</Base_Win64>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -39,30 +39,36 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
-        <Manifest_File>None</Manifest_File>
-        <DCC_Define>CONSOLE_TESTRUNNER;$(DCC_Define)</DCC_Define>
-        <DCC_UnitSearchPath>..\..\src;$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <DCC_UsePackage>bindcompfmx;dsnap;rtl;IndySystem;IndyCore;dbrtl;bindcomp;xmlrtl;IndyProtocols;bindengine;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_DcuOutput>..\..\lib\test\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_ExeOutput>..\..\test\build</DCC_ExeOutput>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_DUPLICATE_CTOR_DTOR>false</DCC_DUPLICATE_CTOR_DTOR>
+        <GenPackage>true</GenPackage>
+        <GenDll>true</GenDll>
+        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_DcuOutput>..\..\lib\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Android)'!=''">
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar</VerInfo_Keys>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-        <DCC_UsePackage>bindcompvcl;vcltouch;vcldbx;vclribbon;VclSmp;vcl;dsnapcon;vclx;svnui;svn;vclimg;bdertl;vclactnband;vcldb;vcldsnap;$(DCC_UsePackage)</DCC_UsePackage>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Win64)'!=''">
-        <DCC_UsePackage>bindcompvcl;vcltouch;vclribbon;VclSmp;vcl;dsnapcon;vclx;vclimg;vclactnband;vcldb;vcldsnap;$(DCC_UsePackage)</DCC_UsePackage>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -72,7 +78,9 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_DcuOutput>..\..\lib\test\${Platform}\${Config}</DCC_DcuOutput>
+        <DCC_DcuOutput>..\..\lib\$(Platform)\$(Config)</DCC_DcuOutput>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -81,37 +89,42 @@
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_DebugInformation>0</DCC_DebugInformation>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+    </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\..\test\dutil.io.device.FileTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.io.device.File_.pas"/>
-        <DCCReference Include="..\..\test\dutil.io.device.TempFileTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.io.device.TempFile.pas"/>
-        <DCCReference Include="..\..\test\dutil.sys.win32.PlatformTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.sys.win32.Platform.pas"/>
-        <DCCReference Include="..\..\test\dutil.sys.win32.ProcessTest.pas"/>
-        <DCCReference Include="..\..\test\dutil.sys.win32.registry.ValidationTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.sys.win32.registry.Validation.pas"/>
-        <DCCReference Include="..\..\test\dutil.sys.win32.SpecialPathTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.sys.win32.SpecialPath.pas"/>
-        <DCCReference Include="..\..\test\dutil.text.arg.ArgumentsTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.text.arg.Arguments.pas"/>
-        <DCCReference Include="..\..\test\dutil.text.arg.BuilderTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.text.arg.Builder.pas"/>
-        <DCCReference Include="..\..\test\dutil.text.ConvertTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.text.Convert.pas"/>
-        <DCCReference Include="..\..\test\dutil.text.UtilTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.text.Util.pas"/>
-        <DCCReference Include="..\..\test\dutil.text.xml.ValidationTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.text.xml.Validation.pas"/>
-        <DCCReference Include="..\..\test\dutil.util.concurrent.BlockingQueueTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.util.concurrent.BlockingQueue.pas"/>
-        <DCCReference Include="..\..\test\dutil.util.concurrent.TimerQueueTest.pas"/>
-        <DCCReference Include="..\..\src\dutil.util.concurrent.TimerQueue.pas"/>
-        <DCCReference Include="..\..\test\dutil.util.digest.Crc32Test.pas"/>
-        <DCCReference Include="..\..\src\dutil.util.digest.Crc32.pas"/>
+        <DCCReference Include="rtl.dcp"/>
+        <DCCReference Include="..\src\dutil.core.Exception.pas"/>
+        <DCCReference Include="..\src\dutil.core.NonRefCountedInterfacedObject.pas"/>
+        <DCCReference Include="..\src\dutil.io.device.File_.pas"/>
+        <DCCReference Include="..\src\dutil.io.device.TempFile.pas"/>
+        <DCCReference Include="..\src\dutil.io.FileVersion.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.Platform.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.Process.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.registry.Validation.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.registry.Writer.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.SpecialPath.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.SubclassingWindow.pas"/>
+        <DCCReference Include="..\src\dutil.text.arg.Arg.pas"/>
+        <DCCReference Include="..\src\dutil.text.arg.Arguments.pas"/>
+        <DCCReference Include="..\src\dutil.text.arg.Builder.pas"/>
+        <DCCReference Include="..\src\dutil.text.Convert.pas"/>
+        <DCCReference Include="..\src\dutil.text.json.Json.pas"/>
+        <DCCReference Include="..\src\dutil.text.json.Validation.pas"/>
+        <DCCReference Include="..\src\dutil.text.Util.pas"/>
+        <DCCReference Include="..\src\dutil.text.xml.Validation.pas"/>
+        <DCCReference Include="..\src\dutil.time.Time.pas"/>
+        <DCCReference Include="..\src\dutil.util.concurrent.BlockingQueue.pas"/>
+        <DCCReference Include="..\src\dutil.util.concurrent.FailSafeThread.pas"/>
+        <DCCReference Include="..\src\dutil.util.concurrent.Result.pas"/>
+        <DCCReference Include="..\src\dutil.util.concurrent.Timer.pas"/>
+        <DCCReference Include="..\src\dutil.util.concurrent.TimerImpl.pas"/>
+        <DCCReference Include="..\src\dutil.util.concurrent.TimerQueue.pas"/>
+        <DCCReference Include="..\src\dutil.util.container.DynArray.pas"/>
+        <DCCReference Include="..\src\dutil.util.digest.Crc32.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -126,11 +139,11 @@
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Delphi.Personality.12</Borland.Personality>
-        <Borland.ProjectType/>
+        <Borland.ProjectType>Package</Borland.ProjectType>
         <BorlandProject>
             <Delphi.Personality>
                 <VersionInfo>
-                    <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
                     <VersionInfo Name="AutoIncBuild">False</VersionInfo>
                     <VersionInfo Name="MajorVer">1</VersionInfo>
                     <VersionInfo Name="MinorVer">0</VersionInfo>
@@ -157,20 +170,21 @@
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
                 <Source>
-                    <Source Name="MainSource">dutil_rxe5_tests.dpr</Source>
+                    <Source Name="MainSource">dutil_rtl.dpk</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment/>
             <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="iOSDevice">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
-            <UnitTesting>
-                <TestFramework>DUnit / Delphi Win32</TestFramework>
-                <TestRunner>GUI</TestRunner>
-                <TestProjectName/>
-                <SourceProjectName/>
-            </UnitTesting>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
