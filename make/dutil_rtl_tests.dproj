@@ -5,8 +5,8 @@
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <TargetedPlatforms>1</TargetedPlatforms>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Console</AppType>
         <MainSource>dutil_rtl_tests.dpr</MainSource>
     </PropertyGroup>
@@ -45,11 +45,11 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Manifest_File>None</Manifest_File>
         <DCC_Define>CONSOLE_TESTRUNNER;$(DCC_Define)</DCC_Define>
-        <DCC_UnitSearchPath>..\..\src;$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\src;$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_UsePackage>bindcompfmx;dsnap;rtl;IndySystem;IndyCore;dbrtl;bindcomp;xmlrtl;IndyProtocols;bindengine;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_DcuOutput>..\..\lib\test\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_ExeOutput>..\..\test\build</DCC_ExeOutput>
+        <DCC_DcuOutput>..\lib\test\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>..\test\build</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
@@ -57,11 +57,11 @@
         <DCC_K>false</DCC_K>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <DCC_UsePackage>bindcompvcl;vcltouch;vcldbx;vclribbon;VclSmp;vcl;dsnapcon;vclx;svnui;svn;vclimg;bdertl;vclactnband;vcldb;vcldsnap;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
         <DCC_UsePackage>bindcompvcl;vcltouch;vclribbon;VclSmp;vcl;dsnapcon;vclx;vclimg;vclactnband;vcldb;vcldsnap;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -72,7 +72,6 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_DcuOutput>..\..\lib\test\${Platform}\${Config}</DCC_DcuOutput>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -86,32 +85,19 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\test\dutil.io.device.FileTest.pas"/>
-        <DCCReference Include="..\src\dutil.io.device.File_.pas"/>
         <DCCReference Include="..\test\dutil.io.device.TempFileTest.pas"/>
-        <DCCReference Include="..\src\dutil.io.device.TempFile.pas"/>
         <DCCReference Include="..\test\dutil.sys.win32.PlatformTest.pas"/>
-        <DCCReference Include="..\src\dutil.sys.win32.Platform.pas"/>
         <DCCReference Include="..\test\dutil.sys.win32.ProcessTest.pas"/>
         <DCCReference Include="..\test\dutil.sys.win32.registry.ValidationTest.pas"/>
-        <DCCReference Include="..\src\dutil.sys.win32.registry.Validation.pas"/>
         <DCCReference Include="..\test\dutil.sys.win32.SpecialPathTest.pas"/>
-        <DCCReference Include="..\src\dutil.sys.win32.SpecialPath.pas"/>
         <DCCReference Include="..\test\dutil.text.arg.ArgumentsTest.pas"/>
-        <DCCReference Include="..\src\dutil.text.arg.Arguments.pas"/>
         <DCCReference Include="..\test\dutil.text.arg.BuilderTest.pas"/>
-        <DCCReference Include="..\src\dutil.text.arg.Builder.pas"/>
         <DCCReference Include="..\test\dutil.text.ConvertTest.pas"/>
-        <DCCReference Include="..\src\dutil.text.Convert.pas"/>
         <DCCReference Include="..\test\dutil.text.UtilTest.pas"/>
-        <DCCReference Include="..\src\dutil.text.Util.pas"/>
         <DCCReference Include="..\test\dutil.text.xml.ValidationTest.pas"/>
-        <DCCReference Include="..\src\dutil.text.xml.Validation.pas"/>
         <DCCReference Include="..\test\dutil.util.concurrent.BlockingQueueTest.pas"/>
-        <DCCReference Include="..\src\dutil.util.concurrent.BlockingQueue.pas"/>
         <DCCReference Include="..\test\dutil.util.concurrent.TimerQueueTest.pas"/>
-        <DCCReference Include="..\src\dutil.util.concurrent.TimerQueue.pas"/>
         <DCCReference Include="..\test\dutil.util.digest.Crc32Test.pas"/>
-        <DCCReference Include="..\src\dutil.util.digest.Crc32.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -159,11 +145,15 @@
                 <Source>
                     <Source Name="MainSource">dutil_rtl_tests.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment/>
             <Platforms>
                 <Platform value="Win32">True</Platform>
-                <Platform value="Win64">False</Platform>
+                <Platform value="Win64">True</Platform>
             </Platforms>
             <UnitTesting>
                 <TestFramework>DUnit / Delphi Win32</TestFramework>

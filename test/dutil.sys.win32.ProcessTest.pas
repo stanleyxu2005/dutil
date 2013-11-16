@@ -27,8 +27,8 @@ type
   published
     procedure TestListAll;
     procedure TestListFilteredByProcessName;
-    procedure TestEstablish;
-    procedure TestEstablish_LessOptions;
+    procedure TestFolk;
+    procedure TestFolk_LessOptions;
     procedure TestTerminate;
   private
     procedure ExpectProcessCount(const ProcessName: string; Expected: Cardinal);
@@ -83,7 +83,7 @@ begin
   end;
 end;
 
-procedure TProcessTest.TestEstablish;
+procedure TProcessTest.TestFolk;
 var
   ShowMode: Integer;
   Masks: System.Cardinal;
@@ -97,13 +97,13 @@ begin
   Masks := SEE_MASK_DEFAULT;
   ShowMode := SW_HIDE;
 
-  FProcess.Establish(Filename, Parameters, WorkingDir, Masks, ShowMode);
+  FProcess.Folk(Filename, Parameters, WorkingDir, Masks, ShowMode);
   ExpectProcessCount('processtest.exe', {Expected=}1);
   Windows.Sleep(50);
   ExpectProcessCount('processtest.exe', {Expected=}0);
 end;
 
-procedure TProcessTest.TestEstablish_LessOptions;
+procedure TProcessTest.TestFolk_LessOptions;
 var
   Parameters: string;
   Filename: string;
@@ -111,7 +111,7 @@ begin
   Filename := '..\fixture\processtest.exe';
   Parameters := '--close';
 
-  FProcess.Establish(Filename, Parameters);
+  FProcess.Folk(Filename, Parameters);
   ExpectProcessCount('processtest.exe', {Expected=}1);
   Windows.Sleep(50);
   ExpectProcessCount('processtest.exe', {Expected=}0);
@@ -125,7 +125,7 @@ var
   PID: System.Cardinal;
 begin
   Filename := '..\fixture\processtest.exe';
-  FProcess.Establish(Filename, {Paramters=}'');
+  FProcess.Folk(Filename, {Paramters=}'');
   Processes := TProcess.ListFilteredByProcessName('processtest.exe');
   try
     CheckEquals(1, Processes.Count);

@@ -61,11 +61,14 @@ end;
 procedure TCrc32Test.TestDigest1;
 var
   ReturnValue: System.Cardinal;
+  ReturnValue2: System.Cardinal;
   S: string;
 begin
   S := 'This is a test!';
   ReturnValue := FCrc32.digest(S);
-  CheckEquals($567CD4CC, ReturnValue);
+  ReturnValue2 := FCrc32.digest(S + '1');
+  CheckEquals($29492415, ReturnValue);
+  CheckNotEquals(ReturnValue2, ReturnValue);
 end;
 
 procedure TCrc32Test.TestDigestFromFile;

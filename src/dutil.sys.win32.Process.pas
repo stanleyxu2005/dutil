@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.Process.pas 543 2012-07-03 20:09:44Z QXu $
+ * $Id: dutil.sys.win32.Process.pas 716 2013-11-16 07:52:55Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -26,13 +26,13 @@ type
     /// <summary>Lists all active processes that have a specified process name (case sensitive).</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
     class function ListFilteredByProcessName(const ProcessName: string): TList<TProcessEntry32>; static;
-    /// <summary>Establishes a process.</summary>
+    /// <summary>Folks a process.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class procedure Establish(const Filename: string; const Parameters: string; const WorkingDir: string;
+    class procedure Folk(const Filename: string; const Parameters: string; const WorkingDir: string;
       Masks: Cardinal; ShowMode: Integer); overload; static;
-    /// <summary>Establishes a process.</summary>
+    /// <summary>Folks a process.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class procedure Establish(const Filename: string; const Parameters: string); overload; static;
+    class procedure Folk(const Filename: string; const Parameters: string); overload; static;
     /// <summary>Terminates a process by its process id.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
     class procedure Terminate(PID: Cardinal; ExitCode: Cardinal); static;
@@ -88,7 +88,7 @@ begin
   end;
 end;
 
-class procedure TProcess.Establish(const Filename: string; const Parameters: string; const WorkingDir: string;
+class procedure TProcess.Folk(const Filename: string; const Parameters: string; const WorkingDir: string;
   Masks: Cardinal; ShowMode: Integer);
 var
   Info: TShellExecuteInfo;
@@ -107,13 +107,13 @@ begin
     RaiseLastOSError;
 end;
 
-class procedure TProcess.Establish(const Filename: string; const Parameters: string);
+class procedure TProcess.Folk(const Filename: string; const Parameters: string);
 const
   DEFAULT_WORKING_DIR = '';
   DEFAULT_MASKS = SEE_MASK_NOCLOSEPROCESS or SEE_MASK_FLAG_NO_UI or SEE_MASK_FLAG_DDEWAIT;
   DEFAULT_SHOW_MODE = SW_NORMAL;
 begin
-  Establish(Filename, Parameters, DEFAULT_WORKING_DIR, DEFAULT_MASKS, DEFAULT_SHOW_MODE);
+  Folk(Filename, Parameters, DEFAULT_WORKING_DIR, DEFAULT_MASKS, DEFAULT_SHOW_MODE);
 end;
 
 class procedure TProcess.Terminate(PID: Cardinal; ExitCode: Cardinal);
