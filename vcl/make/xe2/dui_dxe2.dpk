@@ -1,0 +1,49 @@
+package dui_dxe2;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  vclimg,
+  dutil_rtl;
+
+contains
+  dui.control.button.SkinButton in '..\..\src\dui.control.button.SkinButton.pas',
+  dui.control.button.SkinButtonImages in '..\..\src\dui.control.button.SkinButtonImages.pas',
+  dui.control.ComponentRegister in '..\..\src\dui.control.ComponentRegister.pas',
+  dui.control.menu.Util in '..\..\src\dui.control.menu.Util.pas',
+  dui.metrics.MenuExtent in '..\..\src\dui.metrics.MenuExtent.pas',
+  dui.metrics.TextExtent in '..\..\src\dui.metrics.TextExtent.pas',
+  dui.sys.ScreenShot in '..\..\src\dui.sys.ScreenShot.pas',
+  dui.sys.TaskBarEffects in '..\..\src\dui.sys.TaskBarEffects.pas',
+  dui.sys.UserInput in '..\..\src\dui.sys.UserInput.pas',
+  dui.text.L10n in '..\..\src\dui.text.L10n.pas',
+  dui.sys.InstanceManager in '..\..\src\dui.sys.InstanceManager.pas';
+
+end.
