@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7AFBA66E-F46A-42E6-9CF7-536EB70EEBE9}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\rtl\make\dutil_rtl.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\rtl\make\dutil_rtl_tests.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\vcl\make\dui_rtm.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\vcl\make\dui.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="dutil_rtl">
+        <MSBuild Projects="..\rtl\make\dutil_rtl.dproj"/>
+    </Target>
+    <Target Name="dutil_rtl:Clean">
+        <MSBuild Projects="..\rtl\make\dutil_rtl.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dutil_rtl:Make">
+        <MSBuild Projects="..\rtl\make\dutil_rtl.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dutil_rtl_tests">
+        <MSBuild Projects="..\rtl\make\dutil_rtl_tests.dproj"/>
+    </Target>
+    <Target Name="dutil_rtl_tests:Clean">
+        <MSBuild Projects="..\rtl\make\dutil_rtl_tests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dutil_rtl_tests:Make">
+        <MSBuild Projects="..\rtl\make\dutil_rtl_tests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dui_rtm">
+        <MSBuild Projects="..\vcl\make\dui_rtm.dproj"/>
+    </Target>
+    <Target Name="dui_rtm:Clean">
+        <MSBuild Projects="..\vcl\make\dui_rtm.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dui_rtm:Make">
+        <MSBuild Projects="..\vcl\make\dui_rtm.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dui">
+        <MSBuild Projects="..\vcl\make\dui.dproj"/>
+    </Target>
+    <Target Name="dui:Clean">
+        <MSBuild Projects="..\vcl\make\dui.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dui:Make">
+        <MSBuild Projects="..\vcl\make\dui.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="dutil_rtl;dutil_rtl_tests;dui_rtm;dui"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="dutil_rtl:Clean;dutil_rtl_tests:Clean;dui_rtm:Clean;dui:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="dutil_rtl:Make;dutil_rtl_tests:Make;dui_rtm:Make;dui:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

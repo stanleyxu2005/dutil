@@ -1,4 +1,4 @@
-package dui_rxe2;
+package dui_rtm;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
@@ -33,6 +33,6 @@ requires
   vcl;
 
 contains
-  dui.control.menu.MessageListener in '..\..\src\dui.control.menu.MessageListener.pas';
+  dui.control.menu.MessageListener in '..\src\dui.control.menu.MessageListener.pas';
 
 end.
