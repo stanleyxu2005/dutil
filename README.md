@@ -1,5 +1,4 @@
-Delphi Util Library
-===================
+# Delphi Util Library #
 
 The project is inspired by the library Tango from the language D world. We want
 to make dutil to be a cohesive and comprehensive library for general purpose 
@@ -14,25 +13,27 @@ We recommend you use Embarcadero RAD Studio XE2 or higher.
 We hope you enjoy using the library, although the usage is poorly documented. 
 We would be very appreciated, if you can help us to make it better.
 
-# Getting Started
+## Getting Started ##
 
-The project requires diverse a-grade 3rd-party open source runtime libraries. 
+The project requires diverse a-grade 3rd-party open source runtime libraries.
+
 1. Goto the directory 'include' and download a most recent version of these 
 libraries.
 2. Add these source paths to the browsing path of Delphi IDE. 
 
 As soon as you installed all prerequisites, we should build the project. 
-1. Open the project group definition at the directory 'make'.
-2. Right click on the entry and select "Build All". 
+
+1. Open the project group file at the directory 'make' and execute "Build All". 
+2. If the compilation goes smooth, please run the unittests.
 3. Install the VCL package 'dui'.
-4. If the compilation goes smooth, please run the unittests.
-5. Add the source paths to the browsing path of Delphi IDE. 
+4. Add the source paths to the browsing path of Delphi IDE. 
 
 Now the dutil library is ready to use and have fun.
 
-# Roadmap
+## Roadmap ##
 
 Here are some development goals to be reached in 2014.
+
 1. Introduce an Inter-Process-Communication package. The IPC approach is based 
 on Windows message exchange. The communication protocal is Json RPC. The code 
 is ready for a while, I still need time to prepare some examples. 
