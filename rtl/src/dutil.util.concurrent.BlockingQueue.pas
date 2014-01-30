@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.BlockingQueue.pas 518 2012-05-22 16:46:34Z QXu $
+ * $Id: dutil.util.concurrent.BlockingQueue.pas 735 2014-01-25 18:06:52Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -21,7 +21,7 @@ type
   /// means "when you get this, stop."</remarks>
   TBlockingQueue<T> = class
   private
-    FGuard: TCriticalSection;
+    FLock: TCriticalSection;
     FCondition: TConditionVariableCS;
     FQueue: TQueue<T>;
   public
@@ -38,7 +38,7 @@ constructor TBlockingQueue<T>.Create;
 begin
   inherited;
 
-  FGuard := TCriticalSection.Create;
+  FLock := TCriticalSection.Create;
   FCondition := TConditionVariableCS.Create;
   FQueue := TQueue<T>.Create;
 end;
@@ -49,44 +49,44 @@ begin
   FQueue := nil;
   FCondition.Free;
   FCondition := nil;
-  FGuard.Free;
-  FGuard := nil;
+  FLock.Free;
+  FLock := nil;
 
   inherited;
 end;
 
 function TBlockingQueue<T>.Count: Cardinal;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     Result := FQueue.Count;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
 function TBlockingQueue<T>.Take: T;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     while FQueue.Count = 0 do
     begin
-      FCondition.WaitFor(FGuard);
+      FCondition.WaitFor(FLock);
     end;
     Result := FQueue.Dequeue;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
 procedure TBlockingQueue<T>.Put(const Element: T);
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     FQueue.Enqueue(Element);
     FCondition.ReleaseAll;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 

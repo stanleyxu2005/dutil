@@ -29,7 +29,11 @@ uses
   dutil.text.xml.ValidationTest in '..\test\dutil.text.xml.ValidationTest.pas',
   dutil.util.concurrent.BlockingQueueTest in '..\test\dutil.util.concurrent.BlockingQueueTest.pas',
   dutil.util.concurrent.TimerQueueTest in '..\test\dutil.util.concurrent.TimerQueueTest.pas',
-  dutil.util.digest.Crc32Test in '..\test\dutil.util.digest.Crc32Test.pas';
+  dutil.util.digest.Crc32Test in '..\test\dutil.util.digest.Crc32Test.pas',
+  dutil.net.jsonrpc.framework.SenderMock in '..\test\dutil.net.jsonrpc.framework.SenderMock.pas',
+  dutil.net.jsonrpc.message.DecoderTest in '..\test\dutil.net.jsonrpc.message.DecoderTest.pas',
+  dutil.net.jsonrpc.message.EncoderTest in '..\test\dutil.net.jsonrpc.message.EncoderTest.pas',
+  dutil.net.jsonrpc.message.HandlerMock in '..\test\dutil.net.jsonrpc.message.HandlerMock.pas';
 
 {$R *.RES}
 

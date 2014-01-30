@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.Result.pas 518 2012-05-22 16:46:34Z QXu $
+ * $Id: dutil.util.concurrent.Result.pas 735 2014-01-25 18:06:52Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -18,7 +18,7 @@ type
   /// available.</summary>
   TResult<V> = class
   private
-    FGuard: TCriticalSection;
+    FLock: TCriticalSection;
     FCondition: TConditionVariableCS;
     FValue: V;
     FException: Exception;
@@ -39,7 +39,7 @@ constructor TResult<V>.Create;
 begin
   inherited;
 
-  FGuard := TCriticalSection.Create;
+  FLock := TCriticalSection.Create;
   FCondition := TConditionVariableCS.Create;
 end;
 
@@ -47,38 +47,38 @@ destructor TResult<V>.Destroy;
 begin
   FCondition.Free;
   FCondition := nil;
-  FGuard.Free;
-  FGuard := nil;
+  FLock.Free;
+  FLock := nil;
 
   inherited;
 end;
 
 function TResult<V>.Take: V;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     while not FAvailable do
     begin
-      FCondition.WaitFor(FGuard);
+      FCondition.WaitFor(FLock);
     end;
     if FException <> nil then
       raise FException;
     Result := FValue;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
 procedure TResult<V>.Put(const Value: V);
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     FValue := Value;
     FException := nil;
     FAvailable := True;
     FCondition.ReleaseAll;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
@@ -86,23 +86,23 @@ procedure TResult<V>.PutException(Ex: Exception);
 begin
   assert(Ex <> nil);
 
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     FException := Ex;
     FAvailable := True;
     FCondition.ReleaseAll;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
 function TResult<V>.Available: Boolean;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     Result := FAvailable;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 

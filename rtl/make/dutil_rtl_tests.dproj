@@ -45,7 +45,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Manifest_File>None</Manifest_File>
         <DCC_Define>CONSOLE_TESTRUNNER;$(DCC_Define)</DCC_Define>
-        <DCC_UnitSearchPath>..\src;$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\src;..\src\net;$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_UsePackage>bindcompfmx;dsnap;rtl;IndySystem;IndyCore;dbrtl;bindcomp;xmlrtl;IndyProtocols;bindengine;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <DCC_DcuOutput>..\lib\test\$(Platform)\$(Config)</DCC_DcuOutput>
@@ -98,6 +98,10 @@
         <DCCReference Include="..\test\dutil.util.concurrent.BlockingQueueTest.pas"/>
         <DCCReference Include="..\test\dutil.util.concurrent.TimerQueueTest.pas"/>
         <DCCReference Include="..\test\dutil.util.digest.Crc32Test.pas"/>
+        <DCCReference Include="..\test\dutil.net.jsonrpc.framework.SenderMock.pas"/>
+        <DCCReference Include="..\test\dutil.net.jsonrpc.message.DecoderTest.pas"/>
+        <DCCReference Include="..\test\dutil.net.jsonrpc.message.EncoderTest.pas"/>
+        <DCCReference Include="..\test\dutil.net.jsonrpc.message.HandlerMock.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -145,9 +149,7 @@
                 <Source>
                     <Source Name="MainSource">dutil_rtl_tests.dpr</Source>
                 </Source>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                <Excluded_Packages
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment/>

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.arg.Arguments.pas 527 2012-05-30 17:07:21Z QXu $
+ * $Id: dutil.text.arg.Arguments.pas 735 2014-01-25 18:06:52Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -98,7 +98,7 @@ begin
   assert(Name <> '');
 
   if not FArgs.ContainsKey(Name) then
-    raise ENoSuchElementException.Create(Format('Key ''%s'' does not found', [Name]));
+    raise ENoSuchElementException.Create(Format('Key "%s" does not found', [Name]));
 
   Result := FArgs.Items[Name];
 end;

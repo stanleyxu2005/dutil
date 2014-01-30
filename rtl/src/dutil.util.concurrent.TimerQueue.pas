@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.TimerQueue.pas 520 2012-05-23 04:09:21Z QXu $
+ * $Id: dutil.util.concurrent.TimerQueue.pas 735 2014-01-25 18:06:52Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -18,7 +18,7 @@ type
   /// <summary>This container class holds elements in a first-in-first-out manner.</summary>
   TTimerQueue = class
   private
-    FGuard: TCriticalSection;
+    FLock: TCriticalSection;
     FTimeList: TList<TDateTime>;
     FElements: TDictionary<TDateTime, TThreadMethod>;
   public
@@ -41,7 +41,7 @@ constructor TTimerQueue.Create;
 begin
   inherited;
 
-  FGuard := TCriticalSection.Create;
+  FLock := TCriticalSection.Create;
   FTimeList := TList<TDateTime>.Create;
   FElements := TDictionary<TDateTime, TThreadMethod>.Create;
 end;
@@ -52,15 +52,15 @@ begin
   FElements := nil;
   FTimeList.Free;
   FTimeList := nil;
-  FGuard.Free;
-  FGuard := nil;
+  FLock.Free;
+  FLock := nil;
 
   inherited;
 end;
 
 function TTimerQueue.FirstTime: TDateTime;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     assert(FTimeList.Count = FElements.Count);
 
@@ -69,7 +69,7 @@ begin
     else
       Result := FTimeList.First;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
@@ -78,7 +78,7 @@ begin
   assert(Time < TTime_.MAX);
   assert(Assigned(Action));
 
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     assert(FTimeList.Count = FElements.Count);
 
@@ -93,7 +93,7 @@ begin
     FTimeList.Sort;
   finally
     assert(FTimeList.Count = FElements.Count);
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
@@ -101,7 +101,7 @@ function TTimerQueue.TakeNotAfter(const Time: TDateTime): TThreadMethod;
 var
   FirstTime_: TDateTime;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     assert(FTimeList.Count = FElements.Count);
     Result := nil;
@@ -120,13 +120,13 @@ begin
     end;
   finally
     assert(FTimeList.Count = FElements.Count);
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
 function TTimerQueue.RemoveAction(const Time: TDateTime): Boolean;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     assert(FTimeList.Count = FElements.Count);
 
@@ -139,20 +139,20 @@ begin
     end;
   finally
     assert(FTimeList.Count = FElements.Count);
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
 procedure TTimerQueue.Clear;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     assert(FTimeList.Count = FElements.Count);
 
     FElements.Clear;
     FTimeList.Clear;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 

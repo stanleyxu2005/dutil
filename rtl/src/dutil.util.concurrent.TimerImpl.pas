@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.TimerImpl.pas 520 2012-05-23 04:09:21Z QXu $
+ * $Id: dutil.util.concurrent.TimerImpl.pas 735 2014-01-25 18:06:52Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -20,7 +20,7 @@ type
   /// <summary>This controller class implements a timer.</summary>
   TTimerImpl = class
   private
-    FGuard: TCriticalSection;
+    FLock: TCriticalSection;
     FCondition: TConditionVariableCS;
     FQueue: TTimerQueue;
     FNextWake: TDateTime;
@@ -50,7 +50,7 @@ constructor TTimerImpl.Create;
 begin
   inherited;
 
-  FGuard := TCriticalSection.Create;
+  FLock := TCriticalSection.Create;
   FCondition := TConditionVariableCS.Create;
   FQueue := TTimerQueue.Create;
   FNextWake := TTime_.MAX;
@@ -62,12 +62,12 @@ destructor TTimerImpl.Destroy;
 begin
   if not FTerminated then
   begin
-    FGuard.Acquire;
+    FLock.Acquire;
     try
       FTerminated := True;
       FCondition.ReleaseAll;
     finally
-      FGuard.Release;
+      FLock.Release;
     end;
   end;
 
@@ -78,8 +78,8 @@ begin
   FQueue := nil;
   FCondition.Free;
   FCondition := nil;
-  FGuard.Free;
-  FGuard := nil;
+  FLock.Free;
+  FLock := nil;
 
   inherited;
 end;
@@ -98,12 +98,12 @@ begin
   Time := IncMilliSecond(SysUtils.Now, Round(Delay.TotalMilliseconds));
   Result := FQueue.Add(Time, Action);
 
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     if Time < FNextWake then
       FCondition.ReleaseAll;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
@@ -119,11 +119,11 @@ end;
 
 procedure TTimerImpl.HandleTimeChange;
 begin
-  FGuard.Acquire;
+  FLock.Acquire;
   try
     FCondition.ReleaseAll;
   finally
-    FGuard.Release;
+    FLock.Release;
   end;
 end;
 
@@ -134,24 +134,24 @@ var
 begin
   while True do
   begin
-    FGuard.Acquire;
+    FLock.Acquire;
     try
       if FTerminated then
         Break;
 
       FNextWake := FQueue.FirstTime;
       if Math.SameValue(FNextWake, TTime_.MAX) then
-        FCondition.WaitFor(FGuard)
+        FCondition.WaitFor(FLock)
       else
       begin
         WaitForMillis := MilliSecondSpan(FNextWake, SysUtils.Now);
         if WaitForMillis > 0 then
         begin
-          FCondition.WaitFor(FGuard, {Timeout=}Round(WaitForMillis) + 1)
+          FCondition.WaitFor(FLock, {Timeout=}Round(WaitForMillis) + 1)
         end;
       end;
     finally
-      FGuard.Release;
+      FLock.Release;
     end;
 
     Action := FQueue.TakeNotAfter(SysUtils.Now);
