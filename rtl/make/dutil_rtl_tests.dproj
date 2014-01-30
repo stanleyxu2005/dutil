@@ -149,7 +149,7 @@
                 <Source>
                     <Source Name="MainSource">dutil_rtl_tests.dpr</Source>
                 </Source>
-                <Excluded_Packages
+                <Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment/>
