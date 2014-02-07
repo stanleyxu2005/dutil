@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.io.FileVersion.pas 718 2013-11-18 12:11:57Z QXu $
+ * $Id: dutil.io.FileVersion.pas 745 2014-02-07 16:21:59Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -22,6 +22,8 @@ type
     /// <summary>Retrieves file version information from a module.</summary>
     /// <exception cref="EOSError">OS error</exception>
     class function Retrieve(Module: HMODULE): TFixedFileInfo; overload; static;
+    /// <summary>Converts a fixed file info to a string file version representation.</summary>
+    class function Convert(const FixedFileInfo: TFixedFileInfo): string; static;
   end;
 
 implementation
@@ -62,6 +64,12 @@ begin
   if GetModuleFileName(Module, Buffer, SizeOf(Buffer)) = 0 then
     RaiseLastOSError;
   Result := Retrieve({Filename=}string(Buffer));
+end;
+
+class function TFileVersion.Convert(const FixedFileInfo: TFixedFileInfo): string;
+begin
+  Result := Format('%d.%d.%d.%d', [FixedFileInfo.dwFileVersionLS, FixedFileInfo.dwFileVersionMS,
+    FixedFileInfo.dwProductVersionLS, FixedFileInfo.dwProductVersionMS]);
 end;
 
 end.

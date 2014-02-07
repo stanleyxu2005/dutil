@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.net.jsonrpc.framework.Receiver.pas 738 2014-01-30 08:08:32Z QXu $
+ * $Id: dutil.net.jsonrpc.framework.Receiver.pas 744 2014-02-06 15:43:26Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -113,7 +113,7 @@ var
   Message_: string;
 begin
 {$IFDEF LOGGING}
-  TLogLogger.GetLogger(ClassName).Info(Format('Connected to %s', [FPeer]));
+  TLogLogger.GetLogger(ClassName).Info(Format('Input queue is binded with %s', [FPeer]));
 {$ENDIF}
   try
     Message_ := FInput.Take;
@@ -126,7 +126,7 @@ begin
   finally
     HandleDisconnect;
 {$IFDEF LOGGING}
-    TLogLogger.GetLogger(ClassName).Info(Format('Disconnected from %s', [FPeer]));
+    TLogLogger.GetLogger(ClassName).Info(Format('Input queue is unbinded from %s', [FPeer]));
 {$ENDIF}
   end;
 end;

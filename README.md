@@ -34,8 +34,5 @@ Now the dutil library is ready to use and have fun.
 
 Here are some development goals to be reached in 2014.
 
-1. Introduce an Inter-Process-Communication package. The IPC approach is based 
-on Windows message exchange. The communication protocal is Json RPC. The code 
-is ready for a while, I still need time to prepare some examples. 
-2. Introduce more native looking VCL components from my previous project 
+1. Introduce more native looking VCL components from my previous project 
 https://code.google.com/p/native-look-vcl/
