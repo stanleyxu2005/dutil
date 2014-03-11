@@ -97,6 +97,7 @@
         <DCCReference Include="..\test\dutil.text.xml.ValidationTest.pas"/>
         <DCCReference Include="..\test\dutil.util.concurrent.BlockingQueueTest.pas"/>
         <DCCReference Include="..\test\dutil.util.concurrent.TimerQueueTest.pas"/>
+        <DCCReference Include="..\test\dutil.util.container.DynArrayTest.pas"/>
         <DCCReference Include="..\test\dutil.util.digest.Crc32Test.pas"/>
         <DCCReference Include="..\test\dutil.net.jsonrpc.framework.SenderMock.pas"/>
         <DCCReference Include="..\test\dutil.net.jsonrpc.message.DecoderTest.pas"/>
@@ -149,8 +150,7 @@
                 <Source>
                     <Source Name="MainSource">dutil_rtl_tests.dpr</Source>
                 </Source>
-                <Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Deployment/>
             <Platforms>

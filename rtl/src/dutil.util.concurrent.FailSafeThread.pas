@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.FailSafeThread.pas 520 2012-05-23 04:09:21Z QXu $
+ * $Id: dutil.util.concurrent.FailSafeThread.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.util.concurrent.FailSafeThread;
 interface
 
 uses
-  Classes;
+  System.Classes;
 
 type
   /// <summary>This service class allows to execute a specified action where uncaught exceptions will terminate the
@@ -32,7 +32,7 @@ uses
 {$IFDEF LOGGING}
   Log4D,
 {$ENDIF}
-  SysUtils;
+  System.SysUtils;
 
 constructor TFailSafeThread.Create(Action: TThreadMethod; const Name: AnsiString);
 begin

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.core.Exception.pas 418 2012-04-13 04:00:35Z QXu $
+ * $Id: dutil.core.Exception.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.core.Exception;
 interface
 
 uses
-  SysUtils;
+  System.SysUtils;
 
 type
   /// <summary>Represents a text processing error.</summary>

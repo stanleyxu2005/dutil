@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.io.device.File_.pas 555 2012-07-08 21:45:15Z QXu $
+ * $Id: dutil.io.device.File_.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.io.device.File_;
 interface
 
 uses
-  Classes;
+  System.Classes;
 
 type
   /// <summary>This service class provides methods for file operations.</summary>
@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  System.SysUtils;
 
 class function TFile.ContentsEqual(const FilenameA: string; const FilenameB: string): Boolean;
 const

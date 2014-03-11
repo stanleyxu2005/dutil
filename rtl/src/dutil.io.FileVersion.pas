@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.io.FileVersion.pas 745 2014-02-07 16:21:59Z QXu $
+ * $Id: dutil.io.FileVersion.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -29,8 +29,8 @@ type
 implementation
 
 uses
-  SysUtils,
-  Windows;
+  System.SysUtils,
+  Winapi.Windows;
 
 class function TFileVersion.Retrieve(const Filename: string): TFixedFileInfo;
 var

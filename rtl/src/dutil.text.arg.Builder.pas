@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.arg.Builder.pas 507 2012-05-18 14:36:45Z QXu $
+ * $Id: dutil.text.arg.Builder.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.text.arg.Builder;
 interface
 
 uses
-  Generics.Collections,
+  System.Generics.Collections,
   dutil.text.arg.Arg,
   dutil.text.arg.Arguments;
 
@@ -41,8 +41,8 @@ type
 implementation
 
 uses
-  StrUtils,
-  SysUtils,
+  System.StrUtils,
+  System.SysUtils,
   dutil.core.Exception;
 
 constructor TBuilder.Create;
@@ -142,7 +142,7 @@ var
   Value: string;
   Int64Value: Int64;
 begin
-  if not StrUtils.StartsStr(TArguments.LONG_PREFIX, Text) then
+  if not StartsStr(TArguments.LONG_PREFIX, Text) then
     raise EParseError.Create('');
 
   EqualSignPos := Pos(TArguments.EQUAL_SIGN, Text);

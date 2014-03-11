@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.Result.pas 735 2014-01-25 18:06:52Z QXu $
+ * $Id: dutil.util.concurrent.Result.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,8 +10,8 @@ unit dutil.util.concurrent.Result;
 interface
 
 uses
-  SyncObjs,
-  SysUtils;
+  System.SyncObjs,
+  System.SysUtils;
 
 type
   /// <summary>This container class holds a result value, where the retrieval blocks until the value becomes

@@ -86,7 +86,7 @@ end;
 
 procedure TUtilTest.TestSplit;
 var
-  ReturnValue: TStringDynArray;
+  ReturnValue: TArray<string>;
   S: string;
   Separator: string;
 begin

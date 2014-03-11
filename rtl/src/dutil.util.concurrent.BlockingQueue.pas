@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.BlockingQueue.pas 735 2014-01-25 18:06:52Z QXu $
+ * $Id: dutil.util.concurrent.BlockingQueue.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,8 +10,8 @@ unit dutil.util.concurrent.BlockingQueue;
 interface
 
 uses
-  Generics.Collections,
-  SyncObjs;
+  System.Generics.Collections,
+  System.SyncObjs;
 
 type
   /// <summary>This container class holds elements in a first-in-first-out manner, where retrieving an element waits

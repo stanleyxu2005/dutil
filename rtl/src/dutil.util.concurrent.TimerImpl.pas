@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.TimerImpl.pas 735 2014-01-25 18:06:52Z QXu $
+ * $Id: dutil.util.concurrent.TimerImpl.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,9 +10,9 @@ unit dutil.util.concurrent.TimerImpl;
 interface
 
 uses
-  Classes,
-  SyncObjs,
-  TimeSpan,
+  System.Classes,
+  System.SyncObjs,
+  System.TimeSpan,
   dutil.util.concurrent.FailSafeThread,
   dutil.util.concurrent.TimerQueue;
 
@@ -40,10 +40,10 @@ type
 implementation
 
 uses
-  DateUtils,
-  Math,
-  SysUtils,
-  Windows,
+  System.DateUtils,
+  System.Math,
+  System.SysUtils,
+  Winapi.Windows,
   dutil.time.Time;
 
 constructor TTimerImpl.Create;
@@ -95,7 +95,7 @@ var
 begin
   assert(Assigned(Action));
 
-  Time := IncMilliSecond(SysUtils.Now, Round(Delay.TotalMilliseconds));
+  Time := IncMilliSecond(Now, Round(Delay.TotalMilliseconds));
   Result := FQueue.Add(Time, Action);
 
   FLock.Acquire;
@@ -140,11 +140,11 @@ begin
         Break;
 
       FNextWake := FQueue.FirstTime;
-      if Math.SameValue(FNextWake, TTime_.MAX) then
+      if SameValue(FNextWake, TTime_.MAX) then
         FCondition.WaitFor(FLock)
       else
       begin
-        WaitForMillis := MilliSecondSpan(FNextWake, SysUtils.Now);
+        WaitForMillis := MilliSecondSpan(FNextWake, Now);
         if WaitForMillis > 0 then
         begin
           FCondition.WaitFor(FLock, {Timeout=}Round(WaitForMillis) + 1)
@@ -154,11 +154,11 @@ begin
       FLock.Release;
     end;
 
-    Action := FQueue.TakeNotAfter(SysUtils.Now);
+    Action := FQueue.TakeNotAfter(Now);
     while @Action <> nil do
     begin
       Action();
-      Action := FQueue.TakeNotAfter(SysUtils.Now);
+      Action := FQueue.TakeNotAfter(Now);
     end;
   end;
 end;

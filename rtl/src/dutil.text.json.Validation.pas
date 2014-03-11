@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Validation.pas 712 2013-11-11 17:52:22Z QXu $
+ * $Id: dutil.text.json.Validation.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.text.json.Validation;
 interface
 
 uses
-  Types,
+  System.Types,
   superobject { An universal object serialization framework with Json support };
 
 type
@@ -31,16 +31,16 @@ type
     class function RequireUIntMember(const Composite: ISuperObject; const Name: string): Cardinal; static;
     /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
     /// not a string array.</exception>
-    class function RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TStringDynArray; static;
+    class function RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TArray<string>; static;
     /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
     /// not a boolean array.</exception>
-    class function RequireBoolArrayMember(const Composite: ISuperObject; const Name: string): TBooleanDynArray; static;
+    class function RequireBoolArrayMember(const Composite: ISuperObject; const Name: string): TArray<Boolean>; static;
     /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
     /// not an integer array.</exception>
-    class function RequireIntArrayMember(const Composite: ISuperObject; const Name: string): TIntegerDynArray; static;
+    class function RequireIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Integer>; static;
     /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
     /// not a non-negative integer array.</exception>
-    class function RequireUIntArrayMember(const Composite: ISuperObject; const Name: string): TCardinalDynArray; static;
+    class function RequireUIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Cardinal>; static;
     /// <exception cref="EJsonException">When the specified value is not a string.</exception>
     class function RequireStr(const Value: ISuperObject): string; static;
     /// <exception cref="EJsonException">When the specified value is not a boolean.</exception>
@@ -50,13 +50,13 @@ type
     /// <exception cref="EJsonException">When the specified value is not a non-negative integer.</exception>
     class function RequireUInt(const Value: ISuperObject): Cardinal; static;
     /// <exception cref="EJsonException">When the specified value is not a string array.</exception>
-    class function RequireStrArray(const Value: ISuperObject): TStringDynArray; static;
+    class function RequireStrArray(const Value: ISuperObject): TArray<string>; static;
     /// <exception cref="EJsonException">When the specified value is not a boolean array.</exception>
-    class function RequireBoolArray(const Value: ISuperObject): TBooleanDynArray; static;
+    class function RequireBoolArray(const Value: ISuperObject): TArray<Boolean>; static;
     /// <exception cref="EJsonException">When the specified value is not an integer array.</exception>
-    class function RequireIntArray(const Value: ISuperObject): TIntegerDynArray; static;
+    class function RequireIntArray(const Value: ISuperObject): TArray<Integer>; static;
     /// <exception cref="EJsonException">When the specified value is not a non-negative array.</exception>
-    class function RequireUIntArray(const Value: ISuperObject): TCardinalDynArray; static;
+    class function RequireUIntArray(const Value: ISuperObject): TArray<Cardinal>; static;
   private
     /// <exception cref="EJsonException">When the JSON object has no member with the specified name.</exception>
     class function RequireMember(const Composite: ISuperObject; const Name: string;
@@ -70,7 +70,7 @@ type
 implementation
 
 uses
-  SysUtils,
+  System.SysUtils,
   supertypes { An universal object serialization framework with Json support },
   dutil.core.Exception;
 
@@ -123,7 +123,7 @@ begin
   Result := Number;
 end;
 
-class function TValidation.RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TStringDynArray;
+class function TValidation.RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TArray<string>;
 var
   Member: ISuperObject;
 begin
@@ -134,7 +134,7 @@ begin
   Result := RequireStrArray(Member);
 end;
 
-class function TValidation.RequireBoolArrayMember(const Composite: ISuperObject; const Name: string): TBooleanDynArray;
+class function TValidation.RequireBoolArrayMember(const Composite: ISuperObject; const Name: string): TArray<Boolean>;
 var
   Member: ISuperObject;
 begin
@@ -145,7 +145,7 @@ begin
   Result := RequireBoolArray(Member);
 end;
 
-class function TValidation.RequireIntArrayMember(const Composite: ISuperObject; const Name: string): TIntegerDynArray;
+class function TValidation.RequireIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Integer>;
 var
   Member: ISuperObject;
 begin
@@ -156,7 +156,7 @@ begin
   Result := RequireIntArray(Member);
 end;
 
-class function TValidation.RequireUIntArrayMember(const Composite: ISuperObject; const Name: string): TCardinalDynArray;
+class function TValidation.RequireUIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Cardinal>;
 var
   Member: ISuperObject;
 begin
@@ -220,7 +220,7 @@ begin
   Result := Number;
 end;
 
-class function TValidation.RequireStrArray(const Value: ISuperObject): TStringDynArray;
+class function TValidation.RequireStrArray(const Value: ISuperObject): TArray<string>;
 var
   Members: TSuperArray;
   I: Integer;
@@ -233,7 +233,7 @@ begin
     Result[I] := RequireStr(Members[I]);
 end;
 
-class function TValidation.RequireBoolArray(const Value: ISuperObject): TBooleanDynArray;
+class function TValidation.RequireBoolArray(const Value: ISuperObject): TArray<Boolean>;
 var
   Members: TSuperArray;
   I: Integer;
@@ -246,7 +246,7 @@ begin
     Result[I] := RequireBool(Members[I]);
 end;
 
-class function TValidation.RequireIntArray(const Value: ISuperObject): TIntegerDynArray;
+class function TValidation.RequireIntArray(const Value: ISuperObject): TArray<Integer>;
 var
   Members: TSuperArray;
   I: Integer;
@@ -259,7 +259,7 @@ begin
     Result[I] := RequireInt(Members[I]);
 end;
 
-class function TValidation.RequireUIntArray(const Value: ISuperObject): TCardinalDynArray;
+class function TValidation.RequireUIntArray(const Value: ISuperObject): TArray<Cardinal>;
 var
   Members: TSuperArray;
   I: Integer;

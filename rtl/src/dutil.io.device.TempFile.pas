@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.io.device.TempFile.pas 530 2012-06-05 14:31:51Z QXu $
+ * $Id: dutil.io.device.TempFile.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -22,8 +22,8 @@ type
 implementation
 
 uses
-  IOUtils,
-  SysUtils;
+  System.IOUtils,
+  System.SysUtils;
 
 class function TTempFile.MakeTempDirectory(const ParentDirectory: string; const Prefix: string = 'tmp';
   const Suffix: string = ''): string;

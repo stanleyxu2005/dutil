@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.xml.Validation.pas 500 2012-05-14 17:35:56Z QXu $
+ * $Id: dutil.text.xml.Validation.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.text.xml.Validation;
 interface
 
 uses
-  Generics.Collections,
+  System.Generics.Collections,
   NativeXml; {$I simdesign.inc}
 
 type
@@ -43,8 +43,8 @@ type
 implementation
 
 uses
-  Classes,
-  SysUtils,
+  System.Classes,
+  System.SysUtils,
   dutil.core.Exception,
   dutil.text.Convert;
 

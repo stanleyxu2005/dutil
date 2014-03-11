@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.SpecialPath.pas 540 2012-06-09 20:16:01Z QXu $
+ * $Id: dutil.sys.win32.SpecialPath.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -21,9 +21,9 @@ type
 implementation
 
 uses
-  Windows,
-  ShlObj,
-  SysUtils;
+  System.SysUtils,
+  Winapi.ShlObj,
+  Winapi.Windows;
 
 class function TSpecialPath.FromCsidl(Csidl: Integer; CanCreate: Boolean): string;
 var

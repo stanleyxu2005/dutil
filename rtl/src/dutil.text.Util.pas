@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.Util.pas 412 2012-04-12 08:24:25Z QXu $
+ * $Id: dutil.text.Util.pas 747 2014-03-11 07:42:35Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,7 +10,7 @@ unit dutil.text.Util;
 interface
 
 uses
-  Types;
+  System.Types;
 
 type
   /// <summary>This service class provides methods for string processing.</summary>
@@ -19,13 +19,13 @@ type
     /// <summary>Trims the given array by stripping the provided match from both ends.</summary>
     class function Strip(const Source: string; Match: Char): string; static;
     /// <summary>Splits the string wherever a separator instance is found and return the resultant segments.</summary>
-    class function Split(const S: string; const Separator: string): TStringDynArray; static;
+    class function Split(const S: string; const Separator: string): TArray<string>; static;
   end;
 
 implementation
 
 uses
-  SysUtils;
+  System.SysUtils;
 
 class function TUtil.Strip(const Source: string; Match: Char): string;
 var
@@ -55,7 +55,7 @@ begin
     Result := Source;
 end;
 
-class function TUtil.Split(const S: string; const Separator: string): TStringDynArray;
+class function TUtil.Split(const S: string; const Separator: string): TArray<string>;
 var
   SplitPoints: Integer;
   I: Integer;
