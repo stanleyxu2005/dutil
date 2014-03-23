@@ -17,14 +17,16 @@ We would be very appreciated, if you can help us to make it better.
 
 The project requires diverse a-grade 3rd-party open source runtime libraries.
 
-1. Goto the directory 'include' and download a most recent version of these 
-libraries.
+1. Goto the directory 'include' and download these open source libraries. 
+   a. These libraries does not have any license issues. 
+   b. If you do not want to use these libraries, you can simply remove related 
+      units and unittests.
 2. Add these source paths to the browsing path of Delphi IDE. 
 
 As soon as you installed all prerequisites, we should build the project. 
 
 1. Open the project group file at the directory 'make' and execute "Build All". 
-2. If the compilation goes smooth, please run the unittests.
+2. Run two unittests suites from project manager.
 3. Install the VCL package 'dui'.
 4. Add the source paths to the browsing path of Delphi IDE. 
 
@@ -36,3 +38,6 @@ Here are some development goals to be reached in 2014.
 
 1. Introduce more native looking VCL components from my previous project 
 https://code.google.com/p/native-look-vcl/
+2. Consider use 'x-superobject' instead of 'superobject'. As 'superobject' does 
+   not support Andriod and iOS platforms. 
+3. There is no plan to convert Vcl framework to FMX framework.
