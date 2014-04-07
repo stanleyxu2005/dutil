@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.Process.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.sys.win32.Process.pas 758 2014-04-07 14:50:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -22,10 +22,10 @@ type
   public
     /// <summary>Lists all active processes.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class function ListAll: TList<TProcessEntry32>; static;
+    class function ListAll: TArray<TProcessEntry32>; static;
     /// <summary>Lists all active processes that have a specified process name (case sensitive).</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class function ListFilteredByProcessName(const ProcessName: string): TList<TProcessEntry32>; static;
+    class function ListProcess(const ProcessName: string): TArray<TProcessEntry32>; static;
     /// <summary>Folks a process.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
     class procedure Folk(const Filename: string; const Parameters: string; const WorkingDir: string;
@@ -40,7 +40,10 @@ type
 
 implementation
 
-class function TProcess.ListAll: TList<TProcessEntry32>;
+uses
+  dutil.util.container.DynArray;
+
+class function TProcess.ListAll: TArray<TProcessEntry32>;
 var
   Handle: THandle;
   Process: TProcessEntry32;
@@ -50,41 +53,30 @@ begin
   if Handle = INVALID_HANDLE_VALUE then
     RaiseLastOSError;
 
-  try
-    Result := TList<TProcessEntry32>.Create;
+  SetLength(Result, 0);
+  ZeroMemory(@Process, SizeOf(Process));
+  Process.dwSize := SizeOf(Process);
+  Found := Process32First(Handle, Process);
+  while Found do
+  begin
+    TDynArray.Append<TProcessEntry32>(Result, Process);
+
     ZeroMemory(@Process, SizeOf(Process));
     Process.dwSize := SizeOf(Process);
-
-    Found := Process32First(Handle, Process);
-    while Found do
-    begin
-      Result.Add(Process);
-
-      ZeroMemory(@Process, SizeOf(Process));
-      Process.dwSize := SizeOf(Process);
-      Found := Process32Next(Handle, Process);
-    end;
-  finally
-    CloseHandle(Handle);
+    Found := Process32Next(Handle, Process);
   end;
+  CloseHandle(Handle);
 end;
 
-class function TProcess.ListFilteredByProcessName(const ProcessName: string): TList<TProcessEntry32>;
+class function TProcess.ListProcess(const ProcessName: string): TArray<TProcessEntry32>;
 var
-  ProcessList: TList<TProcessEntry32>;
   Process: TProcessEntry32;
 begin
-  Result := TList<TProcessEntry32>.Create;
-
-  ProcessList := ListAll;
-  try
-    for Process in ProcessList do
-    begin
-      if Process.szExeFile = ProcessName then
-        Result.Add(Process);
-    end;
-  finally
-    ProcessList.Free;
+  SetLength(Result, 0);
+  for Process in ListAll do
+  begin
+    if Process.szExeFile = ProcessName then
+      TDynArray.Append<TProcessEntry32>(Result, Process);
   end;
 end;
 

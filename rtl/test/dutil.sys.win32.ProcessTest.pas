@@ -26,7 +26,7 @@ type
     procedure TearDown; override;
   published
     procedure TestListAll;
-    procedure TestListFilteredByProcessName;
+    procedure TestListProcess;
     procedure TestFolk;
     procedure TestFolk_LessOptions;
     procedure TestTerminate;
@@ -52,17 +52,13 @@ end;
 
 procedure TProcessTest.TestListAll;
 var
-  ReturnValue: TList<TProcessEntry32>;
+  ReturnValue: TArray<TProcessEntry32>;
 begin
   ReturnValue := FProcess.ListAll;
-  try
-    CheckTrue(ReturnValue.Count > 2, 'At least the test runner itself and ''System Idle Process'' should exist');
-  finally
-    ReturnValue.Free;
-  end;
+  CheckTrue(Length(ReturnValue) > 2, 'At least the test runner itself and ''System Idle Process'' should exist');
 end;
 
-procedure TProcessTest.TestListFilteredByProcessName;
+procedure TProcessTest.TestListProcess;
 var
   ProcessName: string;
 begin
@@ -73,14 +69,10 @@ end;
 
 procedure TProcessTest.ExpectProcessCount(const ProcessName: string; Expected: Cardinal);
 var
-  ProcessList: TList<TProcessEntry32>;
+  ProcessList: TArray<TProcessEntry32>;
 begin
-  ProcessList := FProcess.ListFilteredByProcessName(ProcessName);
-  try
-    CheckEquals(Expected, ProcessList.Count);
-  finally
-    ProcessList.Free;
-  end;
+  ProcessList := FProcess.ListProcess(ProcessName);
+  CheckEquals(Expected, Length(ProcessList));
 end;
 
 procedure TProcessTest.TestFolk;
@@ -120,19 +112,15 @@ end;
 procedure TProcessTest.TestTerminate;
 var
   Filename: string;
-  Processes: TList<TProcessEntry32>;
+  ProcessList: TArray<TProcessEntry32>;
   ExitCode: System.Cardinal;
   PID: System.Cardinal;
 begin
   Filename := '..\fixture\processtest.exe';
   FProcess.Folk(Filename, {Paramters=}'');
-  Processes := TProcess.ListFilteredByProcessName('processtest.exe');
-  try
-    CheckEquals(1, Processes.Count);
-    PID := Processes[0].th32ProcessID;
-  finally
-    Processes.Free;
-  end;
+  ProcessList := TProcess.ListProcess('processtest.exe');
+  CheckEquals(1, Length(ProcessList));
+  PID := ProcessList[0].th32ProcessID;
   ExitCode := 1;
 
   FProcess.Terminate(PID, ExitCode);
