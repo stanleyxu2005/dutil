@@ -26,10 +26,11 @@ type
     procedure TearDown; override;
   published
     procedure TestListAll;
-    procedure TestListProcess;
+    procedure TestListFiltered;
     procedure TestFolk;
     procedure TestFolk_LessOptions;
-    procedure TestTerminate;
+    procedure TestTerminate_ByPID;
+    procedure TestTerminate_ByName;
   private
     procedure ExpectProcessCount(const ProcessName: string; Expected: Cardinal);
   end;
@@ -58,7 +59,7 @@ begin
   CheckTrue(Length(ReturnValue) > 2, 'At least the test runner itself and ''System Idle Process'' should exist');
 end;
 
-procedure TProcessTest.TestListProcess;
+procedure TProcessTest.TestListFiltered;
 var
   ProcessName: string;
 begin
@@ -71,7 +72,7 @@ procedure TProcessTest.ExpectProcessCount(const ProcessName: string; Expected: C
 var
   ProcessList: TArray<TProcessEntry32>;
 begin
-  ProcessList := FProcess.ListProcess(ProcessName);
+  ProcessList := FProcess.ListFiltered(ProcessName);
   CheckEquals(Expected, Length(ProcessList));
 end;
 
@@ -109,7 +110,7 @@ begin
   ExpectProcessCount('processtest.exe', {Expected=}0);
 end;
 
-procedure TProcessTest.TestTerminate;
+procedure TProcessTest.TestTerminate_ByPID;
 var
   Filename: string;
   ProcessList: TArray<TProcessEntry32>;
@@ -118,12 +119,30 @@ var
 begin
   Filename := '..\fixture\processtest.exe';
   FProcess.Folk(Filename, {Paramters=}'');
-  ProcessList := TProcess.ListProcess('processtest.exe');
+  ProcessList := TProcess.ListFiltered('processtest.exe');
   CheckEquals(1, Length(ProcessList));
   PID := ProcessList[0].th32ProcessID;
   ExitCode := 1;
 
   FProcess.Terminate(PID, ExitCode);
+  Windows.Sleep(50);
+  ExpectProcessCount('processtest.exe', {Expected=}0);
+end;
+
+procedure TProcessTest.TestTerminate_ByName;
+var
+  Filename: string;
+  ProcessList: TArray<TProcessEntry32>;
+  ExitCode: System.Cardinal;
+begin
+  Filename := '..\fixture\processtest.exe';
+  FProcess.Folk(Filename, {Paramters=}'');
+  FProcess.Folk(Filename, {Paramters=}'');
+  ProcessList := TProcess.ListFiltered('processtest.exe');
+  CheckEquals(2, Length(ProcessList));
+  ExitCode := 1;
+
+  FProcess.Terminate('processtest.exe', ExitCode);
   Windows.Sleep(50);
   ExpectProcessCount('processtest.exe', {Expected=}0);
 end;
