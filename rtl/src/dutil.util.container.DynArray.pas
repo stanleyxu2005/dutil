@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.container.DynArray.pas 769 2014-04-19 16:50:27Z QXu $
+ * $Id: dutil.util.container.DynArray.pas 770 2014-04-20 06:51:21Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -27,43 +27,23 @@ implementation
 
 class function TDynArray.Append<T>(var Destination: TArray<T>; const Item: T): Cardinal;
 begin
-  Result := Length(Destination);
-  SetLength(Destination, Result + 1);
-
-  Destination[Result] := Item;
-  Inc(Result);
+  Result := Insert<T>(Destination, Item, {Index=}Length(Destination));
 end;
 
 class function TDynArray.Append<T>(var Destination: TArray<T>; const Items: TArray<T>): Cardinal;
-var
-  Item: T;
 begin
-  Result := Length(Destination);
-  SetLength(Destination, Result + Cardinal(Length(Items)));
-
-  for Item in Items do
-  begin
-    Destination[Result] := Item;
-    Inc(Result);
-  end;
+  Result := Insert<T>(Destination, Items, {Index=}Length(Destination));
 end;
 
 class function TDynArray.Insert<T>(var Destination: TArray<T>; const Item: T; Index: Cardinal): Cardinal;
 var
-  L0, L1: Cardinal;
-  I: Cardinal;
+  Items: TArray<T>;
 begin
   assert(Index <= Cardinal(Length(Destination)));
 
-  L0 := Length(Destination);
-  L1 := 1;
-  Result := L0 + L1;
-  SetLength(Destination, Result);
-
-  if Index + 1 <= L0 then
-    for I := L0 - 1 downto Index do
-      Destination[I + L1] := Destination[I];
-  Destination[Index] := Item;
+  SetLength(Items, 1);
+  Items[0] := Item;
+  Result := Insert<T>(Destination, Items, Index);
 end;
 
 class function TDynArray.Insert<T>(var Destination: TArray<T>; const Items: TArray<T>; Index: Cardinal): Cardinal;
