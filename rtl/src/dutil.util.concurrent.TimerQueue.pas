@@ -49,11 +49,8 @@ end;
 destructor TTimerQueue.Destroy;
 begin
   FElements.Free;
-  FElements := nil;
   FTimeList.Free;
-  FTimeList := nil;
   FLock.Free;
-  FLock := nil;
 
   inherited;
 end;

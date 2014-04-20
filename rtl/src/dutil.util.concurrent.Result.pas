@@ -46,9 +46,7 @@ end;
 destructor TResult<V>.Destroy;
 begin
   FCondition.Free;
-  FCondition := nil;
   FLock.Free;
-  FLock := nil;
 
   inherited;
 end;

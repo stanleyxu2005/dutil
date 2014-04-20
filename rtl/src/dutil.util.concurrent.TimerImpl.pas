@@ -73,13 +73,9 @@ begin
 
   FThread.WaitFor;
   FThread.Free;
-  FThread := nil;
   FQueue.Free;
-  FQueue := nil;
   FCondition.Free;
-  FCondition := nil;
   FLock.Free;
-  FLock := nil;
 
   inherited;
 end;

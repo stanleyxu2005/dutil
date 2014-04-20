@@ -42,7 +42,6 @@ end;
 class destructor TTimer.Destroy;
 begin
   FTimerImpl.Free;
-  FTimerImpl := nil;
 end;
 
 class function TTimer.Schedule(const Delay: TTimeSpan; Action: TThreadMethod): TDateTime;

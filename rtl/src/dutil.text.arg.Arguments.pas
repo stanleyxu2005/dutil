@@ -60,7 +60,6 @@ end;
 destructor TArguments.Destroy;
 begin
   FArgs.Free;
-  FArgs := nil;
 
   inherited;
 end;

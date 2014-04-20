@@ -46,11 +46,8 @@ end;
 destructor TBlockingQueue<T>.Destroy;
 begin
   FQueue.Free;
-  FQueue := nil;
   FCondition.Free;
-  FCondition := nil;
   FLock.Free;
-  FLock := nil;
 
   inherited;
 end;

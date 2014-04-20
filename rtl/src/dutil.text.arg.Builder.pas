@@ -53,7 +53,6 @@ end;
 destructor TBuilder.Destroy;
 begin
   FArgs.Free;
-  FArgs := nil;
 
   inherited;
 end;
