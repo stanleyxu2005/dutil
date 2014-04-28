@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.TimerImpl.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.util.concurrent.TimerImpl.pas 794 2014-04-28 16:00:24Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -54,7 +54,8 @@ begin
   FCondition := TConditionVariableCS.Create;
   FQueue := TTimerQueue.Create;
   FNextWake := TTime_.MAX;
-  FThread := TFailSafeThread.Create(RunForever, 'timer');
+  FThread := TFailSafeThread.Create(RunForever);
+  FThread.NameThreadForDebugging('timer', FThread.ThreadID);
   FTerminated := False;
 end;
 

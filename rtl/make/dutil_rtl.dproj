@@ -140,18 +140,6 @@
         <DCCReference Include="..\src\dutil.util.concurrent.TimerQueue.pas"/>
         <DCCReference Include="..\src\dutil.util.container.DynArray.pas"/>
         <DCCReference Include="..\src\dutil.util.digest.Crc32.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.message.JsonRpcException.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.framework.Backlog.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.framework.NotificationHandler.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.framework.Receiver.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.framework.RequestHandler.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.framework.Sender.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.framework.SenderImpl.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.message.Decoder.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.message.Encoder.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.message.Error.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.message.Handler.pas"/>
-        <DCCReference Include="..\src\net\dutil.net.jsonrpc.message.Identifier.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

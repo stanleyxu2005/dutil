@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.BlockingQueue.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.util.concurrent.BlockingQueue.pas 778 2014-04-26 10:11:29Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -11,7 +11,9 @@ interface
 
 uses
   System.Generics.Collections,
-  System.SyncObjs;
+  System.SyncObjs,
+  dutil.core.NonRefCountedInterfacedObject,
+  dutil.util.container.Queue;
 
 type
   /// <summary>This container class holds elements in a first-in-first-out manner, where retrieving an element waits
@@ -19,7 +21,7 @@ type
   /// <remarks>Blocking queues support the producer-consumer design pattern. A common way to convince a
   /// producer-consumer service to shut down is with a "poison pill": a recognizable object placed on the queue that
   /// means "when you get this, stop."</remarks>
-  TBlockingQueue<T> = class
+  TBlockingQueue<T> = class(TNonRefCountedInterfacedObject, IQueue<T>)
   private
     FLock: TCriticalSection;
     FCondition: TConditionVariableCS;

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.FailSafeThread.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.util.concurrent.FailSafeThread.pas 794 2014-04-28 16:00:24Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -17,12 +17,11 @@ type
   /// process.</summary>
   TFailSafeThread = class(TThread)
   private
-    FName: AnsiString;
     FAction: TThreadMethod;
   protected
     procedure Execute; override;
   public
-    constructor Create(Action: TThreadMethod; const Name: AnsiString);
+    constructor Create(Action: TThreadMethod);
     destructor Destroy; override;
   end;
 
@@ -34,14 +33,13 @@ uses
 {$ENDIF}
   System.SysUtils;
 
-constructor TFailSafeThread.Create(Action: TThreadMethod; const Name: AnsiString);
+constructor TFailSafeThread.Create(Action: TThreadMethod);
 begin
   assert(Assigned(Action));
 
   inherited Create({CreateSuspended=}True);
 
   FAction := Action;
-  FName := Name;
 end;
 
 destructor TFailSafeThread.Destroy;
@@ -53,8 +51,6 @@ end;
 
 procedure TFailSafeThread.Execute;
 begin
-  NameThreadForDebugging(FName);
-
   try
     FAction;
   except

@@ -99,10 +99,6 @@
         <DCCReference Include="..\test\dutil.util.concurrent.TimerQueueTest.pas"/>
         <DCCReference Include="..\test\dutil.util.container.DynArrayTest.pas"/>
         <DCCReference Include="..\test\dutil.util.digest.Crc32Test.pas"/>
-        <DCCReference Include="..\test\dutil.net.jsonrpc.framework.SenderMock.pas"/>
-        <DCCReference Include="..\test\dutil.net.jsonrpc.message.DecoderTest.pas"/>
-        <DCCReference Include="..\test\dutil.net.jsonrpc.message.EncoderTest.pas"/>
-        <DCCReference Include="..\test\dutil.net.jsonrpc.message.HandlerMock.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

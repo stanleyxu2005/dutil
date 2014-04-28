@@ -59,19 +59,7 @@ contains
   dutil.util.concurrent.TimerImpl in '..\src\dutil.util.concurrent.TimerImpl.pas',
   dutil.util.concurrent.TimerQueue in '..\src\dutil.util.concurrent.TimerQueue.pas',
   dutil.util.container.DynArray in '..\src\dutil.util.container.DynArray.pas',
-  dutil.util.digest.Crc32 in '..\src\dutil.util.digest.Crc32.pas',
-  dutil.net.jsonrpc.message.JsonRpcException in '..\src\net\dutil.net.jsonrpc.message.JsonRpcException.pas',
-  dutil.net.jsonrpc.framework.Backlog in '..\src\net\dutil.net.jsonrpc.framework.Backlog.pas',
-  dutil.net.jsonrpc.framework.NotificationHandler in '..\src\net\dutil.net.jsonrpc.framework.NotificationHandler.pas',
-  dutil.net.jsonrpc.framework.Receiver in '..\src\net\dutil.net.jsonrpc.framework.Receiver.pas',
-  dutil.net.jsonrpc.framework.RequestHandler in '..\src\net\dutil.net.jsonrpc.framework.RequestHandler.pas',
-  dutil.net.jsonrpc.framework.Sender in '..\src\net\dutil.net.jsonrpc.framework.Sender.pas',
-  dutil.net.jsonrpc.framework.SenderImpl in '..\src\net\dutil.net.jsonrpc.framework.SenderImpl.pas',
-  dutil.net.jsonrpc.message.Decoder in '..\src\net\dutil.net.jsonrpc.message.Decoder.pas',
-  dutil.net.jsonrpc.message.Encoder in '..\src\net\dutil.net.jsonrpc.message.Encoder.pas',
-  dutil.net.jsonrpc.message.Error in '..\src\net\dutil.net.jsonrpc.message.Error.pas',
-  dutil.net.jsonrpc.message.Handler in '..\src\net\dutil.net.jsonrpc.message.Handler.pas',
-  dutil.net.jsonrpc.message.Identifier in '..\src\net\dutil.net.jsonrpc.message.Identifier.pas';
+  dutil.util.digest.Crc32 in '..\src\dutil.util.digest.Crc32.pas';
 
 end.
 

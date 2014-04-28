@@ -142,7 +142,7 @@ begin
   CheckEquals(2, Length(ProcessList));
   ExitCode := 1;
 
-  FProcess.Terminate('processtest.exe', ExitCode);
+  FProcess.Terminate('processtest.exe', {IncludeSelf=}True, ExitCode);
   Windows.Sleep(50);
   ExpectProcessCount('processtest.exe', {Expected=}0);
 end;

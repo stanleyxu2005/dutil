@@ -62,7 +62,7 @@ var
   Element: TElement;
   Elements: TList<TElement>;
 begin
-  Thread := TFailSafeThread.Create(RunMethodForPutAndTake, 'test');
+  Thread := TFailSafeThread.Create(RunMethodForPutAndTake);
   Thread.Start;
 
   Elements := TList<TElement>.Create;

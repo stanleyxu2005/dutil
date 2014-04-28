@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.core.Exception.pas 766 2014-04-17 17:58:54Z QXu $
+ * $Id: dutil.core.Exception.pas 778 2014-04-26 10:11:29Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -26,6 +26,7 @@ type
   end;
 
   /// <summary>Base class for parsing errors.</summary>
+  /// <remarks>Error means the exception can be handled or popup to top.</summary>
   EParseError = class(ETextException)
   end;
 

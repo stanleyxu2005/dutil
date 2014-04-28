@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.Process.pas 768 2014-04-19 15:39:41Z QXu $
+ * $Id: dutil.sys.win32.Process.pas 778 2014-04-26 10:11:29Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -37,7 +37,7 @@ type
     /// <exception cref="EOSError">Operating system failure.</exception>
     class procedure Terminate(PID: Cardinal; ExitCode: Cardinal = 0); overload; static;
     /// <summary>Terminates all processes that match the specfied process name.</summary>
-    class procedure Terminate(const ProcessName: string; ExitCode: Cardinal = 0); overload; static;
+    class procedure Terminate(const ProcessName: string; IncludeSelf: Boolean; ExitCode: Cardinal = 0); overload; static;
   end;
 
 implementation
@@ -108,7 +108,8 @@ end;
 class procedure TProcess.Folk(const FileName: string; const Parameters: string);
 const
   DEFAULT_WORKING_DIR = '';
-  DEFAULT_MASKS = SEE_MASK_NOCLOSEPROCESS or SEE_MASK_FLAG_NO_UI or SEE_MASK_FLAG_DDEWAIT;
+  // madExcept reports a handle leak if `SEE_MASK_NOCLOSEPROCESS` is set
+  DEFAULT_MASKS = {SEE_MASK_NOCLOSEPROCESS or }SEE_MASK_FLAG_NO_UI or SEE_MASK_FLAG_DDEWAIT;
   DEFAULT_SHOW_MODE = SW_NORMAL;
 begin
   assert(FileName <> '');
@@ -136,7 +137,7 @@ begin
   end;
 end;
 
-class procedure TProcess.Terminate(const ProcessName: string; ExitCode: Cardinal);
+class procedure TProcess.Terminate(const ProcessName: string; IncludeSelf: Boolean; ExitCode: Cardinal);
 var
   Process: TProcessEntry32;
   PIDs: TArray<Cardinal>;
@@ -147,8 +148,11 @@ begin
   SetLength(PIDs, 0);
   for Process in ListFiltered(ProcessName) do
     if Process.th32ProcessID = GetCurrentProcessId then
-      // Keeps the current process to be terminated at the end
-      TDynArray.Append<Cardinal>(PIDs, Process.th32ProcessID)
+    begin
+      if IncludeSelf then
+        // Keeps the current process to be terminated at the end
+        TDynArray.Append<Cardinal>(PIDs, Process.th32ProcessID)
+    end
     else
       TDynArray.Insert<Cardinal>(PIDs, Process.th32ProcessID, 0);
 

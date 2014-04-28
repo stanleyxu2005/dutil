@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.Timer.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.util.concurrent.Timer.pas 771 2014-04-20 07:20:06Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
