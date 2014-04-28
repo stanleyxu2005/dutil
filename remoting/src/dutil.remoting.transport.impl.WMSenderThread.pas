@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.impl.WMSenderThread.pas 794 2014-04-28 16:00:24Z QXu $
+ * $Id: dutil.remoting.transport.impl.WMSenderThread.pas 796 2014-04-28 17:01:01Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -48,7 +48,6 @@ end;
 
 destructor TWMSenderThread.Destroy;
 begin
-  Terminate;
   FOutputQueue.Put(POISON_PILL); // To wake up the thread context by putting a poison pill
   FOutputQueue := nil;
 
@@ -59,15 +58,13 @@ procedure TWMSenderThread.Execute;
 var
   Pdu: TPdu;
 begin
-  while not Terminated do
+  Pdu := FOutputQueue.Take;
+  while not POISON_PILL.Equals(Pdu) do
   begin
-    Pdu := FOutputQueue.Take;
-    if Terminated then
-      Exit;
-
     // Note that the sender does not (but the TransportImpl does) have the responsibility of handling undelivered
     // messages here.
     SendMessage(Pdu);
+    Pdu := FOutputQueue.Take;
   end;
 end;
 
