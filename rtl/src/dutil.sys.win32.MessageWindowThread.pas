@@ -39,13 +39,13 @@ end;
 
 destructor TMessageWindowThread.Destroy;
 begin
+  inherited;
+
   if FWindowHandle > 0 then
   begin
     DeallocateHWnd(FWindowHandle);
     FWindowHandle := 0;
   end;
-
-  inherited;
 end;
 
 procedure TMessageWindowThread.Execute;
