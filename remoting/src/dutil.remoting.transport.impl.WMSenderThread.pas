@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.impl.WMSenderThread.pas 796 2014-04-28 17:01:01Z QXu $
+ * $Id: dutil.remoting.transport.impl.WMSenderThread.pas 798 2014-04-28 17:29:33Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -48,7 +48,10 @@ end;
 
 destructor TWMSenderThread.Destroy;
 begin
-  FOutputQueue.Put(POISON_PILL); // To wake up the thread context by putting a poison pill
+  // To wake up the thread context by putting a poison pill
+  FOutputQueue.Put(POISON_PILL);
+  WaitFor;
+
   FOutputQueue := nil;
 
   inherited;

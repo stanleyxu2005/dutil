@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.impl.WMTransportImpl.pas 794 2014-04-28 16:00:24Z QXu $
+ * $Id: dutil.remoting.transport.impl.WMTransportImpl.pas 798 2014-04-28 17:29:33Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -46,7 +46,7 @@ constructor TWMTransportImpl.Create;
 begin
   inherited;
 
-  FSenderThread := TWMSenderThread.Create(GetOutboundMessageQueue);
+  FSenderThread := TWMSenderThread.Create(FOutboundMessageQueue);
   FSenderThread.NameThreadForDebugging('dco.system.sender <wm>', FSenderThread.ThreadID);
   FReceiverThread := TMessageWindowThread.Create;
   FReceiverThread.NameThreadForDebugging('dco.system.receiver <wm>', FReceiverThread.ThreadID);
@@ -87,7 +87,7 @@ begin
     PChar(Message_.CopyDataStruct.lpData) // Copies data onto heap
   );
 
-  GetInboundMessageQueue.Put(Pdu);
+  FInboundMessageQueue.Put(Pdu);
   Result := True;
 
 {$IFDEF LOGGING}

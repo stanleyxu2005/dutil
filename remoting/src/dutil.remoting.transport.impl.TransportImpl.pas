@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.impl.TransportImpl.pas 788 2014-04-27 17:12:50Z QXu $
+ * $Id: dutil.remoting.transport.impl.TransportImpl.pas 798 2014-04-28 17:29:33Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -11,7 +11,6 @@ interface
 
 uses
   dutil.util.concurrent.BlockingQueue,
-  dutil.util.container.Queue,
   dutil.remoting.transport.Pdu,
   dutil.remoting.transport.Transport;
 
@@ -20,12 +19,12 @@ type
   /// it holds two threads for transmitting inbound and outbound messages. The messages will be stored in thread-safe
   /// blocking queues.</summary>
   TTransportImpl = class abstract(TInterfacedObject, ITransport)
-  private
+  protected
+    // Initially I plan to keep them private and expose IQueue in protected scope. However I cannot use `property` to
+    // case a generic class to a generic interface. But if I use functions to expose them, I have to do extra locking
+    // for the thread safety.
     FInboundMessageQueue: TBlockingQueue<TPdu>;
     FOutboundMessageQueue: TBlockingQueue<TPdu>;
-  protected
-    function GetInboundMessageQueue: IQueue<TPdu>;
-    function GetOutboundMessageQueue: IQueue<TPdu>;
   public
     constructor Create;
     destructor Destroy; override;
@@ -60,16 +59,6 @@ begin
   FInboundMessageQueue.Free;
 
   inherited;
-end;
-
-function TTransportImpl.GetInboundMessageQueue: IQueue<TPdu>;
-begin
-  Result := FInboundMessageQueue;
-end;
-
-function TTransportImpl.GetOutboundMessageQueue: IQueue<TPdu>;
-begin
-  Result := FOutboundMessageQueue;
 end;
 
 procedure TTransportImpl.ShutDown;
