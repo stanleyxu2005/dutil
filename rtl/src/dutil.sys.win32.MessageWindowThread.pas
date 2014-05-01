@@ -32,6 +32,7 @@ implementation
 constructor TMessageWindowThread.Create;
 begin
   inherited Create({CreateSuspended=}True);
+  NameThreadForDebugging(ClassName, ThreadID);
 
   FWindowHandle := AllocateHWnd(WindowProc);
   assert(FWindowHandle > 0);

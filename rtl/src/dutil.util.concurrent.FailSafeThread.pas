@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.FailSafeThread.pas 794 2014-04-28 16:00:24Z QXu $
+ * $Id: dutil.util.concurrent.FailSafeThread.pas 803 2014-04-30 15:32:50Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -38,6 +38,7 @@ begin
   assert(Assigned(Action));
 
   inherited Create({CreateSuspended=}True);
+  NameThreadForDebugging(ClassName, ThreadID);
 
   FAction := Action;
 end;
