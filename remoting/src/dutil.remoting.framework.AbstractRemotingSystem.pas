@@ -1,11 +1,11 @@
 (**
- * $Id: dutil.remoting.framework.RemotingSystem.pas 795 2014-04-28 16:30:49Z QXu $
+ * $Id: dutil.remoting.framework.AbstractRemotingSystem.pas 804 2014-04-30 15:33:25Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
 
-unit dutil.remoting.framework.RemotingSystem;
+unit dutil.remoting.framework.AbstractRemotingSystem;
 
 interface
 
@@ -23,7 +23,7 @@ type
   /// system serves as a thread, which reads PDU (protocol data units) from a transport resource continuously. A PDU
   /// will be dispatched to corresponding RPC object (if there is any) and will be handled in another thread, so that 
   /// the reading will not be blocked. Handles responses will be written back to the transport resource.</summary>
-  TRemotingSystem = class(TThread)
+  TAbstractRemotingSystem = class(TThread)
   private
     FLock: TCriticalSection;
     FSerializer: ISerializer;
@@ -37,6 +37,8 @@ type
     constructor Create;
     destructor Destroy; override;
   public
+    /// <summary>Returns the communication entry point of the remoting sytem</summary>
+    function GetUri: string;
     /// <summary>Adds a handler.</summary>
     /// <exception cref="EDuplicateElementException">Specified handler exists already.</exception>
     procedure Add(const Handler: IHandler);
@@ -57,19 +59,20 @@ uses
 {$ENDIF}
   System.SysUtils,
   dutil.core.Exception,
-  dutil.remoting.rpc.impl.JsonRPCSerializerImpl;
+  dutil.remoting.rpc.jsonrpc.SerializerImpl;
 
-constructor TRemotingSystem.Create;
+constructor TAbstractRemotingSystem.Create;
 begin
   inherited Create({CreateSuspended=}True);
+  NameThreadForDebugging(ClassName, ThreadID);
 
-  FSerializer := TJsonRPCSerializerImpl.Create; // This is currently the only one data serializer
-  assert(TJsonRPCSerializerImpl.InheritsFrom(TInterfacedObject));
+  FSerializer := TSerializerImpl.Create; // This is currently the only one data serializer
+  assert(TSerializerImpl.InheritsFrom(TInterfacedObject));
   FLock := TCriticalSection.Create;
   FHandlerLookup := TDictionary<string, IHandler>.Create;
 end;
 
-destructor TRemotingSystem.Destroy;
+destructor TAbstractRemotingSystem.Destroy;
 begin
   FLock.Acquire;
   try
@@ -83,7 +86,7 @@ begin
   inherited;
 end;
 
-procedure TRemotingSystem.Execute;
+procedure TAbstractRemotingSystem.Execute;
 var
   Pdu: TPdu;
   RPCObject: IHandler;
@@ -122,12 +125,17 @@ begin
   end;
 end;
 
-function TRemotingSystem.Filtered(const Pdu: TPdu): Boolean;
+function TAbstractRemotingSystem.Filtered(const Pdu: TPdu): Boolean;
 begin
   Result := False;
 end;
 
-procedure TRemotingSystem.Add(const Handler: IHandler);
+function TAbstractRemotingSystem.GetUri: string;
+begin
+  Result := GetTransport.GetUri;
+end;
+
+procedure TAbstractRemotingSystem.Add(const Handler: IHandler);
 begin
   assert(Handler <> nil);
 
@@ -142,7 +150,7 @@ begin
   end;
 end;
 
-procedure TRemotingSystem.Remove(const Id: string);
+procedure TAbstractRemotingSystem.Remove(const Id: string);
 begin
   if not Exists(Id) then
     Exit;
@@ -155,7 +163,7 @@ begin
   end;
 end;
 
-function TRemotingSystem.Exists(const Id: string): Boolean;
+function TAbstractRemotingSystem.Exists(const Id: string): Boolean;
 begin
   FLock.Acquire;
   try
@@ -165,7 +173,7 @@ begin
   end;
 end;
 
-function TRemotingSystem.Get(const Id: string): IHandler;
+function TAbstractRemotingSystem.Get(const Id: string): IHandler;
 begin
   if not Exists(Id) then
     Exit(nil);

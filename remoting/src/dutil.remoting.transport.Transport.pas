@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.Transport.pas 788 2014-04-27 17:12:50Z QXu $
+ * $Id: dutil.remoting.transport.Transport.pas 805 2014-05-01 04:23:28Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -16,7 +16,7 @@ type
   /// <summary>The interface defines the basic behaviors of a transport resource.</summary>
   ITransport = interface
     /// <summary>Informs the recipient to shut down.</summary>
-    procedure ShutDown;
+    procedure Shutdown;
     /// <summary>Sends an outbound message and returns immediately.</summary>
     procedure Write(const Pdu: TPdu);
     /// <summary>Sends an outbound message and waits for it is actually sent out.</summary>

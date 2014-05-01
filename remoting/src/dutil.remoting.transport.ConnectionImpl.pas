@@ -1,11 +1,11 @@
 (**
- * $Id: dutil.remoting.transport.impl.ConnectionImpl.pas 790 2014-04-27 18:01:48Z QXu $
+ * $Id: dutil.remoting.transport.ConnectionImpl.pas 800 2014-04-30 07:18:42Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
 
-unit dutil.remoting.transport.impl.ConnectionImpl;
+unit dutil.remoting.transport.ConnectionImpl;
 
 interface
 

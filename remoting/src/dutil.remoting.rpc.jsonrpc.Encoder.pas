@@ -1,11 +1,11 @@
 (**
- * $Id: dutil.remoting.rpc.impl.JsonRPCEncoder.pas 786 2014-04-27 15:44:17Z QXu $
+ * $Id: dutil.remoting.rpc.jsonrpc.Encoder.pas 800 2014-04-30 07:18:42Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
 
-unit dutil.remoting.rpc.impl.JsonRPCEncoder;
+unit dutil.remoting.rpc.jsonrpc.Encoder;
 
 interface
 
@@ -16,7 +16,7 @@ uses
 
 type
   /// <summary>This service class allows to encode JSON-RPC requests and responses.</summary>
-  TJsonRPCEncoder = class
+  TEncoder = class
 {$IFNDEF OMIT_JSONRPC_PROTOCOL_VERSION}
   private const
     VERSION = '2.0';
@@ -34,7 +34,7 @@ type
 
 implementation
 
-class function TJsonRPCEncoder.EncodeRequest(const Method: string; const Params: ISuperObject; const Id: TIdentifier): string;
+class function TEncoder.EncodeRequest(const Method: string; const Params: ISuperObject; const Id: TIdentifier): string;
 var
   Request: ISuperObject;
 begin
@@ -51,7 +51,7 @@ begin
   Result := Request.AsJson;
 end;
 
-class function TJsonRPCEncoder.EncodeNotification(const Method: string; const Params: ISuperObject): string;
+class function TEncoder.EncodeNotification(const Method: string; const Params: ISuperObject): string;
 var
   Notification: ISuperObject;
 begin
@@ -66,7 +66,7 @@ begin
   Result := Notification.AsJson;
 end;
 
-class function TJsonRPCEncoder.EncodeResponse(const Result_: ISuperObject; const Id: TIdentifier): string;
+class function TEncoder.EncodeResponse(const Result_: ISuperObject; const Id: TIdentifier): string;
 var
   Response: ISuperObject;
 begin
@@ -79,7 +79,7 @@ begin
   Result := Response.AsJson;
 end;
 
-class function TJsonRPCEncoder.EncodeResponse(const Error: TErrorObject; const Id: TIdentifier): string;
+class function TEncoder.EncodeResponse(const Error: TErrorObject; const Id: TIdentifier): string;
 var
   Response: ISuperObject;
 begin
@@ -92,7 +92,7 @@ begin
   Result := Response.AsJson;
 end;
 
-class function TJsonRPCEncoder.EncodeProtocolVersion: ISuperObject;
+class function TEncoder.EncodeProtocolVersion: ISuperObject;
 begin
   Result := SO;
 {$IFNDEF OMIT_JSONRPC_PROTOCOL_VERSION}
@@ -100,7 +100,7 @@ begin
 {$ENDIF}
 end;
 
-class function TJsonRPCEncoder.Encode(const Error: TErrorObject): ISuperObject;
+class function TEncoder.Encode(const Error: TErrorObject): ISuperObject;
 begin
   Result := SO;
   Result.I['code'] := Error.Code;

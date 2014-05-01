@@ -1,11 +1,11 @@
 (**
- * $Id: dutil.remoting.framework.impl.RPCObjectImpl.pas 795 2014-04-28 16:30:49Z QXu $
+ * $Id: dutil.remoting.framework.RPCObjectImpl.pas 800 2014-04-30 07:18:42Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
 
-unit dutil.remoting.framework.impl.RPCObjectImpl;
+unit dutil.remoting.framework.RPCObjectImpl;
 
 interface
 
@@ -92,7 +92,6 @@ begin
   assert(Serializer <> nil);
   inherited Create;
 
-  FHandlingQueue := TBlockingQueue<string>.Create;
   FConnection := Connection;
   FSerializer := Serializer;
   FBacklog := TBacklog.Create;
@@ -101,6 +100,7 @@ begin
   FNotificationHandlerLookup := TDictionary<string, THandleNotificationMethod>.Create;
   FRequestHandlerLookup := TDictionary<string, THandleRequestMethod>.Create;
 
+  FHandlingQueue := TBlockingQueue<string>.Create;
   FHandlingThread := TThreadedConsumer<string>.Create(FHandlingQueue, Handle);
   FHandlingThread.NameThreadForDebugging(Format('dco.rpcobj.handler <%s>', [GetId]), FHandlingThread.ThreadID);
   FHandlingThread.Start;
@@ -109,6 +109,7 @@ end;
 destructor TRPCObjectImpl.Destroy;
 begin
   FHandlingThread.Free;
+  // Accept no more request or notifications
 
   FLock.Acquire;
   try
@@ -131,32 +132,32 @@ end;
 
 procedure TRPCObjectImpl.Write(const Message_: string);
 begin
+  // We have a background thread (per RPC object) to handle pushed messages. In order to ensure the execution order,
+  // messages will be handled sequentially.
   FHandlingQueue.Put(Message_);
 end;
 
 procedure TRPCObjectImpl.Handle(const Message_: string);
-var
-  Success: Boolean;
 begin
-  Success := False;
-  try
-    FSerializer.Decode(Message_, {Handler=}Self);
-    Success := True;
-  except
-    on E: ERPCException do
-    begin
-      if E.Id.Valid then
-        FConnection.Write(FSerializer.EncodeResponse(E.Error, E.Id));
-    end
-    else ;
-  end;
+  assert(GetCurrentThreadId = FHandlingThread.ThreadID);
 
-  if not Success then
-  begin
-    {$IFDEF LOGGING}
-    TLogLogger.GetLogger(ClassName).Error(Format('%s Stop receiving further messages', [GetId]));
-    {$ENDIF}
-    FConnection.Write(''); // poison pill
+  try
+    FSerializer.Decode(Message_, {Handler=}Self); // @throws ERPCException: In case of decoding specific error
+  except
+    on E: Exception do
+    begin
+      if E is ERPCException then
+      begin
+        if ERPCException(E).Id.Valid then
+          // This will be the last response message
+          FConnection.Write(FSerializer.EncodeResponse(ERPCException(E).Error, ERPCException(E).Id));
+      end;
+      // In case of any error, the connection will be terminated.
+      {$IFDEF LOGGING}
+      TLogLogger.GetLogger(ClassName).Error(Format('%s Stop receiving further messages: %s', [GetId, E.ToString]));
+      {$ENDIF}
+      FConnection.Write(''); // poison pill
+    end;
   end;
 end;
 

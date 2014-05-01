@@ -1,11 +1,11 @@
 (**
- * $Id: dutil.remoting.rpc.impl.JsonRPCSerializerImpl.pas 786 2014-04-27 15:44:17Z QXu $
+ * $Id: dutil.remoting.rpc.jsonrpc.SerializerImpl.pas 800 2014-04-30 07:18:42Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
 
-unit dutil.remoting.rpc.impl.JsonRPCSerializerImpl;
+unit dutil.remoting.rpc.jsonrpc.SerializerImpl;
 
 interface
 
@@ -18,7 +18,7 @@ uses
 
 type
   /// <summary>This class implement a JSON-RPC data serializer.</summary>
-  TJsonRPCSerializerImpl = class(TInterfacedObject, ISerializer)
+  TSerializerImpl = class(TInterfacedObject, ISerializer)
     /// <summary>Encodes a request.</summary>
     function EncodeRequest(const Method: string; const Params: ISuperObject; const Id: TIdentifier): string;
     /// <summary>Encodes a notification.</summary>
@@ -35,33 +35,33 @@ type
 implementation
 
 uses
-  dutil.remoting.rpc.impl.JsonRPCEncoder,
-  dutil.remoting.rpc.impl.JsonRPCDecoder;
+  dutil.remoting.rpc.jsonrpc.Encoder,
+  dutil.remoting.rpc.jsonrpc.Decoder;
 
-function TJsonRPCSerializerImpl.EncodeRequest(const Method: string; const Params: ISuperObject; 
+function TSerializerImpl.EncodeRequest(const Method: string; const Params: ISuperObject; 
   const Id: TIdentifier): string;
 begin
-  Result := TJsonRPCEncoder.EncodeRequest(Method, Params, Id);
+  Result := TEncoder.EncodeRequest(Method, Params, Id);
 end;
 
-function TJsonRPCSerializerImpl.EncodeNotification(const Method: string; const Params: ISuperObject): string;
+function TSerializerImpl.EncodeNotification(const Method: string; const Params: ISuperObject): string;
 begin
-  Result := TJsonRPCEncoder.EncodeNotification(Method, Params);
+  Result := TEncoder.EncodeNotification(Method, Params);
 end;
 
-function TJsonRPCSerializerImpl.EncodeResponse(const Result_: ISuperObject; const Id: TIdentifier): string;
+function TSerializerImpl.EncodeResponse(const Result_: ISuperObject; const Id: TIdentifier): string;
 begin
-  Result := TJsonRPCEncoder.EncodeResponse(Result_, Id);
+  Result := TEncoder.EncodeResponse(Result_, Id);
 end;
 
-function TJsonRPCSerializerImpl.EncodeResponse(const Error: TErrorObject; const Id: TIdentifier): string;
+function TSerializerImpl.EncodeResponse(const Error: TErrorObject; const Id: TIdentifier): string;
 begin
-  Result := TJsonRPCEncoder.EncodeResponse(Error, Id);
+  Result := TEncoder.EncodeResponse(Error, Id);
 end;
 
-procedure TJsonRPCSerializerImpl.Decode(const Message_: string; const Handler: IRPCHandler);
+procedure TSerializerImpl.Decode(const Message_: string; const Handler: IRPCHandler);
 begin
-  TJsonRPCDecoder.Decode(Message_, Handler);
+  TDecoder.Decode(Message_, Handler);
 end;
 
 end.

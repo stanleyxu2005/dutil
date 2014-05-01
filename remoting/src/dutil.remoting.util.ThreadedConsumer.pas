@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.util.ThreadedConsumer.pas 794 2014-04-28 16:00:24Z QXu $
+ * $Id: dutil.remoting.util.ThreadedConsumer.pas 803 2014-04-30 15:32:50Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -11,7 +11,7 @@ interface
 
 uses
   System.Classes,
-  dutil.util.concurrent.BlockingQueue;
+  dutil.util.container.Queue;
 
 type
   /// <summary>The consumer class keeps to *consume* the elements of a blocking queue in a first-in-first-out manner. A
@@ -21,12 +21,12 @@ type
   private type
     TThreadedMethod = procedure(const Elem: T)of object;
   private
-    FElems: TBlockingQueue<T>;
+    FElems: IQueue<T>;
     FHandleMethod: TThreadedMethod;
   protected
     procedure Execute; override;
   public
-    constructor Create(Elems: TBlockingQueue<T>; const HandleMethod: TThreadedMethod);
+    constructor Create(const Elems: IQueue<T>; const HandleMethod: TThreadedMethod);
     destructor Destroy; override;
   end;
 
@@ -35,11 +35,12 @@ implementation
 uses
   System.Generics.Defaults;
 
-constructor TThreadedConsumer<T>.Create(Elems: TBlockingQueue<T>; const HandleMethod: TThreadedMethod);
+constructor TThreadedConsumer<T>.Create(const Elems: IQueue<T>; const HandleMethod: TThreadedMethod);
 begin
   assert(Elems <> nil);
   assert(Assigned(HandleMethod));
   inherited Create({CreateSuspended=}True);
+  NameThreadForDebugging(ClassName, ThreadID);
 
   FElems := Elems;
   FHandleMethod := HandleMethod;
@@ -47,6 +48,7 @@ end;
 
 destructor TThreadedConsumer<T>.Destroy;
 begin
+  Terminate;
   FElems.Put(Default(T)); // Put a poison pill
   WaitFor;
 
@@ -62,13 +64,15 @@ var
   Elem: T;
 begin
   Comparer := TEqualityComparer<T>.Default;
+
   Elem := FElems.Take;
   while not Comparer.Equals(Elem, Default(T)) do
   begin
-    try
-      FHandleMethod(Elem);
-    except
-    end;
+    if not Terminated then
+      try
+        FHandleMethod(Elem);
+      except
+      end;
     Elem := FElems.Take;
   end;
 end;

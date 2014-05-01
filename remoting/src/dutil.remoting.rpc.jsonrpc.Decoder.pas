@@ -1,11 +1,11 @@
 (**
- * $Id: dutil.remoting.rpc.impl.JsonRPCDecoder.pas 786 2014-04-27 15:44:17Z QXu $
+ * $Id: dutil.remoting.rpc.jsonrpc.Decoder.pas 800 2014-04-30 07:18:42Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
 
-unit dutil.remoting.rpc.impl.JsonRPCDecoder;
+unit dutil.remoting.rpc.jsonrpc.Decoder;
 
 interface
 
@@ -18,7 +18,7 @@ uses
 type
   /// <summary>This service class allows to decode JSON-RPC requests and responses, which are forwarded to the
   /// specified handler.</summary>
-  TJsonRPCDecoder = class
+  TDecoder = class
 {$IFNDEF OMIT_JSONRPC_PROTOCOL_VERSION}
   private const
     VERSION = '2.0';
@@ -54,7 +54,7 @@ uses
   dutil.text.json.Validation,
   dutil.remoting.rpc.RPCException;
 
-class procedure TJsonRPCDecoder.Decode(const Message_: string; const Handler: IRPCHandler);
+class procedure TDecoder.Decode(const Message_: string; const Handler: IRPCHandler);
 var
   Id: TIdentifier;
   Composite: ISuperObject;
@@ -98,7 +98,7 @@ begin
   end;
 end;
 
-class function TJsonRPCDecoder.ValidateId(const Composite: ISuperObject): TIdentifier;
+class function TDecoder.ValidateId(const Composite: ISuperObject): TIdentifier;
 var
   Value: ISuperObject;
 begin
@@ -114,7 +114,7 @@ begin
 end;
 
 {$IFNDEF OMIT_JSONRPC_PROTOCOL_VERSION}
-class function TJsonRPCDecoder.ValidateProtocolVersion(const Composite: ISuperObject): string;
+class function TDecoder.ValidateProtocolVersion(const Composite: ISuperObject): string;
 begin
   assert(Composite <> nil);
 
@@ -124,7 +124,7 @@ begin
 end;
 {$ENDIF}
 
-class function TJsonRPCDecoder.ValidateType(const Composite: ISuperObject): TMessageType;
+class function TDecoder.ValidateType(const Composite: ISuperObject): TMessageType;
 var
   Types: SmallInt;
   Id: ISuperObject;
@@ -163,7 +163,7 @@ begin
     raise EJsonException.Create('"id" value required for response');
 end;
 
-class function TJsonRPCDecoder.ValidateParams(const Composite: ISuperObject): ISuperObject;
+class function TDecoder.ValidateParams(const Composite: ISuperObject): ISuperObject;
 begin
   assert(Composite <> nil);
 
@@ -175,7 +175,7 @@ begin
     raise EJsonException.Create('"params" value must be array or object');
 end;
 
-class function TJsonRPCDecoder.ValidateError(const Composite: ISuperObject): TErrorObject;
+class function TDecoder.ValidateError(const Composite: ISuperObject): TErrorObject;
 var
   ErrorObject: ISuperObject;
   Code: Integer;
