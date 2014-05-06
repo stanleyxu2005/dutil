@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.framework.RPCObjectImpl.pas 800 2014-04-30 07:18:42Z QXu $
+ * $Id: dutil.remoting.framework.RPCObjectImpl.pas 807 2014-05-06 13:50:17Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -69,6 +69,8 @@ type
     function ExecuteAwait(Command: TCommand; const Timeout: TTimeSpan): ISuperObject; overload;
     /// <summary>Sends a notification and then returns immediately without any delivery garantee.</summary>
     procedure Notify(Command: TCommand);
+    /// <summary>Sends a ping as heartbeat.</summary>
+    procedure Ping;
   end;
 
 implementation
@@ -85,6 +87,9 @@ uses
   dutil.core.Exception,
   dutil.util.concurrent.Result,
   dutil.remoting.rpc.RPCException;
+
+const
+  RPC_NOTIFICATION_PING = 'ping';
 
 constructor TRPCObjectImpl.Create(const Connection: IConnection; const Serializer: ISerializer);
 begin
@@ -299,7 +304,8 @@ begin
 
   FLock.Acquire;
   try
-    if FNotificationHandlerLookup.ContainsKey(Command.Method_) then
+    if (Command.Method_ = RPC_NOTIFICATION_PING) or
+      FNotificationHandlerLookup.ContainsKey(Command.Method_) then
       raise EDuplicateElementException.Create(
         Format('Notification handler has been registered already: %s', [Command.Method_]));
 
@@ -395,6 +401,14 @@ begin
   assert((Command.Params_ = nil) or (Command.Params_.DataType in [TSuperType.stArray, TSuperType.stObject]));
 
   Message_ := FSerializer.EncodeNotification(Command.Method_, Command.Params_);
+  FConnection.Write(Message_);
+end;
+
+procedure TRPCObjectImpl.Ping;
+var
+  Message_: string;
+begin
+  Message_ := FSerializer.EncodeNotification(RPC_NOTIFICATION_PING, nil);
   FConnection.Write(Message_);
 end;
 
