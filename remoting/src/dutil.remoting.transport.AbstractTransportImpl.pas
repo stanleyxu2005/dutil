@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.AbstractTransportImpl.pas 805 2014-05-01 04:23:28Z QXu $
+ * $Id: dutil.remoting.transport.AbstractTransportImpl.pas 811 2014-05-08 12:52:56Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -28,20 +28,19 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    /// <summary>Informs the recipient to shut down.</summary>
-    procedure Shutdown;
-    /// <summary>Sends an outbound message and returns immediately.</summary>
-    procedure Write(const Pdu: TPdu);
-    /// <summary>Sends an outbound message and waits for it is actually sent out.</summary>
-    function WriteEnsured(const Pdu: TPdu): Boolean; virtual; abstract;
-    /// <summary>Blocks until an inbound message is retrieved.</summary>
-    function Read: TPdu;
     /// <summary>Returns the identifier of the transport resource.</summary>
     function GetUri: string; virtual; abstract;
+    /// <summary>Blocks until an inbound message is retrieved.</summary>
+    function Read: TPdu;
+    /// <summary>Sends an outbound message and waits for it is actually sent out.</summary>
+    function WriteEnsured(const Pdu: TPdu): Boolean; virtual; abstract;
+    /// <summary>Sends an outbound message and returns immediately.</summary>
+    procedure Write(const Pdu: TPdu);
+    /// <summary>Pushs an inbound message to the recipient.</summary>
+    procedure ForceRead(const Pdu: TPdu);
   end;
 
 implementation
-
 
 constructor TAbstractTransportImpl.Create;
 begin
@@ -53,28 +52,26 @@ end;
 
 destructor TAbstractTransportImpl.Destroy;
 begin
-  Shutdown; // TODO: How to make sure all messages have been handled?
-
   FOutboundQueue.Free;
   FInboundQueue.Free;
 
   inherited;
 end;
 
-procedure TAbstractTransportImpl.Shutdown;
+procedure TAbstractTransportImpl.ForceRead(const Pdu: TPdu);
 begin
-  // Shut down gracefully by sending a poison pill to corresponding handler.
-  FInboundQueue.Put(POISON_PILL);
-end;
-
-procedure TAbstractTransportImpl.Write(const Pdu: TPdu);
-begin
-  FOutboundQueue.Put(Pdu);
+  // Usually the pdu is a poison pill to shut down gracefully to corresponding data reader.
+  FInboundQueue.Put(Pdu);
 end;
 
 function TAbstractTransportImpl.Read: TPdu;
 begin
   Result := FInboundQueue.Take;
+end;
+
+procedure TAbstractTransportImpl.Write(const Pdu: TPdu);
+begin
+  FOutboundQueue.Put(Pdu);
 end;
 
 end.

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.transport.wm.TransportImpl.pas 801 2014-04-30 07:56:32Z QXu $
+ * $Id: dutil.remoting.transport.wm.TransportImpl.pas 813 2014-05-08 15:08:01Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -44,7 +44,40 @@ uses
   Log4D,
 {$ENDIF}
   System.SysUtils,
-  dutil.remoting.transport.wm.WMUri;
+  dutil.remoting.transport.Uri;
+
+type
+  TWMUri = record
+  private
+    FMessageWindow: HWND;
+    FId: Cardinal;
+  public
+    property MessageWindow: HWND read FMessageWindow;
+    property Id: Cardinal read FId;
+  public
+    constructor Create(MessageWindow: HWND; Id: Cardinal);
+    function ToString: string;
+    class function FromUri(const S: string): TWMUri; static;
+  end;
+
+constructor TWMUri.Create(MessageWindow: HWND; Id: Cardinal);
+begin
+  FMessageWindow := MessageWindow;
+  FId := Id;
+end;
+
+function TWMUri.ToString: string;
+begin
+  Result := TUri.Create(Format('%d', [FMessageWindow]), FId).ToString;
+end;
+
+class function TWMUri.FromUri(const S: string): TWMUri;
+var
+  Uri: TUri;
+begin
+  Uri := TUri.FromString(S);
+  Result := TWMUri.Create(StrToInt(Uri.Domain), Uri.Id);
+end;
 
 constructor TTransportImpl.Create;
 begin
@@ -79,17 +112,19 @@ end;
 
 function TTransportImpl.MessageTaken(const Message_: TWMCopyData): Boolean;
 var
-  Id: Word;
-  Secret: Word;
+  Id: Cardinal;
   Pdu: TPdu;
 begin
-  Id := LoWord(Message_.CopyDataStruct.dwData);
-  Secret := HiWord(Message_.CopyDataStruct.dwData);
-  Pdu := TPdu.Create(
-    TWMUri.Create(LocalWindow, Id, Secret).ToString,
-    TWMUri.Create(Message_.From, Id, Secret).ToString,
-    PChar(Message_.CopyDataStruct.lpData) // Copies data onto heap
-  );
+  Id := Message_.CopyDataStruct.dwData;
+  try
+    Pdu := TPdu.Create(
+      TWMUri.Create(LocalWindow, Id).ToString,
+      TWMUri.Create(Message_.From, Id).ToString,
+      PChar(Message_.CopyDataStruct.lpData) // Copies data onto heap
+    );
+  except
+    Exit(False); // Unexpected message
+  end;
 
   FInboundQueue.Put(Pdu);
   Result := True;
@@ -112,7 +147,7 @@ end;
 
 function TTransportImpl.GetUri: string;
 begin
-  Result := Format('%s%d', [TWMUri.WM_PROTOCOL, LocalWindow]);
+  Result := IntToStr(LocalWindow);
 end;
 
 procedure TTransportImpl.SendMessage(const Pdu: TPdu);
@@ -127,8 +162,8 @@ var
   CopyData: CopyDataStruct;
 begin
   try
-    Recipient := TWMUri.FromString(Pdu.Recipient);
-    Sender := TWMUri.FromString(Pdu.Sender);
+    Recipient := TWMUri.FromUri(Pdu.Recipient);
+    Sender := TWMUri.FromUri(Pdu.Sender);
   except
     on E: Exception do
     begin
@@ -138,7 +173,7 @@ begin
       Exit(False);
     end;
   end;
-  if (Recipient.Id <> Sender.Id) or (Recipient.Secret <> Sender.Secret) then
+  if Recipient.Id <> Sender.Id then
   begin
     {$IFDEF LOGGING}
     TLogLogger.GetLogger(ClassName).Error(
@@ -148,13 +183,13 @@ begin
     Exit(False);
   end;
 
-  if not IsWindow(Recipient.Window) then
+  if not IsWindow(Recipient.MessageWindow) then
     Exit(False);
 
-  CopyData.dwData := MakeLong({LoWord=}Recipient.Id, {HiWord=}Recipient.Secret);
+  CopyData.dwData := Recipient.Id;
   CopyData.lpData := PChar(Pdu.Message_);
   CopyData.cbData := (Length(Pdu.Message_) + 1) * StringElementSize(Pdu.Message_);
-  Winapi.Windows.SendMessage(Recipient.Window, WM_COPYDATA, WPARAM(Sender.Window), LPARAM(@CopyData));
+  Winapi.Windows.SendMessage(Recipient.MessageWindow, WM_COPYDATA, WPARAM(Sender.MessageWindow), LPARAM(@CopyData));
   Result := True;
 
 {$IFDEF LOGGING}

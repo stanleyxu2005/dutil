@@ -4,9 +4,11 @@ interface
 
 uses
   System.Classes,
+  Vcl.Controls,
+  Vcl.StdCtrls,
   Vcl.Forms,
-  dutil.remoting.framework.wm.RemotingSystem,
-  remote.model.WindowOrigin, Vcl.Controls, Vcl.StdCtrls;
+  dutil.remoting.framework.RemotingSystem,
+  remote.model.WindowOrigin;
 
 type
   TForm2 = class(TForm)
@@ -35,11 +37,12 @@ implementation
 
 uses
   System.SysUtils,
+  dutil.remoting.transport.np.TransportImpl,
   dutil.remoting.framework.RPCObjectImpl;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  FRemotingSystem := TRemotingSystem.Create;
+  FRemotingSystem := TRemotingSystem.Create(TTransportImpl.Create('form2'));
   FRemotingSystem.Start;
   SetupCommunication;
 end;
@@ -68,7 +71,6 @@ end;
 
 procedure TForm2.SetupCommunication;
 const
-  SECRET = 0;
   PROCESS_UUID = 'remote1';
 var
   RemoteUri: string;
@@ -76,7 +78,7 @@ var
 begin
   // Create a remote object
   RemoteUri := ParamStr(2);
-  RPCObject := FRemotingSystem.CreateAndAdd(SECRET, RemoteUri);
+  RPCObject := FRemotingSystem.CreateAndAdd(RemoteUri);
   assert(RPCObject <> nil);
   RPCObject.Ping;
 

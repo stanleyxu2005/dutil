@@ -3,11 +3,13 @@ unit ControllerProcess;
 interface
 
 uses
+  System.Classes,
+  Vcl.Controls,
   Vcl.Forms,
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
-  dutil.remoting.framework.wm.RemotingSystem,
-  remote.model.WindowHost, System.Classes, Vcl.Controls;
+  dutil.remoting.framework.RemotingSystem,
+  remote.model.WindowHost;
 
 type
   TForm1 = class(TForm)
@@ -26,6 +28,7 @@ type
     procedure ConfigureLogger;
     procedure NotifyPositionChanged(X, Y: Integer);
     procedure NotifySizeChanged(NewWidth, NewHeight: Cardinal);
+    procedure NotifySystemTime(NewTime: TDateTime);
   end;
 
 var
@@ -40,11 +43,11 @@ uses
   System.DateUtils,
   System.SysUtils,
   dutil.sys.win32.Process,
+  dutil.remoting.transport.np.TransportImpl,
   dutil.remoting.framework.RPCObjectImpl;
 
 procedure TForm1.SetupCommunication;
 const
-  SECRET = 0;
   PROCESS_UUID = 'remote1';
 var
   LocalUri: string;
@@ -52,7 +55,7 @@ var
   RPCObject: TRPCObjectImpl;
 begin
   // Create a remote object
-  LocalUri := FRemotingSystem.ExpectHandshake(SECRET);
+  LocalUri := FRemotingSystem.ExpectHandshake;
   TProcess.Folk(Application.ExeName, Format('%s %s', [PROCESS_UUID, LocalUri]));
   RPCObject := nil;
   StartTime := Now;
@@ -69,6 +72,7 @@ begin
   FDemoObjectHost := TDemoObjectHost.Create(RPCObject);
   FDemoObjectHost.OnWindowSizeChanged := NotifySizeChanged;
   FDemoObjectHost.OnWindowPositionChanged := NotifyPositionChanged;
+  FDemoObjectHost.OnSystemTimeNotified := NotifySystemTime;
 end;
 
 procedure TForm1.ConfigureLogger;
@@ -103,7 +107,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   TThread.NameThreadForDebugging('ui');
   ConfigureLogger;
-  FRemotingSystem := TRemotingSystem.Create;
+  FRemotingSystem := TRemotingSystem.Create(TTransportImpl.Create('form1'));
   FRemotingSystem.Start;
   SetupCommunication;
 end;
@@ -129,6 +133,11 @@ end;
 procedure TForm1.NotifySizeChanged(NewWidth, NewHeight: Cardinal);
 begin
   LabeledEdit2.Text := Format('%d, %d', [NewWidth, NewHeight]);
+end;
+
+procedure TForm1.NotifySystemTime(NewTime: TDateTime);
+begin
+  //Caption := DateTimeToStr(NewTime);
 end;
 
 end.

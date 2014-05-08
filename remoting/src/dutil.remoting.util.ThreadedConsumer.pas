@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.util.ThreadedConsumer.pas 803 2014-04-30 15:32:50Z QXu $
+ * $Id: dutil.remoting.util.ThreadedConsumer.pas 811 2014-05-08 12:52:56Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -14,9 +14,7 @@ uses
   dutil.util.container.Queue;
 
 type
-  /// <summary>The consumer class keeps to *consume* the elements of a blocking queue in a first-in-first-out manner. A
-  /// common way to convince a producer-consumer service to shut down is with a "poison pill": a recognizable object
-  /// placed on the queue that means "when you get this, stop."</summary>
+  /// <summary>The consumer class keeps to *consume* the elements of a queue in a first-in-first-out manner.</summary>
   TThreadedConsumer<T> = class(TThread)
   private type
     TThreadedMethod = procedure(const Elem: T)of object;

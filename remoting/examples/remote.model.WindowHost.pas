@@ -54,6 +54,7 @@ begin
   begin
     AddNotificationHandler(TNotifySizeChanged, DecodeNotfiySizeChanged);
     AddNotificationHandler(TNotifyPositionChanged, DecodeNotfiyPositionChanged);
+    AddNotificationHandler(TNotifySystemTime, DecodeNotfiySystemTime);
   end;
 end;
 
@@ -115,7 +116,6 @@ begin
           FOnSystemTimeNotified(Notification.SystemTime);
         end);
     end;
-    TLogLogger.GetLogger('perf').Info(DateTimeToStr(Notification.SystemTime));
   finally
     Notification.Free;
   end;
