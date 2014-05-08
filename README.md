@@ -36,11 +36,10 @@ Now the dutil library is ready to use and have fun.
 
 Here are some development goals to be reached in 2014.
 
-1. Introduce a remoting framework (codename 'dco'), which uses JSON-RPC 2.0 as
-   data serializer and uses Windows messaging and named pipe as transport
-   protocol.
-2. Introduce more native looking VCL components from my previous project 
+1. Introduce more native looking VCL components from my previous project 
    https://code.google.com/p/native-look-vcl/
-3. Consider use 'x-superobject' instead of 'superobject'. As 'superobject' does 
+2. Consider use 'x-superobject' instead of 'superobject'. As 'superobject' does 
    not support Andriod and iOS platforms. 
-4. There is no plan to convert Vcl framework to FMX framework.
+3. There is no plan to convert Vcl framework to FMX framework.
+
+Welcome you to create tickets on github or mail me for feature requests.
