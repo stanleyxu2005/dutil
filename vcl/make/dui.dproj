@@ -89,6 +89,7 @@
         <DCC_DebugInformation>false</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <DCC_Description>DUtil: dui</DCC_Description>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
     <ItemGroup>
@@ -103,9 +104,10 @@
         <DCCReference Include="..\src\dui.control.button.SkinButtonImages.pas"/>
         <DCCReference Include="..\src\dui.control.ComponentRegister.pas"/>
         <DCCReference Include="..\src\dui.control.menu.Util.pas"/>
+        <DCCReference Include="..\src\dui.imaging.Convert.pas"/>
         <DCCReference Include="..\src\dui.metrics.MenuExtent.pas"/>
         <DCCReference Include="..\src\dui.metrics.TextExtent.pas"/>
-        <DCCReference Include="..\src\dui.sys.ScreenShot.pas"/>
+        <DCCReference Include="..\src\dui.sys.Screenshot.pas"/>
         <DCCReference Include="..\src\dui.sys.TaskBarEffects.pas"/>
         <DCCReference Include="..\src\dui.sys.UserInput.pas"/>
         <DCCReference Include="..\src\dui.text.L10n.pas"/>
@@ -158,8 +160,8 @@
                     <Source Name="MainSource">dui.dpk</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k180.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment/>

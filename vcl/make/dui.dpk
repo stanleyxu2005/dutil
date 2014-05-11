@@ -25,6 +25,7 @@ package dui;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'DUtil: dui'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -38,9 +39,10 @@ contains
   dui.control.button.SkinButtonImages in '..\src\dui.control.button.SkinButtonImages.pas',
   dui.control.ComponentRegister in '..\src\dui.control.ComponentRegister.pas',
   dui.control.menu.Util in '..\src\dui.control.menu.Util.pas',
+  dui.imaging.Convert in '..\src\dui.imaging.Convert.pas',
   dui.metrics.MenuExtent in '..\src\dui.metrics.MenuExtent.pas',
   dui.metrics.TextExtent in '..\src\dui.metrics.TextExtent.pas',
-  dui.sys.ScreenShot in '..\src\dui.sys.ScreenShot.pas',
+  dui.sys.Screenshot in '..\src\dui.sys.Screenshot.pas',
   dui.sys.TaskBarEffects in '..\src\dui.sys.TaskBarEffects.pas',
   dui.sys.UserInput in '..\src\dui.sys.UserInput.pas',
   dui.text.L10n in '..\src\dui.text.L10n.pas',
