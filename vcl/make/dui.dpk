@@ -46,6 +46,7 @@ contains
   dui.sys.TaskBarEffects in '..\src\dui.sys.TaskBarEffects.pas',
   dui.sys.UserInput in '..\src\dui.sys.UserInput.pas',
   dui.text.L10n in '..\src\dui.text.L10n.pas',
-  dui.sys.InstanceManager in '..\src\dui.sys.InstanceManager.pas';
+  dui.sys.InstanceManager in '..\src\dui.sys.InstanceManager.pas',
+  dui.sys.RemovableDeviceNotifier in '..\src\dui.sys.RemovableDeviceNotifier.pas';
 
 end.

@@ -112,6 +112,7 @@
         <DCCReference Include="..\src\dui.sys.UserInput.pas"/>
         <DCCReference Include="..\src\dui.text.L10n.pas"/>
         <DCCReference Include="..\src\dui.sys.InstanceManager.pas"/>
+        <DCCReference Include="..\src\dui.sys.RemovableDeviceNotifier.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
