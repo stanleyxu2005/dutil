@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.rpc.jsonrpc.Decoder.pas 800 2014-04-30 07:18:42Z QXu $
+ * $Id: dutil.remoting.rpc.jsonrpc.Decoder.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -87,7 +87,7 @@ begin
       TMessageType.ERROR:
         Handler.HandleResponse(ValidateError(Composite), Id);
     else
-      raise EProgrammerNotFound.Create(Format('Unexpected message type: %s', [Message_]));
+      raise ENotImplemented.CreateFmt('Unexpected message type: %s', [Message_]);
     end;
   except
     on E: EJsonException do
@@ -120,7 +120,7 @@ begin
 
   Result := TValidation.RequireStrMember(Composite, 'jsonrpc');
   if Result <> VERSION then
-    raise EJsonException.Create(Format('protocol version must be "%s"', [VERSION]));
+    raise EJsonException.CreateFmt('protocol version must be "%s"', [VERSION]);
 end;
 {$ENDIF}
 
@@ -188,7 +188,7 @@ begin
   if ErrorObject = nil then
     raise EJsonException.Create('"error" value not found');
   if ErrorObject.DataType <> TSuperType.stObject then
-    raise EJsonException.Create(Format('object required but got %s', [ErrorObject.AsJSon]));
+    raise EJsonException.CreateFmt('object required but got %s', [ErrorObject.AsJSon]);
 
   Code := TValidation.RequireIntMember(ErrorObject, 'code');
   Message_ := TValidation.RequireStrMember(ErrorObject, 'message');

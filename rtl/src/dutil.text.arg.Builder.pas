@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.arg.Builder.pas 771 2014-04-20 07:20:06Z QXu $
+ * $Id: dutil.text.arg.Builder.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -79,7 +79,7 @@ begin
   assert(Arg.Name <> '');
 
   if FArgs.ContainsKey(Arg.Name) then
-    raise EDuplicateElementException.Create(Format('Key ''%s'' exists already', [Arg.Name]));
+    raise EDuplicateElementException.CreateFmt('Key ''%s'' exists already', [Arg.Name]);
 
   FArgs.Add(Arg.Name, Arg);
 end;
@@ -122,7 +122,7 @@ begin
         on E: EParseError do
         begin
           Result := nil;
-          raise EParseError.Create(Format('Failed to parse argument: %s', [Piece]));
+          raise EParseError.CreateFmt('Failed to parse argument: %s', [Piece]);
         end;
       end;
     end;

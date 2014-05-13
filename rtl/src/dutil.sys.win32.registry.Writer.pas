@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.registry.Writer.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.sys.win32.registry.Writer.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -38,16 +38,13 @@ type
 
 implementation
 
-uses
-  System.SysUtils;
-
 class procedure TWriter.RequireOpenKey(Reg: TRegistry; const Key: string; RootKey: HKEY);
 begin
   assert(Reg <> nil);
 
   Reg.RootKey := RootKey;
   if not Reg.OpenKey(Key, {CanCreate=}True) then
-    raise ERegistryException.Create(Format('Failed to open key: %s', [Key]));
+    raise ERegistryException.CreateFmt('Failed to open key: %s', [Key]);
 end;
 
 class procedure TWriter.WriteStr(const Key: string; const Name: string; const Value: string;

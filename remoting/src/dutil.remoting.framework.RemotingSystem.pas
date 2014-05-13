@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.framework.RemotingSystem.pas 813 2014-05-08 15:08:01Z QXu $
+ * $Id: dutil.remoting.framework.RemotingSystem.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -167,7 +167,7 @@ begin
   assert(Handler <> nil);
 
   if Exists(Handler.GetId) then
-    raise EDuplicateElementException.Create(Format('Duplicated handler ''%s''', [Handler.GetId]));
+    raise EDuplicateElementException.CreateFmt('Duplicated handler ''%s''', [Handler.GetId]);
 
   FLock.Acquire;
   try

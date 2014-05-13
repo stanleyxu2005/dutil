@@ -1,5 +1,5 @@
 (**
- * $Id: dui.sys.TaskBarEffects.pas 717 2013-11-16 17:20:31Z QXu $
+ * $Id: dui.sys.TaskBarEffects.pas 819 2014-05-11 06:45:16Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.

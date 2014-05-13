@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.registry.Validation.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.sys.win32.registry.Validation.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -30,9 +30,6 @@ type
   end;
 
 implementation
-
-uses
-  System.SysUtils;
 
 class function TValidation.RequireValue(Reg: TRegistry; const Key: string; const Name: string; RootKey: HKEY): Boolean;
 begin
@@ -68,7 +65,7 @@ begin
     Reg.Free;
   end;
 
-  raise ERegistryException.Create(Format('String value does not exist: key=%s, value name=%s', [Key, Name]));
+  raise ERegistryException.CreateFmt('String value does not exist: key=%s, value name=%s', [Key, Name]);
 end;
 
 type
@@ -88,7 +85,7 @@ begin
       try
         TRegistryAccess(Reg).GetData(Name, @Result, SizeOf(Cardinal), RegData);
         if RegData <> rdInteger then
-          raise ERegistryException.Create(Format('Invalid data type for ''%s''', [Name]));
+          raise ERegistryException.CreateFmt('Invalid data type for ''%s''', [Name]);
       finally
         Reg.CloseKey;
       end;
@@ -98,8 +95,7 @@ begin
     Reg.Free;
   end;
 
-  raise ERegistryException.Create(Format('Non-negative integer value does not exist: key=%s, value name=%s',
-      [Key, Name]));
+  raise ERegistryException.CreateFmt('Non-negative integer value does not exist: key=%s, value name=%s', [Key, Name]);
 end;
 
 end.

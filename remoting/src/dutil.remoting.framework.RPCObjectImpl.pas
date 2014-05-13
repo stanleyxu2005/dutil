@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.remoting.framework.RPCObjectImpl.pas 807 2014-05-06 13:50:17Z QXu $
+ * $Id: dutil.remoting.framework.RPCObjectImpl.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -306,8 +306,8 @@ begin
   try
     if (Command.Method_ = RPC_NOTIFICATION_PING) or
       FNotificationHandlerLookup.ContainsKey(Command.Method_) then
-      raise EDuplicateElementException.Create(
-        Format('Notification handler has been registered already: %s', [Command.Method_]));
+      raise EDuplicateElementException.CreateFmt(
+        'Notification handler has been registered already: %s', [Command.Method_]);
 
     FNotificationHandlerLookup.Add(Command.Method_, Method);
   finally
@@ -323,8 +323,8 @@ begin
   FLock.Acquire;
   try
     if FRequestHandlerLookup.ContainsKey(Command.Method_) then
-      raise EDuplicateElementException.Create(
-        Format('Request handler has been registered already: %s', [Command.Method_]));
+      raise EDuplicateElementException.CreateFmt(
+        'Request handler has been registered already: %s', [Command.Method_]);
 
     FRequestHandlerLookup.Add(Command.Method_, Method);
   finally

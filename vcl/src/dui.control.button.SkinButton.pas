@@ -1,5 +1,5 @@
 (**
- * $Id: dui.control.button.SkinButton.pas 717 2013-11-16 17:20:31Z QXu $
+ * $Id: dui.control.button.SkinButton.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -251,7 +251,7 @@ begin
       if not FImages.Down.Empty then
         Result := FImages.Down;
   else
-    raise EProgrammerNotFound.Create(Format('Unexpected button state: %d', [Ord(FButtonState)]));
+    raise ENotImplemented.CreateFmt('Unexpected button state: %d', [Ord(FButtonState)]);
   end;
 
   if Result = nil then

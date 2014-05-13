@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.arg.Arguments.pas 771 2014-04-20 07:20:06Z QXu $
+ * $Id: dutil.text.arg.Arguments.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -82,7 +82,7 @@ begin
         Token:
           Builder.AppendFormat('%s%s', [LONG_PREFIX, Arg.Name]);
       else
-        raise EProgrammerNotFound.Create(Format('Unexpected argument type: %d', [Ord(Arg.Type_)]));
+        raise ENotImplemented.CreateFmt('Unexpected argument type: %d', [Ord(Arg.Type_)]);
       end;
     end;
 
@@ -97,7 +97,7 @@ begin
   assert(Name <> '');
 
   if not FArgs.ContainsKey(Name) then
-    raise ENoSuchElementException.Create(Format('Key "%s" does not found', [Name]));
+    raise ENoSuchElementException.CreateFmt('Key "%s" does not found', [Name]);
 
   Result := FArgs.Items[Name];
 end;
@@ -110,7 +110,7 @@ begin
 
   Arg := Require(Name);
   if Arg.Type_ <> Number then
-    raise ENoSuchElementException.Create(Format('Unexpected argument type: %d', [Ord(Arg.Type_)]));
+    raise ENoSuchElementException.CreateFmt('Unexpected argument type: %d', [Ord(Arg.Type_)]);
 
   try
     Result := StrToInt(Arg.Value);
@@ -128,7 +128,7 @@ begin
 
   Arg := Require(Name);
   if Arg.Type_ <> Number then
-    raise ENoSuchElementException.Create(Format('Unexpected argument type: %d', [Ord(Arg.Type_)]));
+    raise ENoSuchElementException.CreateFmt('Unexpected argument type: %d', [Ord(Arg.Type_)]);
 
   try
     Result := TConvert.StrToUInt(Arg.Value);
@@ -146,7 +146,7 @@ begin
 
   Arg := Require(Name);
   if not (Arg.Type_ in [Str, Number]) then
-    raise ENoSuchElementException.Create(Format('Unexpected argument type: %d', [Ord(Arg.Type_)]));
+    raise ENoSuchElementException.CreateFmt('Unexpected argument type: %d', [Ord(Arg.Type_)]);
 
   Result := Arg.Value;
 end;
@@ -161,7 +161,7 @@ begin
   begin
     Arg := FArgs.Items[Name];
     if Arg.Type_ <> Token then
-      raise ENoSuchElementException.Create(Format('Unexpected argument type: %d', [Ord(Arg.Type_)]));
+      raise ENoSuchElementException.CreateFmt('Unexpected argument type: %d', [Ord(Arg.Type_)]);
 
     Result := True;
   end

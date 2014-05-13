@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Validation.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.text.json.Validation.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -70,7 +70,6 @@ type
 implementation
 
 uses
-  System.SysUtils,
   supertypes { An universal object serialization framework with Json support },
   dutil.core.Exception;
 
@@ -118,7 +117,7 @@ begin
   Member := RequireMember(Composite, Name, TSuperType.stInt);
   Number := Member.AsInteger;
   if Number < 0 then
-    raise EJsonException.Create(Format('Non-negative integer required but got %d', [Number]));
+    raise EJsonException.CreateFmt('Non-negative integer required but got %d', [Number]);
 
   Result := Number;
 end;
@@ -176,10 +175,10 @@ begin
   Result := Composite.O[Name];
 
   if Result = nil then
-    raise EJsonException.Create(Format('"%s" element required', [Name]));
+    raise EJsonException.CreateFmt('"%s" element required', [Name]);
 
   if Result.DataType <> DataType then
-    raise EJsonException.Create(Format('Data type %d required but got %s', [Ord(DataType), Result.AsJSon]));
+    raise EJsonException.CreateFmt('Data type %d required but got %s', [Ord(DataType), Result.AsJSon]);
 end;
 
 class function TValidation.RequireStr(const Value: ISuperObject): string;
@@ -215,7 +214,7 @@ begin
   Require(Value, TSuperType.stInt);
   Number := Value.AsInteger;
   if Number < 0 then
-    raise EJsonException.Create(Format('Non-negative integer required but got %d', [Number]));
+    raise EJsonException.CreateFmt('Non-negative integer required but got %d', [Number]);
 
   Result := Number;
 end;
@@ -285,7 +284,7 @@ begin
   assert(Value <> nil);
 
   if Value.DataType <> DataType then
-    raise EJsonException.Create(Format('Data type %d required but got %s', [Ord(DataType), Value.AsJSon]));
+    raise EJsonException.CreateFmt('Data type %d required but got %s', [Ord(DataType), Value.AsJSon]);
 end;
 
 end.

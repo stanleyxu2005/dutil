@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.xml.Validation.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.text.xml.Validation.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -53,7 +53,7 @@ begin
   assert(Node <> nil);
 
   if Node.Name <> Name then
-    raise EXmlException.Create(Format('element ''%s'': unexpected element (expected is ''%s'')', [Node.name, Name]));
+    raise EXmlException.CreateFmt('element ''%s'': unexpected element (expected is ''%s'')', [Node.name, Name]);
 end;
 
 class function TValidation.RequireChild(Node: TXmlNode; const Name: string): TXmlNode;
@@ -66,7 +66,7 @@ begin
   Children := TValidation.RequireChildren(Node, Name);
   try
     if Children.Count > 1 then
-      raise EXmlException.Create(Format('element ''%s'': unexpected extra child element ''%s''', [Node.name, Name]));
+      raise EXmlException.CreateFmt('element ''%s'': unexpected extra child element ''%s''', [Node.name, Name]);
 
     Result := Children[0];
   finally
@@ -87,8 +87,7 @@ begin
     Node.FindNodes(Name, Children);
 
     if Children.Count = 0 then
-      raise EXmlException.Create(Format('element ''%s'': unexpected child element ''%s'' is missing',
-          [Node.name, Name]));
+      raise EXmlException.CreateFmt('element ''%s'': unexpected child element ''%s'' is missing', [Node.name, Name]);
 
     Result := TList<TXmlNode>.Create;
     for ChildNode in Children do
@@ -106,7 +105,7 @@ begin
 
   Attribute := Node.AttributeByName[Name];
   if Attribute = nil then
-    raise EXmlException.Create(Format('element ''%s'': equired attribute ''%s'' is missing', [Node.name, Name]));
+    raise EXmlException.CreateFmt('element ''%s'': equired attribute ''%s'' is missing', [Node.name, Name]);
 
   Result := Attribute.Value;
 end;
@@ -122,7 +121,7 @@ begin
     Result := StrToBool(Value);
   except
     on EConvertError do
-      raise EXmlException.Create(Format('element ''%s'', attribute ''%s'': ''%s''', [Node.name, Name]));
+      raise EXmlException.CreateFmt('element ''%s'', attribute ''%s'': ''%s''', [Node.name, Name]);
   end;
 end;
 
@@ -137,7 +136,7 @@ begin
     Result := StrToInt(Value);
   except
     on EConvertError do
-      raise EXmlException.Create(Format('element ''%s'', attribute ''%s'': ''%s''', [Node.name, Name]));
+      raise EXmlException.CreateFmt('element ''%s'', attribute ''%s'': ''%s''', [Node.name, Name]);
   end;
 end;
 
@@ -152,7 +151,7 @@ begin
     Result := TConvert.StrToUInt(Value);
   except
     on EConvertError do
-      raise EXmlException.Create(Format('element ''%s'', attribute ''%s'': ''%s''', [Node.name, Name]));
+      raise EXmlException.CreateFmt('element ''%s'', attribute ''%s'': ''%s''', [Node.name, Name]);
   end;
 end;
 

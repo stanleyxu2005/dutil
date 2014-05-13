@@ -79,7 +79,7 @@ end;
 procedure THandlerMock.Verify;
 begin
   if ExpectedResult <> ActualResult then
-    raise EAssertionFailed.Create(Format('expected: %s, but actual: %s', [ExpectedResult, ActualResult]));
+    raise EAssertionFailed.CreateFmt('expected: %s, but actual: %s', [ExpectedResult, ActualResult]);
 end;
 
 end.

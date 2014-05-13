@@ -1,5 +1,5 @@
 (**
- * $Id: dui.metrics.MenuExtent.pas 717 2013-11-16 17:20:31Z QXu $
+ * $Id: dui.metrics.MenuExtent.pas 822 2014-05-13 17:06:20Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -80,8 +80,7 @@ begin
   begin
     assert(Menu.Images <> nil);
     if Menu.Images.Height < 12 then
-      raise EProgrammerNotFound.Create(Format('Image height is expected to be >= 12px, but was %dpx',
-          [Menu.Images.Height]));
+      raise ENotImplemented.CreateFmt('Image height is expected to be >= 12px, but was %dpx', [Menu.Images.Height]);
 
     ItemHeight := ICON16_ITEMBASISHEIGHT[VisualStyle] + Max(ICON16_MINIMAGEHEIGHT[VisualStyle], Menu.Images.Height);
     Inc(Result, NumOfVisibleItems * ItemHeight);
