@@ -19,7 +19,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('dutil/dui', [TSkinButton]);
+  RegisterComponents('dui', [TSkinButton]);
 end;
 
 end.

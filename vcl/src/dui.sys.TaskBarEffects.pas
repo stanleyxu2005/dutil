@@ -18,13 +18,18 @@ type
   /// Windows 7.</summary>
   TTaskBarEffects = class
   private type
-    TTaskBarProgressState = ( //
-      None = TBPF_NOPROGRESS, // Stops displaying progress and returns the button to its normal state.
-      Indeterminate = TBPF_INDETERMINATE, // The progress indicator does not grow in size, but cycles repeatedly along the length of the taskbar button.
-      Normal = TBPF_NORMAL, // The progress indicator grows in size from left to right in proportion to the estimated amount of the operation completed.
-      Error = TBPF_ERROR, // The progress indicator turns red to show that an error has occurred in one of the windows that is broadcasting progress.
-      Paused = TBPF_PAUSED // The progress indicator turns yellow to show that progress is currently stopped in one of the windows but can be resumed by the user.
-      );
+    TTaskBarProgressState = (
+      // Stops displaying progress and returns the button to its normal state.
+      NONE = TBPF_NOPROGRESS,
+      // Does not grow in size, but cycles repeatedly along the length of the taskbar button.
+      INDETERMINATE = TBPF_INDETERMINATE,
+      // Grows in size from left to right in proportion to the estimated amount of the operation completed.
+      NORMAL = TBPF_NORMAL,
+      // Turns red to show that an error has occurred in one of the windows.
+      ERROR = TBPF_ERROR,
+      // Turns yellow to show that progress is currently stopped in one of the windows.
+      PAUSED = TBPF_PAUSED
+    );
   public
     /// <summary>Sets the type and state of the progress indicator displayed on a taskbar button.</summary>
     class function SetProgressState(State: TTaskBarProgressState): Boolean; static;

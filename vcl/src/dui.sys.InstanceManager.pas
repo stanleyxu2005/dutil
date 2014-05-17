@@ -13,9 +13,9 @@ type
   TInstanceManager = class
   public
     /// <summary>Indicates whether another instance of a given application is running.</summary>
-    class function OtherInstanceIsRunning(MatchFileContent: Boolean): Boolean;
+    class function OtherInstanceIsRunning(MatchFileContent: Boolean): Boolean; static;
     /// <summary>Retrieves the most recent command-line send to this instance.</summary>
-    class function GetLastCommandLine: string;
+    class function GetLastCommandLine: string; static;
   end;
 
 var

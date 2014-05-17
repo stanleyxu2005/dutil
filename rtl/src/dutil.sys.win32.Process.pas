@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.Process.pas 778 2014-04-26 10:11:29Z QXu $
+ * $Id: dutil.sys.win32.Process.pas 829 2014-05-17 13:49:10Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -26,16 +26,16 @@ type
     /// <summary>Lists processes that have a specified process name (case sensitive).</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
     class function ListFiltered(const ProcessName: string): TArray<TProcessEntry32>; static;
-    /// <summary>Folks a process.</summary>
+    /// <summary>Forks a process.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class procedure Folk(const FileName: string; const Parameters: string; const WorkingDir: string;
+    class procedure Fork(const FileName: string; const Parameters: string; const Directory: string;
       Masks: Cardinal; ShowMode: Integer); overload; static;
-    /// <summary>Folks a process.</summary>
+    /// <summary>Forks a process.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class procedure Folk(const FileName: string; const Parameters: string); overload; static;
+    class procedure Fork(const FileName: string; const Parameters: string); overload; static;
     /// <summary>Terminates a process by its process id.</summary>
     /// <exception cref="EOSError">Operating system failure.</exception>
-    class procedure Terminate(PID: Cardinal; ExitCode: Cardinal = 0); overload; static;
+    class procedure Terminate(Pid: Cardinal; ExitCode: Cardinal = 0); overload; static;
     /// <summary>Terminates all processes that match the specfied process name.</summary>
     class procedure Terminate(const ProcessName: string; IncludeSelf: Boolean; ExitCode: Cardinal = 0); overload; static;
   end;
@@ -84,7 +84,7 @@ begin
   end;
 end;
 
-class procedure TProcess.Folk(const FileName: string; const Parameters: string; const WorkingDir: string;
+class procedure TProcess.Fork(const FileName: string; const Parameters: string; const Directory: string;
   Masks: Cardinal; ShowMode: Integer);
 var
   Info: TShellExecuteInfo;
@@ -94,18 +94,18 @@ begin
   ZeroMemory(@Info, SizeOf(Info));
   Info.cbSize := SizeOf(Info);
   Info.fMask := Masks;
-  Info.Wnd := HWnd_Desktop;
-  Info.lpVerb := PChar('open');
+  Info.Wnd := HWND_DESKTOP;
+  Info.lpVerb := 'open';
   Info.lpFile := PChar(FileName);
   Info.lpParameters := PChar(Parameters);
-  Info.lpDirectory := PChar(WorkingDir);
+  Info.lpDirectory := PChar(Directory);
   Info.nShow := ShowMode;
 
   if not ShellExecuteEx(@Info) then
     RaiseLastOSError;
 end;
 
-class procedure TProcess.Folk(const FileName: string; const Parameters: string);
+class procedure TProcess.Fork(const FileName: string; const Parameters: string);
 const
   DEFAULT_WORKING_DIR = '';
   // madExcept reports a handle leak if `SEE_MASK_NOCLOSEPROCESS` is set
@@ -114,17 +114,17 @@ const
 begin
   assert(FileName <> '');
 
-  Folk(FileName, Parameters, DEFAULT_WORKING_DIR, DEFAULT_MASKS, DEFAULT_SHOW_MODE);
+  Fork(FileName, Parameters, DEFAULT_WORKING_DIR, DEFAULT_MASKS, DEFAULT_SHOW_MODE);
 end;
 
-class procedure TProcess.Terminate(PID: Cardinal; ExitCode: Cardinal);
+class procedure TProcess.Terminate(Pid: Cardinal; ExitCode: Cardinal);
 var
   Handle: THandle;
   Success: Boolean;
 begin
-  assert(PID > 0);
+  assert(Pid > 0);
 
-  Handle := OpenProcess(PROCESS_TERMINATE, {bInheritHandle=}False, PID);
+  Handle := OpenProcess(PROCESS_TERMINATE, {bInheritHandle=}False, Pid);
   if Handle = THandle(nil) then
     RaiseLastOSError;
 

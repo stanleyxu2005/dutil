@@ -27,8 +27,8 @@ type
   published
     procedure TestListAll;
     procedure TestListFiltered;
-    procedure TestFolk;
-    procedure TestFolk_LessOptions;
+    procedure TestFork;
+    procedure TestFork_LessOptions;
     procedure TestTerminate_ByPID;
     procedure TestTerminate_ByName;
   private
@@ -76,7 +76,7 @@ begin
   CheckEquals(Expected, Length(ProcessList));
 end;
 
-procedure TProcessTest.TestFolk;
+procedure TProcessTest.TestFork;
 var
   ShowMode: Integer;
   Masks: System.Cardinal;
@@ -90,13 +90,13 @@ begin
   Masks := SEE_MASK_DEFAULT;
   ShowMode := SW_HIDE;
 
-  FProcess.Folk(Filename, Parameters, WorkingDir, Masks, ShowMode);
+  FProcess.Fork(Filename, Parameters, WorkingDir, Masks, ShowMode);
   ExpectProcessCount('processtest.exe', {Expected=}1);
   Windows.Sleep(50);
   ExpectProcessCount('processtest.exe', {Expected=}0);
 end;
 
-procedure TProcessTest.TestFolk_LessOptions;
+procedure TProcessTest.TestFork_LessOptions;
 var
   Parameters: string;
   Filename: string;
@@ -104,7 +104,7 @@ begin
   Filename := '..\fixture\processtest.exe';
   Parameters := '--close';
 
-  FProcess.Folk(Filename, Parameters);
+  FProcess.Fork(Filename, Parameters);
   ExpectProcessCount('processtest.exe', {Expected=}1);
   Windows.Sleep(50);
   ExpectProcessCount('processtest.exe', {Expected=}0);
@@ -118,7 +118,7 @@ var
   PID: System.Cardinal;
 begin
   Filename := '..\fixture\processtest.exe';
-  FProcess.Folk(Filename, {Paramters=}'');
+  FProcess.Fork(Filename, {Paramters=}'');
   ProcessList := TProcess.ListFiltered('processtest.exe');
   CheckEquals(1, Length(ProcessList));
   PID := ProcessList[0].th32ProcessID;
@@ -136,8 +136,8 @@ var
   ExitCode: System.Cardinal;
 begin
   Filename := '..\fixture\processtest.exe';
-  FProcess.Folk(Filename, {Paramters=}'');
-  FProcess.Folk(Filename, {Paramters=}'');
+  FProcess.Fork(Filename, {Paramters=}'');
+  FProcess.Fork(Filename, {Paramters=}'');
   ProcessList := TProcess.ListFiltered('processtest.exe');
   CheckEquals(2, Length(ProcessList));
   ExitCode := 1;
