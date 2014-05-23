@@ -68,7 +68,7 @@ begin
   Value := 42;
 
   FBuilder.AddInt(Name, Value);
-  View := FBuilder.CreateView;
+  View := FBuilder.Build;
   try
     CheckEquals(Value, View.RequireInt(Name));
   finally
@@ -86,7 +86,7 @@ begin
   Value := 'bar';
 
   FBuilder.AddStr(Name, Value);
-  View := FBuilder.CreateView;
+  View := FBuilder.Build;
   try
     CheckEquals(Value, View.RequireStr(Name));
   finally
@@ -102,7 +102,7 @@ begin
   Name := 'foo';
 
   FBuilder.AddToken(Name);
-  View := FBuilder.CreateView;
+  View := FBuilder.Build;
   try
     CheckTrue(View.HasToken(Name));
   finally

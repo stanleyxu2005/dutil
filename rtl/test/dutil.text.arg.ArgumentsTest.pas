@@ -57,7 +57,7 @@ begin
     Builder.AddInt('int', 42);
     Builder.AddStr('str', 'xx');
     Builder.AddToken('token');
-    FArguments := Builder.CreateView;
+    FArguments := Builder.Build;
   finally
     Builder.Free;
   end;
@@ -78,7 +78,7 @@ begin
   Builder := TBuilder.Create;
   try
     Builder.AddInt(Name, Value);
-    FArguments := Builder.CreateView;
+    FArguments := Builder.Build;
   finally
     Builder.Free;
   end;
@@ -99,7 +99,7 @@ begin
   Builder := TBuilder.Create;
   try
     Builder.AddInt(Name, Value);
-    FArguments := Builder.CreateView;
+    FArguments := Builder.Build;
   finally
     Builder.Free;
   end;
@@ -120,7 +120,7 @@ begin
   Builder := TBuilder.Create;
   try
     Builder.AddStr(Name, Value);
-    FArguments := Builder.CreateView;
+    FArguments := Builder.Build;
   finally
     Builder.Free;
   end;
@@ -139,7 +139,7 @@ begin
   Builder := TBuilder.Create;
   try
     Builder.AddToken(Name);
-    FArguments := Builder.CreateView;
+    FArguments := Builder.Build;
   finally
     Builder.Free;
   end;
@@ -161,7 +161,7 @@ begin
   Builder := TBuilder.Create;
   try
     Builder.AddStr(Name, 'bar');
-    FArguments := Builder.CreateView;
+    FArguments := Builder.Build;
   finally
     Builder.Free;
   end;

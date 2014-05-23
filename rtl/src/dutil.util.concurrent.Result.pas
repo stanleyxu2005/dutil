@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.Result.pas 771 2014-04-20 07:20:06Z QXu $
+ * $Id: dutil.util.concurrent.Result.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -26,10 +26,14 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    /// <summary>Takes the result value or an exception from the container.</summary>
     /// <exception cref="Exception">When an exception is put into the result.</exception>
     function Take: V;
+    /// <summary>Puts a result value into the container.</summary>
     procedure Put(const Value: V);
+    /// <summary>Puts an exception into the container.</summary>
     procedure PutException(Ex: Exception);
+    /// <summary>Indicates whether the contain is filled with something.</summary>
     function Available: Boolean;
   end;
 

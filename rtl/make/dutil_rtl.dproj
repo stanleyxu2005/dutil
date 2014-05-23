@@ -117,8 +117,10 @@
         <DCCReference Include="..\src\dutil.io.device.File_.pas"/>
         <DCCReference Include="..\src\dutil.io.device.TempFile.pas"/>
         <DCCReference Include="..\src\dutil.io.FileVersion.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.MessageWindowThread.pas"/>
         <DCCReference Include="..\src\dutil.sys.win32.Platform.pas"/>
         <DCCReference Include="..\src\dutil.sys.win32.Process.pas"/>
+        <DCCReference Include="..\src\dutil.sys.win32.registry.Reader.pas"/>
         <DCCReference Include="..\src\dutil.sys.win32.registry.Validation.pas"/>
         <DCCReference Include="..\src\dutil.sys.win32.registry.Writer.pas"/>
         <DCCReference Include="..\src\dutil.sys.win32.SpecialPath.pas"/>
@@ -128,6 +130,7 @@
         <DCCReference Include="..\src\dutil.text.arg.Builder.pas"/>
         <DCCReference Include="..\src\dutil.text.Convert.pas"/>
         <DCCReference Include="..\src\dutil.text.json.Json.pas"/>
+        <DCCReference Include="..\src\dutil.text.json.Reader.pas"/>
         <DCCReference Include="..\src\dutil.text.json.Validation.pas"/>
         <DCCReference Include="..\src\dutil.text.Util.pas"/>
         <DCCReference Include="..\src\dutil.text.xml.Validation.pas"/>

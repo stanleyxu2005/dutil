@@ -5,7 +5,7 @@ package dutil_rtl;
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -37,8 +37,10 @@ contains
   dutil.io.device.File_ in '..\src\dutil.io.device.File_.pas',
   dutil.io.device.TempFile in '..\src\dutil.io.device.TempFile.pas',
   dutil.io.FileVersion in '..\src\dutil.io.FileVersion.pas',
+  dutil.sys.win32.MessageWindowThread in '..\src\dutil.sys.win32.MessageWindowThread.pas',
   dutil.sys.win32.Platform in '..\src\dutil.sys.win32.Platform.pas',
   dutil.sys.win32.Process in '..\src\dutil.sys.win32.Process.pas',
+  dutil.sys.win32.registry.Reader in '..\src\dutil.sys.win32.registry.Reader.pas',
   dutil.sys.win32.registry.Validation in '..\src\dutil.sys.win32.registry.Validation.pas',
   dutil.sys.win32.registry.Writer in '..\src\dutil.sys.win32.registry.Writer.pas',
   dutil.sys.win32.SpecialPath in '..\src\dutil.sys.win32.SpecialPath.pas',
@@ -48,6 +50,7 @@ contains
   dutil.text.arg.Builder in '..\src\dutil.text.arg.Builder.pas',
   dutil.text.Convert in '..\src\dutil.text.Convert.pas',
   dutil.text.json.Json in '..\src\dutil.text.json.Json.pas',
+  dutil.text.json.Reader in '..\src\dutil.text.json.Reader.pas',
   dutil.text.json.Validation in '..\src\dutil.text.json.Validation.pas',
   dutil.text.Util in '..\src\dutil.text.Util.pas',
   dutil.text.xml.Validation in '..\src\dutil.text.xml.Validation.pas',

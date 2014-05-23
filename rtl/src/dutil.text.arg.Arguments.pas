@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.arg.Arguments.pas 822 2014-05-13 17:06:20Z QXu $
+ * $Id: dutil.text.arg.Arguments.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -28,14 +28,18 @@ type
     constructor Create(const Args: TDictionary<string, TArg>);
     destructor Destroy; override;
     function ToString: string; override;
+    /// <summary>Expects specified argument has an Integer value.</summary>
     /// <exception cref="ENoSuchElementException">The argument does not exist.</exception>
     function RequireInt(const Name: string): Integer;
+    /// <summary>Expects specified argument has a non-negative Integer value.</summary>
     /// <exception cref="ENoSuchElementException">The argument does not exist or the value is negative.</exception>
     function RequireUInt(const Name: string): Cardinal;
+    /// <summary>Expects specified argument has a string value.</summary>
     /// <exception cref="ENoSuchElementException">The argument does not exist.</exception>
     function RequireStr(const Name: string): string;
-    /// <exception cref="ENoSuchElementException">The argument does not exist.</exception>
+    /// <summary>Checks whether specified value-less argument exists.</summary>
     function HasToken(const Name: string): Boolean;
+    /// <summary>Checks whether specified argument exists.</summary>
     function HasArg(const Name: string): Boolean;
   end;
 
@@ -160,10 +164,7 @@ begin
   if FArgs.ContainsKey(Name) then
   begin
     Arg := FArgs.Items[Name];
-    if Arg.Type_ <> Token then
-      raise ENoSuchElementException.CreateFmt('Unexpected argument type: %d', [Ord(Arg.Type_)]);
-
-    Result := True;
+    Result := Arg.Type_ = Token;
   end
   else
     Result := False;

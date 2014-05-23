@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.util.concurrent.Timer.pas 771 2014-04-20 07:20:06Z QXu $
+ * $Id: dutil.util.concurrent.Timer.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -22,12 +22,12 @@ type
     class constructor Create;
   public
     class destructor Destroy;
-    /// <summary>Schedule a new action to be carried out at a given relative time.</summary>
+    /// <summary>Schedules a new action to be carried out at a given relative time.</summary>
     /// <remarks>If the given time has already passed, the action will be carried out as soon as possible.</remarks>
     class function Schedule(const Delay: TTimeSpan; Action: TThreadMethod): TDateTime; static;
-    /// <summary>Remove all occurrences of the given action from the timer.</summary>
+    /// <summary>Removes all occurrences of the given action from the timer.</summary>
     class function Remove(const Time: TDateTime): Boolean; static;
-    /// <summary>Remove all events from the timer.</summary>
+    /// <summary>Removes all events from the timer.</summary>
     class procedure Clear; static;
   end;
 

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Validation.pas 822 2014-05-13 17:06:20Z QXu $
+ * $Id: dutil.text.json.Validation.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -17,53 +17,61 @@ type
   /// <summary>This service class provides methods for simple JSON validity checks.</summary>
   TValidation = class
   public
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not a string.</exception>
+    /// <summary>Expects specified member value is a string.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a string.</exception>
     class function RequireStrMember(const Composite: ISuperObject; const Name: string): string; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not a boolean.</exception>
+    /// <summary>Expects specified member value is a boolean.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a boolean.</exception>
     class function RequireBoolMember(const Composite: ISuperObject; const Name: string): Boolean; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not an integer.</exception>
+    /// <summary>Expects specified member value is an integer.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not an integer.</exception>
     class function RequireIntMember(const Composite: ISuperObject; const Name: string): Integer; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not a non-negative integer.</exception>
+    /// <summary>Expects specified member value is a non-negative integer.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a non-negative integer.</exception>
     class function RequireUIntMember(const Composite: ISuperObject; const Name: string): Cardinal; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not a string array.</exception>
+    /// <summary>Expects specified member value is a string array.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a string array.</exception>
     class function RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TArray<string>; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not a boolean array.</exception>
+    /// <summary>Expects specified member value is a boolean array.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a boolean array.</exception>
     class function RequireBoolArrayMember(const Composite: ISuperObject; const Name: string): TArray<Boolean>; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not an integer array.</exception>
+    /// <summary>Expects specified member value is an integer array.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not an integer array.</exception>
     class function RequireIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Integer>; static;
-    /// <exception cref="EJsonException">When the JSON object has a member with the specified name but the member is
-    /// not a non-negative integer array.</exception>
+    /// <summary>Expects specified member value is a non-negative integer array.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a non-negative integer array.</exception>
     class function RequireUIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Cardinal>; static;
-    /// <exception cref="EJsonException">When the specified value is not a string.</exception>
+    /// <summary>Expects value as a string.</summary>
+    /// <exception cref="EJsonException">Specified value is not a string.</exception>
     class function RequireStr(const Value: ISuperObject): string; static;
-    /// <exception cref="EJsonException">When the specified value is not a boolean.</exception>
+    /// <summary>Expects value as a boolean.</summary>
+    /// <exception cref="EJsonException">Specified value is not a boolean.</exception>
     class function RequireBool(const Value: ISuperObject): Boolean; static;
-    /// <exception cref="EJsonException">When the specified value is not an integer.</exception>
+    /// <summary>Expects value as an integer.</summary>
+    /// <exception cref="EJsonException">Specified value is not an integer.</exception>
     class function RequireInt(const Value: ISuperObject): Integer; static;
-    /// <exception cref="EJsonException">When the specified value is not a non-negative integer.</exception>
+    /// <summary>Expects value as a non-negative integer.</summary>
+    /// <exception cref="EJsonException">Specified value is not a non-negative integer.</exception>
     class function RequireUInt(const Value: ISuperObject): Cardinal; static;
-    /// <exception cref="EJsonException">When the specified value is not a string array.</exception>
+    /// <summary>Expects value as a string array.</summary>
+    /// <exception cref="EJsonException">Specified value is not a string array.</exception>
     class function RequireStrArray(const Value: ISuperObject): TArray<string>; static;
-    /// <exception cref="EJsonException">When the specified value is not a boolean array.</exception>
+    /// <summary>Expects value as a boolean array.</summary>
+    /// <exception cref="EJsonException">Specified value is not a boolean array.</exception>
     class function RequireBoolArray(const Value: ISuperObject): TArray<Boolean>; static;
-    /// <exception cref="EJsonException">When the specified value is not an integer array.</exception>
+    /// <summary>Expects value as an integer array.</summary>
+    /// <exception cref="EJsonException">Specified value is not an integer array.</exception>
     class function RequireIntArray(const Value: ISuperObject): TArray<Integer>; static;
-    /// <exception cref="EJsonException">When the specified value is not a non-negative array.</exception>
+    /// <summary>Expects value as a non-negative integer array.</summary>
+    /// <exception cref="EJsonException">Specified value is not a non-negative array.</exception>
     class function RequireUIntArray(const Value: ISuperObject): TArray<Cardinal>; static;
   private
     /// <exception cref="EJsonException">When the JSON object has no member with the specified name.</exception>
     class function RequireMember(const Composite: ISuperObject; const Name: string;
       DataType: TSuperType): ISuperObject; static;
-    /// <exception cref="EJsonException">When the specified value is not a super array.</exception>
+    /// <exception cref="EJsonException">Specified value is not a super array.</exception>
     class function RequireArray(const Value: ISuperObject): TSuperArray; static;
-    /// <exception cref="EJsonException">When the specified value is not a JSON object.</exception>
+    /// <exception cref="EJsonException">Specified value is not a JSON object.</exception>
     class procedure Require(const Value: ISuperObject; DataType: TSuperType); static;
   end;
 

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Json.pas 412 2012-04-12 08:24:25Z QXu $
+ * $Id: dutil.text.json.Json.pas 835 2014-05-21 09:50:29Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -18,6 +18,14 @@ type
   public
     /// <summary>Returns the string representation of the specified JSON value.</summary>
     class function Print(const Composite: ISuperObject): string; static;
+    /// <summary>Converts a dynamic string array to a JSON array.</summary>
+    class function CreateArray(const DynArray: TArray<string>): ISuperObject; overload; static;
+    /// <summary>Converts a dynamic boolean array to a JSON array.</summary>
+    class function CreateArray(const DynArray: TArray<Boolean>): ISuperObject; overload; static;
+    /// <summary>Converts a dynamic integer array to a JSON array.</summary>
+    class function CreateArray(const DynArray: TArray<Integer>): ISuperObject; overload; static;
+    /// <summary>Converts a dynamic non-negative integer array to a JSON array.</summary>
+    class function CreateArray(const DynArray: TArray<Cardinal>): ISuperObject; overload; static;
   end;
 
 implementation
@@ -28,6 +36,42 @@ begin
     Result := 'null'
   else
     Result := Composite.AsJson;
+end;
+
+class function TJson.CreateArray(const DynArray: TArray<String>): ISuperObject;
+var
+  Item: string;
+begin
+  Result := TSuperObject.Create(stArray);
+  for Item in DynArray do
+    Result.AsArray.Add(SO(Item));
+end;
+
+class function TJson.CreateArray(const DynArray: TArray<Boolean>): ISuperObject;
+var
+  Item: Boolean;
+begin
+  Result := TSuperObject.Create(stArray);
+  for Item in DynArray do
+    Result.AsArray.Add(SO(Item));
+end;
+
+class function TJson.CreateArray(const DynArray: TArray<Integer>): ISuperObject;
+var
+  Item: Integer;
+begin
+  Result := TSuperObject.Create(stArray);
+  for Item in DynArray do
+    Result.AsArray.Add(SO(Item));
+end;
+
+class function TJson.CreateArray(const DynArray: TArray<Cardinal>): ISuperObject;
+var
+  Item: Cardinal;
+begin
+  Result := TSuperObject.Create(stArray);
+  for Item in DynArray do
+    Result.AsArray.Add(SO(Item));
 end;
 
 end.

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.Util.pas 747 2014-03-11 07:42:35Z QXu $
+ * $Id: dutil.text.Util.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -19,6 +19,7 @@ type
     /// <summary>Trims the given array by stripping the provided match from both ends.</summary>
     class function Strip(const Source: string; Match: Char): string; static;
     /// <summary>Splits the string wherever a separator instance is found and return the resultant segments.</summary>
+    /// <remarks>Consider use `some_string.Split([Seprator])` instead.</remarks>
     class function Split(const S: string; const Separator: string): TArray<string>; static;
   end;
 

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.arg.Builder.pas 822 2014-05-13 17:06:20Z QXu $
+ * $Id: dutil.text.arg.Builder.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -27,13 +27,18 @@ type
     constructor Create;
     destructor Destroy; override;
     function ToString: string; override;
-    function CreateView: TArguments;
+    /// <summary>Builds arguments.</summary>
+    function Build: TArguments;
+    /// <summary>Adds an argument with an Integer value.</summary>
     /// <exception cref="EDuplicateElementException"></exception>
     procedure AddInt(const Name: string; const Value: Int64);
+    /// <summary>Adds an argument with a string value.</summary>
     /// <exception cref="EDuplicateElementException"></exception>
     procedure AddStr(const Name: string; const Value: string);
+    /// <summary>Adds a value-less argument.</summary>
     /// <exception cref="EDuplicateElementException"></exception>
     procedure AddToken(const Name: string);
+    /// <summary>Builds arguments from command line.</summary>
     /// <exception cref="EParseError"></exception>
     class function FromCommandLine: TArguments; static;
   end;
@@ -61,7 +66,7 @@ function TBuilder.ToString: string;
 var
   View: TArguments;
 begin
-  View := CreateView;
+  View := Build;
   try
     Result := View.ToString;
   finally
@@ -69,7 +74,7 @@ begin
   end;
 end;
 
-function TBuilder.CreateView: TArguments;
+function TBuilder.Build: TArguments;
 begin
   Result := TArguments.Create(FArgs);
 end;
@@ -127,7 +132,7 @@ begin
       end;
     end;
 
-    Result := Builder.CreateView;
+    Result := Builder.Build;
   finally
     Builder.Free;
   end;

@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.sys.win32.registry.Validation.pas 822 2014-05-13 17:06:20Z QXu $
+ * $Id: dutil.sys.win32.registry.Validation.pas 834 2014-05-20 18:43:27Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -17,42 +17,32 @@ type
   /// <summary>This service class provides methods for simple Windows Registry validity checks.</summary>
   TValidation = class
   public
-    /// <summary>Retrieves a string value from registry.</summary>
+    /// <summary>Expects a string value from registry.</summary>
     /// <exceptions cref="ERegistryException">The value does not exist.</exceptions>
-    class function RequireStr(const Key: string; const Name: string; RootKey: HKEY = HKEY_CURRENT_USER): string; static;
-    /// <summary>Retrieves a non-negative integer value from registry.</summary>
+    class function RequireStr(const Key: string; const Name: string;
+      const RootKey: HKEY = HKEY_CURRENT_USER): string; static;
+    /// <summary>Expects a non-negative integer value from registry.</summary>
     /// <exceptions cref="ERegistryException">The value does not exist.</exceptions>
-    class function RequireUInt(const Key: string; const Name: string; RootKey: HKEY = HKEY_CURRENT_USER): Cardinal;
-      static;
-  private
-    class function RequireValue(Reg: TRegistry; const Key: string; const Name: string; RootKey: HKEY): Boolean;
-      overload; static;
+    class function RequireUInt(const Key: string; const Name: string;
+      const RootKey: HKEY = HKEY_CURRENT_USER): Cardinal; static;
   end;
 
 implementation
 
-class function TValidation.RequireValue(Reg: TRegistry; const Key: string; const Name: string; RootKey: HKEY): Boolean;
-begin
-  assert(Reg <> nil);
+uses
+  dutil.sys.win32.registry.Reader;
 
-  Reg.RootKey := RootKey;
-  if Reg.OpenKeyReadOnly(Key) then
-  begin
-    Result := Reg.ValueExists(Name);
-    if not Result then
-      Reg.CloseKey;
-  end
-  else
-    Result := False;
-end;
+type
+  TReaderAccess = class(TReader)
+  end;
 
-class function TValidation.RequireStr(const Key: string; const Name: string; RootKey: HKEY = HKEY_CURRENT_USER): string;
+class function TValidation.RequireStr(const Key: string; const Name: string; const RootKey: HKEY): string;
 var
   Reg: TRegistry;
 begin
   Reg := TRegistry.Create;
   try
-    if RequireValue(Reg, Key, Name, RootKey) then
+    if TReaderAccess.ValueExists(Reg, Key, Name, RootKey) then
     begin
       try
         Result := Reg.ReadString(Name); // this might raise ERegistryException
@@ -72,15 +62,14 @@ type
   TRegistryAccess = class(TRegistry)
   end;
 
-class function TValidation.RequireUInt(const Key: string; const Name: string;
-  RootKey: HKEY = HKEY_CURRENT_USER): Cardinal;
+class function TValidation.RequireUInt(const Key: string; const Name: string; const RootKey: HKEY): Cardinal;
 var
   Reg: TRegistry;
   RegData: TRegDataType;
 begin
   Reg := TRegistry.Create;
   try
-    if RequireValue(Reg, Key, Name, RootKey) then
+    if TReaderAccess.ValueExists(Reg, Key, Name, RootKey) then
     begin
       try
         TRegistryAccess(Reg).GetData(Name, @Result, SizeOf(Cardinal), RegData);
