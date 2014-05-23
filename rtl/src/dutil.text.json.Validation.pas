@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Validation.pas 834 2014-05-20 18:43:27Z QXu $
+ * $Id: dutil.text.json.Validation.pas 837 2014-05-23 16:12:25Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,6 +10,7 @@ unit dutil.text.json.Validation;
 interface
 
 uses
+  System.Generics.Collections,
   System.Types,
   superobject { An universal object serialization framework with Json support };
 
@@ -29,6 +30,10 @@ type
     /// <summary>Expects specified member value is a non-negative integer.</summary>
     /// <exception cref="EJsonException">Member not found or value is not a non-negative integer.</exception>
     class function RequireUIntMember(const Composite: ISuperObject; const Name: string): Cardinal; static;
+    /// <summary>Expects specified member value is a string pair.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a string pair.</exception>
+    class function RequireStrPairMember(const Composite: ISuperObject; const Name: string): TPair<string, string>;
+      static;
     /// <summary>Expects specified member value is a string array.</summary>
     /// <exception cref="EJsonException">Member not found or value is not a string array.</exception>
     class function RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TArray<string>; static;
@@ -41,6 +46,10 @@ type
     /// <summary>Expects specified member value is a non-negative integer array.</summary>
     /// <exception cref="EJsonException">Member not found or value is not a non-negative integer array.</exception>
     class function RequireUIntArrayMember(const Composite: ISuperObject; const Name: string): TArray<Cardinal>; static;
+    /// <summary>Expects specified member value is a string pair array.</summary>
+    /// <exception cref="EJsonException">Member not found or value is not a string pair array.</exception>
+    class function RequireStrPairArrayMember(const Composite: ISuperObject; const Name: string):
+      TArray<TPair<string, string>>; static;
     /// <summary>Expects value as a string.</summary>
     /// <exception cref="EJsonException">Specified value is not a string.</exception>
     class function RequireStr(const Value: ISuperObject): string; static;
@@ -53,6 +62,9 @@ type
     /// <summary>Expects value as a non-negative integer.</summary>
     /// <exception cref="EJsonException">Specified value is not a non-negative integer.</exception>
     class function RequireUInt(const Value: ISuperObject): Cardinal; static;
+    /// <summary>Expects value as a string pair.</summary>
+    /// <exception cref="EJsonException">Specified value is not a string pair.</exception>
+    class function RequireStrPair(const Value: ISuperObject): TPair<string, string>; static;
     /// <summary>Expects value as a string array.</summary>
     /// <exception cref="EJsonException">Specified value is not a string array.</exception>
     class function RequireStrArray(const Value: ISuperObject): TArray<string>; static;
@@ -65,6 +77,9 @@ type
     /// <summary>Expects value as a non-negative integer array.</summary>
     /// <exception cref="EJsonException">Specified value is not a non-negative array.</exception>
     class function RequireUIntArray(const Value: ISuperObject): TArray<Cardinal>; static;
+    /// <summary>Expects value as a string pair array.</summary>
+    /// <exception cref="EJsonException">Specified value is not a string pair array.</exception>
+    class function RequireStrPairArray(const Value: ISuperObject): TArray<TPair<string, string>>; static;
   private
     /// <exception cref="EJsonException">When the JSON object has no member with the specified name.</exception>
     class function RequireMember(const Composite: ISuperObject; const Name: string;
@@ -130,6 +145,21 @@ begin
   Result := Number;
 end;
 
+class function TValidation.RequireStrPairMember(const Composite: ISuperObject; const Name: string):
+  TPair<string, string>;
+var
+  Elements: TArray<string>;
+begin
+  assert(Composite <> nil);
+  assert(Name <> '');
+
+  Elements := RequireStrArrayMember(Composite, Name);
+  if Length(Elements) <> 2 then
+    raise EJsonException.CreateFmt('Array should contain exactly 2 elements but got %s', [Composite.O[Name].AsJSon]);
+
+  Result := TPair<string, string>.Create(Elements[0], Elements[1]);
+end;
+
 class function TValidation.RequireStrArrayMember(const Composite: ISuperObject; const Name: string): TArray<string>;
 var
   Member: ISuperObject;
@@ -172,6 +202,18 @@ begin
 
   Member := RequireMember(Composite, Name, TSuperType.stArray);
   Result := RequireUIntArray(Member);
+end;
+
+class function TValidation.RequireStrPairArrayMember(const Composite: ISuperObject; const Name: string):
+  TArray<TPair<string, string>>;
+var
+  Member: ISuperObject;
+begin
+  assert(Composite <> nil);
+  assert(Name <> '');
+
+  Member := RequireMember(Composite, Name, TSuperType.stArray);
+  Result := RequireStrPairArray(Member);
 end;
 
 class function TValidation.RequireMember(const Composite: ISuperObject; const Name: string;
@@ -227,6 +269,19 @@ begin
   Result := Number;
 end;
 
+class function TValidation.RequireStrPair(const Value: ISuperObject): TPair<string, string>;
+var
+  Elements: TArray<string>;
+begin
+  assert(Value <> nil);
+
+  Elements := RequireStrArray(Value);
+  if Length(Elements) <> 2 then
+    raise EJsonException.CreateFmt('Array should contain exactly 2 elements but got %s', [Value.AsJson]);
+
+  Result := TPair<string, string>.Create(Elements[0], Elements[1]);
+end;
+
 class function TValidation.RequireStrArray(const Value: ISuperObject): TArray<string>;
 var
   Members: TSuperArray;
@@ -277,6 +332,19 @@ begin
   SetLength(Result, Members.Length);
   for I := 0 to Members.Length - 1 do
     Result[I] := RequireUInt(Members[I]);
+end;
+
+class function TValidation.RequireStrPairArray(const Value: ISuperObject): TArray<TPair<string, string>>;
+var
+  Members: TSuperArray;
+  I: Integer;
+begin
+  assert(Value <> nil);
+
+  Members := RequireArray(Value);
+  SetLength(Result, Members.Length);
+  for I := 0 to Members.Length - 1 do
+    Result[I] := RequireStrPair(Members[I]);
 end;
 
 class function TValidation.RequireArray(const Value: ISuperObject): TSuperArray;

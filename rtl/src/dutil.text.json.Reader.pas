@@ -1,5 +1,5 @@
 (**
- * $Id: dutil.text.json.Reader.pas 834 2014-05-20 18:43:27Z QXu $
+ * $Id: dutil.text.json.Reader.pas 837 2014-05-23 16:12:25Z QXu $
  *
  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
@@ -10,6 +10,7 @@ unit dutil.text.json.Reader;
 interface
 
 uses
+  System.Generics.Collections,
   System.Types,
   superobject { An universal object serialization framework with Json support };
 
@@ -29,6 +30,9 @@ type
     /// <summary>Retrieves specified member value as a non-negative integer or fallback to default.</summary>
     class function ReadUIntMember(const Composite: ISuperObject; const Name: string; Fallback: Cardinal): Cardinal;
       static;
+    /// <summary>Retrieves specified member value as a string pair or fallback to default.</summary>
+    class function ReadStrPairMember(const Composite: ISuperObject; const Name: string;
+      const Fallback: TPair<string, string>): TPair<string, string>; static;
     /// <summary>Retrieves specified member value as a string array or fallback to default.</summary>
     class function ReadStrArrayMember(const Composite: ISuperObject; const Name: string;
       const Fallback: TArray<string>): TArray<string>; static;
@@ -41,9 +45,13 @@ type
     /// <summary>Retrieves specified member value as a non-negative integer array or fallback to default.</summary>
     class function ReadUIntArrayMember(const Composite: ISuperObject; const Name: string;
       const Fallback: TArray<Cardinal>): TArray<Cardinal>; static;
+    /// <summary>Retrieves specified member value as a string pair array or fallback to default.</summary>
+    class function ReadStrPairArrayMember(const Composite: ISuperObject; const Name: string;
+      const Fallback: TArray<TPair<string, string>>): TArray<TPair<string, string>>; static;
   private
     class function ReadMember(const Composite: ISuperObject; const Name: string; DataType: TSuperType): ISuperObject;
       static;
+    class function ReadMemberAsArray(const Composite: ISuperObject; const Name: string): TSuperArray; static;
   end;
 
 implementation
@@ -114,26 +122,48 @@ begin
     Result := Fallback;
 end;
 
-class function TReader.ReadStrArrayMember(const Composite: ISuperObject; const Name: string;
-  const Fallback: TArray<string>): TArray<string>;
+class function TReader.ReadStrPairMember(const Composite: ISuperObject; const Name: string;
+  const Fallback: TPair<string, string>): TPair<string, string>;
 var
-  Member: ISuperObject;
   MemberAsArray: TSuperArray;
-  I: Integer;
 begin
   assert(Composite <> nil);
   assert(Name <> '');
 
-  Member := ReadMember(Composite, Name, TSuperType.stArray);
-  if Member <> nil then
+  MemberAsArray := ReadMemberAsArray(Composite, Name);
+  if MemberAsArray <> nil then
   begin
-    MemberAsArray := Member.AsArray;
+    if (MemberAsArray.Length <> 2) or
+       (MemberAsArray[0].DataType <> stString) or
+       (MemberAsArray[1].DataType <> stString) then
+      Exit(Fallback);
+
+    Result := TPair<string, string>.Create(MemberAsArray[0].AsString, MemberAsArray[1].AsString);
+  end
+  else
+    Result := Fallback;
+end;
+
+class function TReader.ReadStrArrayMember(const Composite: ISuperObject; const Name: string;
+  const Fallback: TArray<string>): TArray<string>;
+var
+  MemberAsArray: TSuperArray;
+  I: Integer;
+  Item: ISuperObject;
+begin
+  assert(Composite <> nil);
+  assert(Name <> '');
+
+  MemberAsArray := ReadMemberAsArray(Composite, Name);
+  if MemberAsArray <> nil then
+  begin
     SetLength(Result, MemberAsArray.Length);
     for I := 0 to MemberAsArray.Length - 1 do
     begin
-      if MemberAsArray[I].DataType <> stString then
+      Item := MemberAsArray[I];
+      if Item.DataType <> stString then
         Exit(Fallback);
-      Result[I] := MemberAsArray[I].AsString;
+      Result[I] := Item.AsString;
     end;
   end
   else
@@ -143,23 +173,23 @@ end;
 class function TReader.ReadBoolArrayMember(const Composite: ISuperObject; const Name: string;
   const Fallback: TArray<Boolean>): TArray<Boolean>;
 var
-  Member: ISuperObject;
   MemberAsArray: TSuperArray;
   I: Integer;
+  Item: ISuperObject;
 begin
   assert(Composite <> nil);
   assert(Name <> '');
 
-  Member := ReadMember(Composite, Name, TSuperType.stArray);
-  if Member <> nil then
+  MemberAsArray := ReadMemberAsArray(Composite, Name);
+  if MemberAsArray <> nil then
   begin
-    MemberAsArray := Member.AsArray;
     SetLength(Result, MemberAsArray.Length);
     for I := 0 to MemberAsArray.Length - 1 do
     begin
-      if MemberAsArray[I].DataType <> stBoolean then
+      Item := MemberAsArray[I];
+      if Item.DataType <> stBoolean then
         Exit(Fallback);
-      Result[I] := MemberAsArray[I].AsBoolean;
+      Result[I] := Item.AsBoolean;
     end;
   end
   else
@@ -169,23 +199,23 @@ end;
 class function TReader.ReadIntArrayMember(const Composite: ISuperObject; const Name: string;
   const Fallback: TArray<Integer>): TArray<Integer>;
 var
-  Member: ISuperObject;
   MemberAsArray: TSuperArray;
   I: Integer;
+  Item: ISuperObject;
 begin
   assert(Composite <> nil);
   assert(Name <> '');
 
-  Member := ReadMember(Composite, Name, TSuperType.stArray);
-  if Member <> nil then
+  MemberAsArray := ReadMemberAsArray(Composite, Name);
+  if MemberAsArray <> nil then
   begin
-    MemberAsArray := Member.AsArray;
     SetLength(Result, MemberAsArray.Length);
     for I := 0 to MemberAsArray.Length - 1 do
     begin
-      if MemberAsArray[I].DataType <> stInt then
+      Item := MemberAsArray[I];
+      if Item.DataType <> stInt then
         Exit(Fallback);
-      Result[I] := MemberAsArray[I].AsInteger;
+      Result[I] := Item.AsInteger;
     end;
   end
   else
@@ -195,23 +225,57 @@ end;
 class function TReader.ReadUIntArrayMember(const Composite: ISuperObject; const Name: string;
   const Fallback: TArray<Cardinal>): TArray<Cardinal>;
 var
-  Member: ISuperObject;
   MemberAsArray: TSuperArray;
   I: Integer;
+  Item: ISuperObject;
 begin
   assert(Composite <> nil);
   assert(Name <> '');
 
-  Member := ReadMember(Composite, Name, TSuperType.stArray);
-  if Member <> nil then
+  MemberAsArray := ReadMemberAsArray(Composite, Name);
+  if MemberAsArray <> nil then
   begin
-    MemberAsArray := Member.AsArray;
     SetLength(Result, MemberAsArray.Length);
     for I := 0 to MemberAsArray.Length - 1 do
     begin
-      if (MemberAsArray[I].DataType <> stInt) or (MemberAsArray[I].AsInteger < 0) then
+      Item := MemberAsArray[I];
+      if (Item.DataType <> stInt) or (Item.AsInteger < 0) then
         Exit(Fallback);
-      Result[I] := MemberAsArray[I].AsInteger;
+      Result[I] := Item.AsInteger;
+    end;
+  end
+  else
+    Result := Fallback;
+end;
+
+class function TReader.ReadStrPairArrayMember(const Composite: ISuperObject; const Name: string;
+  const Fallback: TArray<TPair<string, string>>): TArray<TPair<string, string>>;
+var
+  MemberAsArray: TSuperArray;
+  I: Integer;
+  Item: ISuperObject;
+  ItemAsArray: TSuperArray;
+begin
+  assert(Composite <> nil);
+  assert(Name <> '');
+
+  MemberAsArray := ReadMemberAsArray(Composite, Name);
+  if MemberAsArray <> nil then
+  begin
+    SetLength(Result, MemberAsArray.Length);
+    for I := 0 to MemberAsArray.Length - 1 do
+    begin
+      Item := MemberAsArray[I];
+      if Item.DataType <> stArray then
+        Exit(Fallback);
+
+      ItemAsArray := Item.AsArray;
+      if (ItemAsArray.Length <> 2) or
+         (ItemAsArray[0].DataType <> stString) or
+         (ItemAsArray[1].DataType <> stString) then
+        Exit(Fallback);
+
+      Result[I] := TPair<string, string>.Create(ItemAsArray[0].AsString, ItemAsArray[1].AsString);
     end;
   end
   else
@@ -226,6 +290,17 @@ begin
 
   Result := Composite.O[Name];
   if (Result <> nil) and (Result.DataType <> DataType) then
+    Result := nil;
+end;
+
+class function TReader.ReadMemberAsArray(const Composite: ISuperObject; const Name: string): TSuperArray;
+var
+  Temp: ISuperObject;
+begin
+  Temp := ReadMember(Composite, Name, TSuperType.stArray);
+  if Temp <> nil then
+    Result := Temp.AsArray
+  else
     Result := nil;
 end;
 

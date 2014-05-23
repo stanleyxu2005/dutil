@@ -94,6 +94,7 @@
         <DCCReference Include="..\test\dutil.text.arg.BuilderTest.pas"/>
         <DCCReference Include="..\test\dutil.text.ConvertTest.pas"/>
         <DCCReference Include="..\test\dutil.text.json.JsonTest.pas"/>
+        <DCCReference Include="..\test\dutil.text.json.ReaderTest.pas"/>
         <DCCReference Include="..\test\dutil.text.UtilTest.pas"/>
         <DCCReference Include="..\test\dutil.text.xml.ValidationTest.pas"/>
         <DCCReference Include="..\test\dutil.util.concurrent.BlockingQueueTest.pas"/>
