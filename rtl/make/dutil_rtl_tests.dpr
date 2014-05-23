@@ -25,6 +25,7 @@ uses
   dutil.text.arg.ArgumentsTest in '..\test\dutil.text.arg.ArgumentsTest.pas',
   dutil.text.arg.BuilderTest in '..\test\dutil.text.arg.BuilderTest.pas',
   dutil.text.ConvertTest in '..\test\dutil.text.ConvertTest.pas',
+  dutil.text.json.JsonTest in '..\test\dutil.text.json.JsonTest.pas',
   dutil.text.UtilTest in '..\test\dutil.text.UtilTest.pas',
   dutil.text.xml.ValidationTest in '..\test\dutil.text.xml.ValidationTest.pas',
   dutil.util.concurrent.BlockingQueueTest in '..\test\dutil.util.concurrent.BlockingQueueTest.pas',
