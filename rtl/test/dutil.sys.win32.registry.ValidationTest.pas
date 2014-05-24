@@ -98,7 +98,7 @@ var
 begin
   RootKey := HKEY_CURRENT_USER;
   Key := '\Software\Microsoft\Windows\CurrentVersion\Internet Settings';
-  Name := 'CertificateRevocation';
+  Name := 'EnableHttp1_1';
 
   ReturnValue := FValidation.RequireUInt(Key, Name, RootKey);
   CheckEquals(1, ReturnValue);

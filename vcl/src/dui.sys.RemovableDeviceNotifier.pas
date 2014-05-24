@@ -22,7 +22,7 @@ type
     procedure WndProc(var Message_: TMessage);
     function ReceiveDeviceNotification: Boolean;
     function StopRetrieveDeviceNotification: Boolean;
-    class function GetFirstDriveLetter(UnitMask: LongInt): Char; static;
+    //class function GetFirstDriveLetter(UnitMask: LongInt): Char; static;
   protected
     procedure WMDeviceChange(var Message_: TMessage); dynamic;
   public
@@ -100,7 +100,7 @@ begin
       FOnUsbRemoved(Self);
   end;
 end;
-
+(*
 class function TRemovableDeviceNotifier.GetFirstDriveLetter(UnitMask: LongInt): Char;
 var
   DriveLetter: ShortInt;
@@ -113,7 +113,7 @@ begin
   end;
   Result := Char(DriveLetter);
 end;
-
+*)
 function TRemovableDeviceNotifier.ReceiveDeviceNotification: Boolean;
 var
   dbi: DEV_BROADCAST_DEVICEINTERFACE;

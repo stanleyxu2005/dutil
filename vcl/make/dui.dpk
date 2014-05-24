@@ -5,7 +5,7 @@ package dui;
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -25,7 +25,7 @@ package dui;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'DUtil: dui'}
+{$DESCRIPTION 'DUtil Visual Component Library'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -47,6 +47,8 @@ contains
   dui.sys.UserInput in '..\src\dui.sys.UserInput.pas',
   dui.text.L10n in '..\src\dui.text.L10n.pas',
   dui.sys.InstanceManager in '..\src\dui.sys.InstanceManager.pas',
-  dui.sys.RemovableDeviceNotifier in '..\src\dui.sys.RemovableDeviceNotifier.pas';
+  dui.sys.RemovableDeviceNotifier in '..\src\dui.sys.RemovableDeviceNotifier.pas',
+  Winapi.Dbt in '..\src\Winapi.Dbt.pas';
 
 end.
+
