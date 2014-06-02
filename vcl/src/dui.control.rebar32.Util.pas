@@ -10,32 +10,26 @@ unit dui.control.rebar32.Util;
 interface
 
 uses
-  Vcl.ActnList,
   Vcl.ComCtrls,
   System.Classes;
 
 type
-  /// <summary>This service class provides methods to manage TToolbar related components.</summary>
+  /// <summary>This service class provides methods to manage rebar32 related components. Note that Delphi components
+  /// have some customized styles rather than the native rebar32 control. Any components created by this class will be
+  /// more native styled.</summary>
   TUtil = class
   public
     /// <summary>Removes all tool buttons from a toolbar.</summary>
     class procedure RemoveAllToolButtons(ToolBar: TToolBar); static;
     /// <summary>Removes a tool button by a specified button index.</summary>
     class function RemoveToolButton(ToolBar: TToolBar; ButtonIndex: Cardinal): Boolean; static;
-    /// <summary>Creates a tool button with an action assigned at the end of a toolbar.</summary>
-    class function CreateToolButton(ToolBar: TToolBar; Action: TAction): TToolButton; overload; static;
-    /// <summary>Creates a tool button with an action assigned.</summary>
-    class function CreateToolButton(ToolBar: TToolBar; Position: Cardinal; Action: TAction): TToolButton; overload;
-      static;
-    /// <summary>Creates a tool button with a caption and an onclick event at the end of a toolbar.</summary>
-    class function CreateToolButton(ToolBar: TToolBar; const Caption: string; OnClick: TNotifyEvent): TToolButton;
-      overload; static;
-    /// <summary>Creates a tool button with a caption and an onclick event.</summary>
-    class function CreateToolButton(ToolBar: TToolBar; Position: Cardinal; const Caption: string;
-      OnClick: TNotifyEvent): TToolButton; overload; static;
+    /// <summary>Creates a tool button at the end of a toolbar.</summary>
+    class function CreateToolButton(ToolBar: TToolBar): TToolButton; overload; static;
+    /// <summary>Creates a tool button at specified position.</summary>
+    class function CreateToolButton(ToolBar: TToolBar; Position: Cardinal): TToolButton; overload; static;
     /// <summary>Creates a separator (divider line) at the end of a toolbar.</summary>
     class procedure CreateTooButtonSeparator(ToolBar: TToolBar); overload; static;
-    /// <summary>Creates a separator (divider line) onto a toolbar.</summary>
+    /// <summary>Creates a separator (divider line) at specified position.</summary>
     class procedure CreateTooButtonSeparator(ToolBar: TToolBar; Position: Cardinal); overload; static;
   private
     class function CreateToolButton(ToolBar: TToolBar; Position: Cardinal; Style: TToolButtonStyle): TToolButton;
@@ -100,41 +94,18 @@ begin
   Result.Parent := ToolBar;
 end;
 
-class function TUtil.CreateToolButton(ToolBar: TToolBar; Action: TAction): TToolButton;
-begin
-  assert(ToolBar <> nil);
-  assert(Action <> nil);
-
-  Result := CreateToolButton(ToolBar, ToolBar.ButtonCount, tbsTextButton);
-  Result.Action := Action;
-end;
-
-class function TUtil.CreateToolButton(ToolBar: TToolBar; Position: Cardinal; Action: TAction): TToolButton;
-begin
-  assert(ToolBar <> nil);
-  assert(Action <> nil);
-
-  Result := CreateToolButton(ToolBar, Position, tbsTextButton);
-  Result.Action := Action;
-end;
-
-class function TUtil.CreateToolButton(ToolBar: TToolBar; const Caption: string; OnClick: TNotifyEvent): TToolButton;
+class function TUtil.CreateToolButton(ToolBar: TToolBar): TToolButton;
 begin
   assert(ToolBar <> nil);
 
   Result := CreateToolButton(ToolBar, ToolBar.ButtonCount, tbsTextButton);
-  Result.Caption := Caption;
-  Result.OnClick := OnClick;
 end;
 
-class function TUtil.CreateToolButton(ToolBar: TToolBar; Position: Cardinal; const Caption: string;
-  OnClick: TNotifyEvent): TToolButton;
+class function TUtil.CreateToolButton(ToolBar: TToolBar; Position: Cardinal): TToolButton;
 begin
   assert(ToolBar <> nil);
 
   Result := CreateToolButton(ToolBar, Position, tbsTextButton);
-  Result.Caption := Caption;
-  Result.OnClick := OnClick;
 end;
 
 class procedure TUtil.CreateTooButtonSeparator(ToolBar: TToolBar);
