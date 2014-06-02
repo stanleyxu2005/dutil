@@ -39,6 +39,7 @@ contains
   dui.control.button.SkinButtonImages in '..\src\dui.control.button.SkinButtonImages.pas',
   dui.control.ComponentRegister in '..\src\dui.control.ComponentRegister.pas',
   dui.control.menu.Util in '..\src\dui.control.menu.Util.pas',
+  dui.control.rebar32.Util in '..\src\dui.control.rebar32.Util.pas',
   dui.imaging.Convert in '..\src\dui.imaging.Convert.pas',
   dui.metrics.MenuExtent in '..\src\dui.metrics.MenuExtent.pas',
   dui.metrics.TextExtent in '..\src\dui.metrics.TextExtent.pas',

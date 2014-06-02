@@ -104,6 +104,7 @@
         <DCCReference Include="..\src\dui.control.button.SkinButtonImages.pas"/>
         <DCCReference Include="..\src\dui.control.ComponentRegister.pas"/>
         <DCCReference Include="..\src\dui.control.menu.Util.pas"/>
+        <DCCReference Include="..\src\dui.control.rebar32.Util.pas"/>
         <DCCReference Include="..\src\dui.imaging.Convert.pas"/>
         <DCCReference Include="..\src\dui.metrics.MenuExtent.pas"/>
         <DCCReference Include="..\src\dui.metrics.TextExtent.pas"/>
