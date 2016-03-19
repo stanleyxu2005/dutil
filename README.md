@@ -17,7 +17,7 @@ We would be very appreciated, if you can help us to make it better.
 
 The project requires diverse 3rd-party open source runtime libraries.
 
-1. Goto the directory 'include' and download these open source libraries. 
+1. Goto the directory `include` and download these open source libraries. 
    a. These libraries does not have any license issues. 
    b. If you do not want to use these libraries, you can simply remove related 
       units and unittests.
@@ -25,9 +25,9 @@ The project requires diverse 3rd-party open source runtime libraries.
 
 As soon as you installed all prerequisites, we should build the project. 
 
-1. Open the project group file at the directory 'make' and execute "Build All". 
+1. Open the project group file at the directory `make` and execute `Build All`. 
 2. Run the unittests from project manager.
-3. Install the VCL package 'dui'.
+3. Install the VCL package `dui`.
 4. Add the source paths to the browsing path of Delphi IDE. 
 
 Now the dutil library is ready to use and have fun.
@@ -36,4 +36,4 @@ Now the dutil library is ready to use and have fun.
 
 Welcome you to create tickets on github or mail me for feature requests.
 
-Please also checkout https://code.google.com/p/native-look-vcl/
+Please also checkout https://github.com/stanleyxu2005/native-looking-vcl
