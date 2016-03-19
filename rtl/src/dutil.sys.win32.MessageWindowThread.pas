@@ -1,5 +1,7 @@
-// $Id: dutil.sys.win32.MessageWindowThread.pas 534 2012-04-25 14:29:42Z QXu $
-
+(**
+ * Software distributed under the MIT License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
+ * express or implied. See the License for the specific language governing rights and limitations under the License.
+ *)
 unit dutil.sys.win32.MessageWindowThread;
 
 interface

@@ -1,10 +1,7 @@
 (**
- * $Id: dui.control.rebar32.Util.pas 851 2014-06-02 08:03:08Z QXu $
- *
- * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
+ * Software distributed under the MIT License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
-
 unit dui.control.rebar32.Util;
 
 interface

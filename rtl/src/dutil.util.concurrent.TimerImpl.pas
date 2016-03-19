@@ -1,10 +1,7 @@
 (**
- * $Id: dutil.util.concurrent.TimerImpl.pas 794 2014-04-28 16:00:24Z QXu $
- *
- * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
+ * Software distributed under the MIT License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
-
 unit dutil.util.concurrent.TimerImpl;
 
 interface

@@ -1,10 +1,7 @@
-(* *
-  * $Id: dui.sys.InstanceManager.pas 830 2014-05-17 18:15:48Z QXu $
-  *
-  * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
-  * express or implied. See the License for the specific language governing rights and limitations under the License.
-*)
-
+(**
+ * Software distributed under the MIT License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
+ * express or implied. See the License for the specific language governing rights and limitations under the License.
+ *)
 unit dui.sys.InstanceManager;
 
 interface

@@ -1,10 +1,7 @@
 (**
- * $Id: dutil.text.arg.Arguments.pas 834 2014-05-20 18:43:27Z QXu $
- *
- * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
+ * Software distributed under the MIT License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either
  * express or implied. See the License for the specific language governing rights and limitations under the License.
  *)
-
 unit dutil.text.arg.Arguments;
 
 interface
