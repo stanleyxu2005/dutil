@@ -63,7 +63,7 @@ begin
   end;
 
   ReturnValue := FArguments.ToString;
-  CheckEquals('--str=xx --int=42 --token', ReturnValue);
+  CheckEquals('--int=42 --str=xx --token', ReturnValue);
 end;
 
 procedure TArgumentsTest.TestRequireInt;

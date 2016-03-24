@@ -55,7 +55,7 @@ begin
   FBuilder.AddToken('token');
 
   ReturnValue := FBuilder.ToString;
-  CheckEquals('--str=xx --int=42 --token', ReturnValue);
+  CheckEquals('--int=42 --str=xx --token', ReturnValue);
 end;
 
 procedure TBuilderTest.TestAddInt;
