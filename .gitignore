@@ -1,12 +1,19 @@
-*.~*~
+# directories
+__history
+bin
+build
+
+# files
+*.~*
 *.dcu
 *.dll
 *.drc
+*.dsk
 *.exe
 *.identcache
 *.local
 *.map
 *.res
-__history
-bin/*
-build
+
+# exclude files
+!**/fixture/*.exe
